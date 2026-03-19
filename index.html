@@ -15,15 +15,15 @@
   --accent:  #f0b429;
   --green:   #34d27b;
   --red:     #e8390e;
-  --text:    #c8ccd4;
-  --muted:   #565c6e;
+  --text:    #e2e5ec;
+  --muted:   #8b92a5;
   --mono:    'IBM Plex Mono', monospace;
   --sans:    'IBM Plex Sans', sans-serif;
   --display: 'Bebas Neue', sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.6; min-height: 100vh; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.7; min-height: 100vh; }
 body::before {
   content: '';
   position: fixed; inset: 0;
@@ -39,12 +39,12 @@ header {
   padding: 0 28px; height: 54px;
   display: flex; align-items: center; gap: 16px;
 }
-.logo { font-family: var(--display); font-size: 22px; letter-spacing: 4px; color: #fff; }
+.logo { font-family: var(--display); font-size: 26px; letter-spacing: 4px; color: #fff; }
 .logo em { color: var(--accent); font-style: normal; }
-.subtitle { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; border-left: 1px solid var(--border); padding-left: 14px; }
+.subtitle { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; border-left: 1px solid var(--border); padding-left: 14px; }
 .pill {
-  font-family: var(--mono); font-size: 10px; letter-spacing: 1px;
-  padding: 3px 10px; border-radius: 2px;
+  font-family: var(--mono); font-size: 12px; letter-spacing: 1px;
+  padding: 4px 12px; border-radius: 2px;
   background: var(--panel); border: 1px solid var(--border); color: var(--muted);
   margin-left: auto;
 }
@@ -69,7 +69,7 @@ header {
   display: flex; flex-direction: column; gap: 24px;
 }
 .slabel {
-  font-family: var(--mono); font-size: 9px; letter-spacing: 2px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 2px;
   text-transform: uppercase; color: var(--muted);
   display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
 }
@@ -85,8 +85,8 @@ header {
 .drop-zone:hover, .drop-zone.dragging { border-color: var(--accent); background: rgba(240,180,41,.04); }
 .drop-zone input { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
 .drop-icon { font-size: 26px; opacity:.35; margin-bottom: 7px; }
-.drop-text { font-family: var(--mono); font-size: 11px; color: var(--muted); line-height:1.6; }
-.drop-text strong { color: var(--text); display:block; margin-bottom:3px; font-size:12px; }
+.drop-text { font-family: var(--mono); font-size: 13px; color: var(--muted); line-height:1.6; }
+.drop-text strong { color: var(--text); display:block; margin-bottom:3px; font-size:14px; }
 
 .file-chip {
   display:flex; align-items:center; gap:9px;
@@ -101,13 +101,13 @@ header {
 .quote-box {
   background: var(--panel); border: 1px solid var(--border); border-radius:3px; padding: 14px 16px;
 }
-.qb-label { font-family: var(--mono); font-size:9px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:4px; }
-.qb-val { font-family: var(--display); font-size:30px; letter-spacing:2px; color: var(--accent); line-height:1; }
-.qb-sub { font-family: var(--mono); font-size:10px; color:var(--muted); margin-top:4px; }
+.qb-label { font-family: var(--mono); font-size:11px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:4px; }
+.qb-val { font-family: var(--display); font-size:36px; letter-spacing:2px; color: var(--accent); line-height:1; }
+.qb-sub { font-family: var(--mono); font-size:12px; color:var(--muted); margin-top:4px; }
 
 /* FIELD */
 .field { display:flex; flex-direction:column; gap:5px; }
-.field label { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
+.field label { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
 .field input, .field select {
   background:var(--panel); border:1px solid var(--border);
   color:var(--text); font-family:var(--mono); font-size:13px;
@@ -170,8 +170,8 @@ header {
   margin-bottom:22px; flex-wrap:wrap; gap:12px;
 }
 .rh-left {}
-.rh-title { font-family:var(--display); font-size:26px; letter-spacing:2px; color:#fff; line-height:1; }
-.rh-meta { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:4px; }
+.rh-title { font-family:var(--display); font-size:32px; letter-spacing:2px; color:#fff; line-height:1; }
+.rh-meta { font-family:var(--mono); font-size:13px; color:var(--muted); margin-top:6px; }
 
 /* STAT CARDS */
 .stat-row { display:grid; grid-template-columns:repeat(auto-fill, minmax(155px,1fr)); gap:10px; margin-bottom:28px; }
@@ -186,13 +186,13 @@ header {
 .stat-val.blue  { color:#4da6ff; }
 
 /* GEAR TABLE */
-table { width:100%; border-collapse:collapse; font-size:12px; margin-bottom:28px; }
+table { width:100%; border-collapse:collapse; font-size:14px; margin-bottom:28px; }
 thead tr { background:var(--panel); border-bottom:2px solid var(--accent); }
-th { padding:8px 12px; text-align:left; font-family:var(--mono); font-size:9px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+th { padding:10px 14px; text-align:left; font-family:var(--mono); font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
 th.r { text-align:right; }
 tbody tr { border-bottom:1px solid var(--border); transition:background .1s; }
 tbody tr:hover { background:rgba(255,255,255,.02); }
-td { padding:8px 12px; vertical-align:middle; }
+td { padding:10px 14px; vertical-align:middle; }
 td.r { text-align:right; font-family:var(--mono); }
 td.name { color:#fff; font-weight:500; }
 td.cat span {
@@ -219,16 +219,16 @@ tfoot td.total-green { color:var(--green); font-size:14px; }
   content:''; position:absolute; top:0; left:0; right:0; height:2px;
   background:linear-gradient(90deg, var(--accent), var(--green));
 }
-.pricer-title { font-family:var(--display); font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:20px; }
+.pricer-title { font-family:var(--display); font-size:26px; letter-spacing:2px; color:#fff; margin-bottom:20px; }
 
 .pricer-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:28px; }
 
 /* SLIDER */
 .slider-wrap { display:flex; flex-direction:column; gap:8px; }
 .slider-top { display:flex; justify-content:space-between; align-items:center; }
-.slider-top label { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
+.slider-top label { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
 .roi-readout {
-  font-family:var(--display); font-size:32px; letter-spacing:2px;
+  font-family:var(--display); font-size:40px; letter-spacing:2px;
   color:var(--accent); line-height:1;
 }
 input[type=range] {
@@ -245,16 +245,16 @@ input[type=range]::-webkit-slider-thumb {
   cursor:pointer; transition:transform .1s;
 }
 input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
-.slider-scale { display:flex; justify-content:space-between; font-family:var(--mono); font-size:9px; color:var(--muted); }
+.slider-scale { display:flex; justify-content:space-between; font-family:var(--mono); font-size:11px; color:var(--muted); }
 
 /* WEEKS */
 .weeks-wrap { display:flex; flex-direction:column; gap:8px; }
 .weeks-top { display:flex; justify-content:space-between; align-items:center; }
-.weeks-top label { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
-.weeks-readout { font-family:var(--display); font-size:32px; letter-spacing:2px; color:#4da6ff; line-height:1; }
+.weeks-top label { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
+.weeks-readout { font-family:var(--display); font-size:40px; letter-spacing:2px; color:#4da6ff; line-height:1; }
 .weeks-btns { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-top:4px; }
 .wbtn {
-  font-family:var(--mono); font-size:11px; padding:6px 4px; text-align:center;
+  font-family:var(--mono); font-size:13px; padding:8px 4px; text-align:center;
   background:var(--bg); border:1px solid var(--border); color:var(--muted);
   border-radius:2px; cursor:pointer; transition:all .12s;
 }
@@ -277,17 +277,17 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
   align-items:center;
 }
 .out-item { text-align:center; }
-.out-lbl { font-family:var(--mono); font-size:9px; color:var(--muted); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:6px; }
-.out-val { font-family:var(--display); font-size:28px; letter-spacing:2px; line-height:1; }
+.out-lbl { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:8px; }
+.out-val { font-family:var(--display); font-size:36px; letter-spacing:2px; line-height:1; }
 .out-val.gold  { color:var(--accent); }
 .out-val.green { color:var(--green); }
 .out-val.blue  { color:#4da6ff; }
-.out-sub { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:4px; }
+.out-sub { font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:4px; }
 .out-divider { width:1px; height:60px; background:var(--border); margin:0 auto; }
 
 .delta-note {
-  margin-top:14px; padding:10px 14px;
-  border-radius:3px; font-family:var(--mono); font-size:11px; line-height:1.6;
+  margin-top:14px; padding:12px 16px;
+  border-radius:3px; font-family:var(--mono); font-size:13px; line-height:1.6;
   display:flex; align-items:center; gap:10px;
 }
 .delta-note.pos { background:rgba(52,210,123,.07); border:1px solid rgba(52,210,123,.2); color:var(--green); }
@@ -339,20 +339,6 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
           <input type="number" id="manualTotal" placeholder="e.g. 132438" min="0" step="100"
             oninput="onManualTotal(this.value)">
         </div>
-      </div>
-    </div>
-
-    <div>
-      <div class="slabel">Wholesale Factor</div>
-      <div class="field">
-        <label>Apex cost as % of MSRP</label>
-        <select id="wholesaleFactor" onchange="recalc()">
-          <option value="0.45">45% — Tier 1 Dealer / Volume</option>
-          <option value="0.50" selected>50% — Standard Wholesale</option>
-          <option value="0.55">55% — Near-wholesale</option>
-          <option value="0.60">60% — Light discount</option>
-        </select>
-        <div class="hint">Applied to MSRP estimates to get Apex's cost basis</div>
       </div>
     </div>
 
@@ -438,8 +424,6 @@ async function runExtract() {
 
   try {
     const b64 = await toB64(state.file);
-    const factor = parseFloat(document.getElementById('wholesaleFactor').value);
-
     const res = await fetch('https://apex-api-proxy.theonlyalexoliveira.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -505,7 +489,7 @@ Be thorough — include every line item. Base estimates on your knowledge of ETC
     }
 
     state.currentRoi = (state.quoteTotal / state.totalWholesale) * 100;
-    state.targetRoi  = parseFloat(state.currentRoi.toFixed(1));
+    state.targetRoi  = parseFloat(Math.min(state.currentRoi, 10).toFixed(1));
     state.weeks = 1;
 
     // Update sidebar
@@ -557,7 +541,7 @@ function renderResults() {
     <table>
       <thead><tr>
         <th>#</th><th>Item</th><th class="r">QTY</th>
-        <th class="r">MSRP/unit</th><th class="r">Wholesale/unit</th>
+        <th class="r">Wholesale Cost/Unit (CAD)</th>
         <th class="r">Ext. Wholesale</th>
       </tr></thead>
       <tbody>
@@ -566,14 +550,12 @@ function renderResults() {
             <td style="font-family:var(--mono);color:var(--muted);font-size:10px;">${String(i+1).padStart(2,'0')}</td>
             <td class="name">${g.name}</td>
             <td class="r">${g.qty}</td>
-            <td class="r">${fmtCAD(g.msrp)}</td>
             <td class="r" style="color:var(--green)">${fmtCAD(g.wholesaleCost)}</td>
             <td class="r" style="color:var(--green)">${fmtCAD(g.wholesaleCost * g.qty)}</td>
           </tr>`).join('')}
       </tbody>
       <tfoot><tr>
-        <td colspan="4">TOTALS</td>
-        <td></td>
+        <td colspan="3">TOTALS</td>
         <td class="r total-green">${fmtCAD(state.totalWholesale)}</td>
       </tr></tfoot>
     </table>
@@ -597,7 +579,7 @@ function renderPricer() {
   if (!pricer) return;
 
   const sliderMin = 0.5;
-  const sliderMax = 25;
+  const sliderMax = 15;
   const pct = ((state.targetRoi - sliderMin) / (sliderMax - sliderMin) * 100).toFixed(1);
 
   pricer.innerHTML = `
@@ -617,7 +599,7 @@ function renderPricer() {
           style="--pct:${pct}%"
           oninput="onSlider(this.value)">
         <div class="slider-scale">
-          <span>0.5%</span><span>5%</span><span>10%</span><span>15%</span><span>20%</span><span>25%</span>
+          <span>0.5%</span><span>3%</span><span>6%</span><span>9%</span><span>12%</span><span>15%</span>
         </div>
         <div style="margin-top:10px;">
           <div class="field">
@@ -685,7 +667,7 @@ function renderPricer() {
 // ─── LIVE UPDATES ─────────────────────────────────────────
 function onSlider(val) {
   state.targetRoi = parseFloat(val);
-  const sliderMin = 0.5, sliderMax = 25;
+  const sliderMin = 0.5, sliderMax = 15;
   const pct = ((state.targetRoi - sliderMin) / (sliderMax - sliderMin) * 100).toFixed(1);
   document.getElementById('roiSlider').style.setProperty('--pct', pct + '%');
   document.getElementById('roiReadout').textContent = state.targetRoi.toFixed(2) + '%';
@@ -697,7 +679,7 @@ function onManualRoi(val) {
   const v = parseFloat(val);
   if (isNaN(v) || v <= 0) return;
   state.targetRoi = v;
-  const sliderMin = 0.5, sliderMax = 25;
+  const sliderMin = 0.5, sliderMax = 15;
   const clamped = Math.min(Math.max(v, sliderMin), sliderMax);
   const pct = ((clamped - sliderMin) / (sliderMax - sliderMin) * 100).toFixed(1);
   const slider = document.getElementById('roiSlider');

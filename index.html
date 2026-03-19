@@ -559,7 +559,7 @@ function renderResults() {
                 onmouseout="this.style.borderColor='transparent'"
                 onfocus="this.style.borderColor='var(--accent)'">
             </td>
-            <td class="r" style="color:var(--green)">${fmtCAD(g.wholesaleCost * g.qty)}</td>
+            <td class="r" style="color:var(--green)" id="ext-${i}">${fmtCAD(g.wholesaleCost * g.qty)}</td>
           </tr>`).join('')}
       </tbody>
       <tfoot><tr>
@@ -807,13 +807,10 @@ function updateAfterEdit() {
   state.totalWholesale = gearData.reduce((s, g) => s + g.wholesaleCost * g.qty, 0);
   state.currentRoi = (state.quoteTotal / state.totalWholesale) * 100;
 
-  // Update ext wholesale cells
-  const rows = document.querySelectorAll('#gearTbody tr');
+  // Update each line extended total by id
   gearData.forEach((g, i) => {
-    const cells = rows[i]?.querySelectorAll('td');
-    if (cells && cells.length >= 4) {
-      cells[cells.length - 1].textContent = fmtCAD(g.wholesaleCost * g.qty);
-    }
+    const cell = document.getElementById('ext-' + i);
+    if (cell) cell.textContent = fmtCAD(g.wholesaleCost * g.qty);
   });
 
   // Update wholesale total in tfoot

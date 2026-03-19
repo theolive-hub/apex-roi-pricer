@@ -539,35 +539,32 @@ function renderResults() {
   tableWrap.innerHTML = `
     <div class="slabel" style="margin-bottom:10px;">Gear List · Wholesale Cost Breakdown</div>
     <p style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:12px;">Click any <span style="color:var(--accent)">Wholesale Cost/Unit</span> value to edit it — totals and ROI update live.</p>
-    <table>
-      <thead><tr>
-        <th>#</th><th>Item</th><th class="r">QTY</th>
-        <th class="r">Wholesale Cost / Unit</th>
-        <th class="r">Ext. Wholesale (Unit × QTY)</th>
-      </tr></thead>
-      <tbody id="gearTbody">
-        ${state.gear.map((g,i) => `
-          <tr>
-            <td style="font-family:var(--mono);color:var(--muted);font-size:10px;">${String(i+1).padStart(2,'0')}</td>
-            <td class="name">${g.name}</td>
-            <td class="r">${g.qty}</td>
-            <td class="r">
-              <input type="number" min="0" step="10" value="${g.wholesaleCost.toFixed(2)}"
-                style="width:110px; padding:5px 8px; font-size:13px; background:var(--bg); border:1px solid transparent; color:var(--green); text-align:right; border-radius:3px;"
-                onchange="gearData[${i}].wholesaleCost=parseFloat(this.value)||0; gearData[${i}].msrp=parseFloat(this.value)||0; updateAfterEdit();"
-                onmouseover="this.style.borderColor='var(--border)'"
-                onmouseout="this.style.borderColor='transparent'"
-                onfocus="this.style.borderColor='var(--accent)'">
-            </td>
-            <td class="r" style="color:var(--green)" id="ext-${i}">${fmtCAD(g.wholesaleCost * g.qty)}</td>
-          </tr>`).join('')}
-      </tbody>
-      <tfoot><tr>
-        <td colspan="3">TOTALS</td>
-        <td class="r total-green">${fmtCAD(state.totalWholesale)}</td>
-      </tr></tfoot>
-    </table>
+  </div>
   `;
+  content.appendChild(tableWrap);
+
+  // Build gear table dynamically so IDs and events work correctly
+  const table = document.createElement('table');
+  table.innerHTML = `<thead><tr>
+    <th>#</th><th>Item</th><th class="r">QTY</th>
+    <th class="r">Wholesale Cost / Unit</th>
+    <th class="r">Ext. Wholesale (Unit × QTY)</th>
+  </tr></thead>`;
+
+  const tbody = document.createElement('tbody');
+  tbody.id = 'gearTbody';
+  buildGearRows(tbody);
+  table.appendChild(tbody);
+
+  const tfoot = document.createElement('tfoot');
+  tfoot.id = 'gearFoot';
+  tfoot.innerHTML = `<tr>
+    <td colspan="3">TOTALS</td>
+    <td class="r total-green" id="wholesaleTotalCell">${fmtCAD(state.totalWholesale)}</td>
+  </tr>`;
+  table.appendChild(tfoot);
+  tableWrap.appendChild(table);
+
   content.appendChild(tableWrap);
 
   // Divider
@@ -801,29 +798,79 @@ function resetAll() {
     </div>`;
 }
 
+// ─── BUILD GEAR ROWS ─────────────────────────────────────
+function buildGearRows(tbody) {
+  tbody.innerHTML = '';
+  gearData.forEach((g, i) => {
+    const tr = document.createElement('tr');
+
+    // # cell
+    const tdNum = document.createElement('td');
+    tdNum.style.cssText = 'font-family:var(--mono);color:var(--muted);font-size:13px;padding:10px 14px;';
+    tdNum.textContent = String(i+1).padStart(2,'0');
+    tr.appendChild(tdNum);
+
+    // Name cell
+    const tdName = document.createElement('td');
+    tdName.className = 'name';
+    tdName.textContent = g.name;
+    tr.appendChild(tdName);
+
+    // QTY cell
+    const tdQty = document.createElement('td');
+    tdQty.className = 'r';
+    tdQty.textContent = g.qty;
+    tr.appendChild(tdQty);
+
+    // Wholesale cost input cell
+    const tdCost = document.createElement('td');
+    tdCost.className = 'r';
+    const inp = document.createElement('input');
+    inp.type = 'number';
+    inp.min = '0';
+    inp.step = '10';
+    inp.value = g.wholesaleCost.toFixed(2);
+    inp.style.cssText = 'width:120px;padding:5px 8px;font-size:14px;background:var(--bg);border:1px solid transparent;color:var(--green);text-align:right;border-radius:3px;';
+    inp.addEventListener('mouseover', () => inp.style.borderColor = 'var(--border)');
+    inp.addEventListener('mouseout',  () => { if (document.activeElement !== inp) inp.style.borderColor = 'transparent'; });
+    inp.addEventListener('focus',     () => inp.style.borderColor = 'var(--accent)');
+    inp.addEventListener('blur',      () => inp.style.borderColor = 'transparent');
+    inp.addEventListener('input', () => {
+      const val = parseFloat(inp.value) || 0;
+      gearData[i].wholesaleCost = val;
+      gearData[i].msrp = val;
+      // Update this row's ext cell immediately
+      tdExt.textContent = fmtCAD(val * g.qty);
+      updateAfterEdit();
+    });
+    tdCost.appendChild(inp);
+    tr.appendChild(tdCost);
+
+    // Ext wholesale cell
+    const tdExt = document.createElement('td');
+    tdExt.className = 'r';
+    tdExt.style.color = 'var(--green)';
+    tdExt.id = 'ext-' + i;
+    tdExt.textContent = fmtCAD(g.wholesaleCost * g.qty);
+    tr.appendChild(tdExt);
+
+    tbody.appendChild(tr);
+  });
+}
+
 // ─── LIVE EDIT HANDLER ───────────────────────────────────
 function updateAfterEdit() {
-  // Recalculate totals
   state.totalWholesale = gearData.reduce((s, g) => s + g.wholesaleCost * g.qty, 0);
   state.currentRoi = (state.quoteTotal / state.totalWholesale) * 100;
 
-  // Update each line extended total by id
-  gearData.forEach((g, i) => {
-    const cell = document.getElementById('ext-' + i);
-    if (cell) cell.textContent = fmtCAD(g.wholesaleCost * g.qty);
-  });
+  const totalCell = document.getElementById('wholesaleTotalCell');
+  if (totalCell) totalCell.textContent = fmtCAD(state.totalWholesale);
 
-  // Update wholesale total in tfoot
-  const footCells = document.querySelectorAll('#gearFoot td');
-  if (footCells.length) footCells[footCells.length - 1].textContent = fmtCAD(state.totalWholesale);
-
-  // Update stat cards
   const wCard = document.getElementById('wholesaleStatCard');
   if (wCard) wCard.textContent = fmtCAD(state.totalWholesale);
   const roiCard = document.getElementById('currentRoiStat');
   if (roiCard) roiCard.textContent = state.currentRoi.toFixed(2) + '%';
 
-  // Refresh output
   updateOutput();
 }
 </script>

@@ -305,7 +305,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 <header>
   <div class="logo">APEX <em>·</em> ROI</div>
   <div class="subtitle">Rental Rate Pricer</div>
-  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.1.5</div><div class="pill" id="statusPill">READY</div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.1.6</div><div class="pill" id="statusPill">READY</div>
 </header>
 
 <div class="app">
@@ -365,7 +365,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 
 <script>
 // ─── STATE ───────────────────────────────────────────────
-let state = {
+window.state = {
   file: null,
   quoteTotal: 0,       // from PDF or manual entry
   quoteName: '',
@@ -780,7 +780,7 @@ function showError(msg) {
 }
 
 function resetAll() {
-  state = { file:null, quoteTotal:0, quoteName:'', gear:[], totalWholesale:0, currentRoi:0, targetRoi:0, weeks:1 };
+  window.state = { file:null, quoteTotal:0, quoteName:'', gear:[], totalWholesale:0, currentRoi:0, targetRoi:0, weeks:1 };
   document.getElementById('fileChip').style.display = 'none';
   document.getElementById('pdfFile').value = '';
   document.getElementById('manualTotal').value = '';

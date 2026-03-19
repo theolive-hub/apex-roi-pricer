@@ -527,7 +527,7 @@ function renderResults() {
     <div class="stat-row">
       <div class="stat"><div class="stat-lbl">Quote Total (1 wk)</div><div class="stat-val gold">${fmtCAD(state.quoteTotal)}</div></div>
       <div class="stat"><div class="stat-lbl">Total MSRP Value</div><div class="stat-val">${fmtCAD(totalMSRP)}</div></div>
-      <div class="stat"><div class="stat-lbl">Wholesale Cost Basis</div><div class="stat-val green">${fmtCAD(state.totalWholesale)}</div></div>
+      <div class="stat"><div class="stat-lbl">Wholesale Cost Basis</div><div class="stat-val green" id="wholesaleStatCard">${fmtCAD(state.totalWholesale)}</div></div>
       <div class="stat"><div class="stat-lbl">Current ROI (1 wk)</div><div class="stat-val blue" id="currentRoiStat">${state.currentRoi.toFixed(2)}%</div></div>
       <div class="stat"><div class="stat-lbl">Wholesale Factor</div><div class="stat-val">${(state.totalWholesale/totalMSRP*100).toFixed(0)}%</div></div>
     </div>
@@ -538,19 +538,27 @@ function renderResults() {
   const tableWrap = document.createElement('div');
   tableWrap.innerHTML = `
     <div class="slabel" style="margin-bottom:10px;">Gear List · Wholesale Cost Breakdown</div>
+    <p style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:12px;">Click any <span style="color:var(--accent)">Wholesale Cost/Unit</span> value to edit it — totals and ROI update live.</p>
     <table>
       <thead><tr>
         <th>#</th><th>Item</th><th class="r">QTY</th>
-        <th class="r">Wholesale Cost/Unit (CAD)</th>
-        <th class="r">Ext. Wholesale</th>
+        <th class="r">Wholesale Cost / Unit</th>
+        <th class="r">Ext. Wholesale (Unit × QTY)</th>
       </tr></thead>
-      <tbody>
+      <tbody id="gearTbody">
         ${state.gear.map((g,i) => `
           <tr>
             <td style="font-family:var(--mono);color:var(--muted);font-size:10px;">${String(i+1).padStart(2,'0')}</td>
             <td class="name">${g.name}</td>
             <td class="r">${g.qty}</td>
-            <td class="r" style="color:var(--green)">${fmtCAD(g.wholesaleCost)}</td>
+            <td class="r">
+              <input type="number" min="0" step="10" value="${g.wholesaleCost.toFixed(2)}"
+                style="width:110px; padding:5px 8px; font-size:13px; background:var(--bg); border:1px solid transparent; color:var(--green); text-align:right; border-radius:3px;"
+                onchange="gearData[${i}].wholesaleCost=parseFloat(this.value)||0; gearData[${i}].msrp=parseFloat(this.value)||0; updateAfterEdit();"
+                onmouseover="this.style.borderColor='var(--border)'"
+                onmouseout="this.style.borderColor='transparent'"
+                onfocus="this.style.borderColor='var(--accent)'">
+            </td>
             <td class="r" style="color:var(--green)">${fmtCAD(g.wholesaleCost * g.qty)}</td>
           </tr>`).join('')}
       </tbody>
@@ -791,6 +799,35 @@ function resetAll() {
       <div class="empty-glyph">%</div>
       <p>Upload a Rental Point PDF. Claude will extract your gear list, estimate <code>wholesale replacement value</code>, and calculate your live ROI-based pricing.</p>
     </div>`;
+}
+
+// ─── LIVE EDIT HANDLER ───────────────────────────────────
+function updateAfterEdit() {
+  // Recalculate totals
+  state.totalWholesale = gearData.reduce((s, g) => s + g.wholesaleCost * g.qty, 0);
+  state.currentRoi = (state.quoteTotal / state.totalWholesale) * 100;
+
+  // Update ext wholesale cells
+  const rows = document.querySelectorAll('#gearTbody tr');
+  gearData.forEach((g, i) => {
+    const cells = rows[i]?.querySelectorAll('td');
+    if (cells && cells.length >= 4) {
+      cells[cells.length - 1].textContent = fmtCAD(g.wholesaleCost * g.qty);
+    }
+  });
+
+  // Update wholesale total in tfoot
+  const footCells = document.querySelectorAll('#gearFoot td');
+  if (footCells.length) footCells[footCells.length - 1].textContent = fmtCAD(state.totalWholesale);
+
+  // Update stat cards
+  const wCard = document.getElementById('wholesaleStatCard');
+  if (wCard) wCard.textContent = fmtCAD(state.totalWholesale);
+  const roiCard = document.getElementById('currentRoiStat');
+  if (roiCard) roiCard.textContent = state.currentRoi.toFixed(2) + '%';
+
+  // Refresh output
+  updateOutput();
 }
 </script>
 </body>

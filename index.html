@@ -305,7 +305,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 <header>
   <div class="logo">APEX <em>·</em> ROI</div>
   <div class="subtitle">Rental Rate Pricer</div>
-  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.1.1</div><div class="pill" id="statusPill">READY</div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.1.3</div><div class="pill" id="statusPill">READY</div>
 </header>
 
 <div class="app">
@@ -474,6 +474,7 @@ Be thorough — include every line item. Base estimates on your knowledge of ETC
     const clean = raw.replace(/```json|```/g, '').trim();
     const parsed = JSON.parse(clean);
 
+    console.log("Parsed gear:", JSON.stringify(parsed.gear));
     if (!parsed.gear?.length) throw new Error('No gear items found in document. Is this a Rental Point PDF?');
 
     state.gear = parsed.gear;
@@ -826,7 +827,11 @@ function buildGearRows(tbody) {
     inp.type = 'number';
     inp.min = '0';
     inp.step = '10';
-    inp.value = g.wholesaleCost.toFixed(2);
+    const costVal = parseFloat(g.wholesaleCost) || parseFloat(g.msrp) || 0;
+    g.wholesaleCost = costVal;
+    state.gear[i].wholesaleCost = costVal;
+    inp.value = costVal > 0 ? costVal.toFixed(2) : '';
+    inp.placeholder = costVal > 0 ? '' : '0.00';
     inp.style.cssText = 'width:130px;padding:6px 10px;font-size:14px;background:var(--panel);border:1px solid var(--border);color:var(--green);text-align:right;border-radius:3px;';
     inp.addEventListener('mouseover', () => inp.style.borderColor = 'var(--border)');
     inp.addEventListener('mouseout',  () => { if (document.activeElement !== inp) inp.style.borderColor = 'transparent'; });
@@ -848,7 +853,7 @@ function buildGearRows(tbody) {
     tdExt.className = 'r';
     tdExt.style.color = 'var(--green)';
     tdExt.id = 'ext-' + i;
-    tdExt.textContent = fmtCAD(g.wholesaleCost * g.qty);
+    tdExt.textContent = fmtCAD((parseFloat(g.wholesaleCost)||0) * g.qty);
     tr.appendChild(tdExt);
 
     tbody.appendChild(tr);

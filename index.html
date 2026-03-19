@@ -446,11 +446,11 @@ async function runExtract() {
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 4000,
-        system: `You are an expert AV/lighting/staging equipment specialist with deep knowledge of professional gear wholesale pricing in Canada.
+        system: `You are an expert AV/lighting/staging equipment specialist with deep knowledge of professional gear pricing in Canada.
 
-Your job: extract every line-item piece of equipment from the rental PDF, and for each item estimate:
-1. Current MSRP (CAD) — retail list price per unit
-2. Wholesale cost (CAD) — what an AV rental company like Apex Sound and Light would actually pay as a dealer/volume buyer. This is typically 45-55% of MSRP for tier-1 AV dealers in Canada.
+Your job: extract every line-item piece of equipment from the rental PDF, and for each item return the Canadian dealer WHOLESALE cost in CAD as both "msrp" and "wholesaleCost".
+
+PRICING RULE: Canadian dealer wholesale = (USD retail MSRP) x 1.39 (USD to CAD) x 0.50 (dealer discount). For example: a fixture with USD MSRP of $1000 = $1390 CAD x 0.50 = $695 CAD wholesale. Return $695 as both msrp and wholesaleCost. Do NOT return USD retail prices. Do NOT return CAD retail prices. Return only CAD wholesale dealer cost.
 
 Also extract:
 - The total pre-tax rental value from the PDF if present
@@ -472,7 +472,7 @@ Return ONLY valid JSON, no markdown, no preamble:
   ]
 }
 
-Be thorough — include every line item. Base wholesale estimates on your knowledge of ETC, Astera, ROBE, Martin, GLP, L-Acoustics, d&b, Shure, disguise, Barco, Christie, ROE, and other professional AV brands. Canadian dealers typically pay 45-55% of USD MSRP converted to CAD.`,
+Be thorough — include every line item. Base estimates on your knowledge of ETC, Astera, ROBE, Martin, GLP, L-Acoustics, d&b, Shure, disguise, Barco, Christie, ROE, and other professional AV brands. All dollar values must be CAD dealer wholesale.`,
         messages: [{
           role: 'user',
           content: [

@@ -305,7 +305,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 <header>
   <div class="logo">APEX <em>·</em> ROI</div>
   <div class="subtitle">Rental Rate Pricer</div>
-  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.1.6</div><div class="pill" id="statusPill">READY</div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.1.7</div><div class="pill" id="statusPill">READY</div>
 </header>
 
 <div class="app">
@@ -566,7 +566,9 @@ function renderResults() {
   content.appendChild(tableWrap);
 
   // Divider
-  content.innerHTML += '<hr class="divider">';
+  const divider = document.createElement('hr');
+  divider.className = 'divider';
+  content.appendChild(divider);
 
   // Pricer
   const pricer = document.createElement('div');

@@ -305,7 +305,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 <header>
   <div class="logo">APEX <em>·</em> ROI</div>
   <div class="subtitle">Rental Rate Pricer</div>
-  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.0.9</div><div class="pill" id="statusPill">READY</div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.1.0</div><div class="pill" id="statusPill">READY</div>
 </header>
 
 <div class="app">
@@ -528,7 +528,6 @@ function renderResults() {
       <div class="stat"><div class="stat-lbl">Quote Total (1 wk)</div><div class="stat-val gold">${fmtCAD(state.quoteTotal)}</div></div>
       <div class="stat"><div class="stat-lbl">Wholesale Cost Basis</div><div class="stat-val green" id="wholesaleStatCard">${fmtCAD(state.totalWholesale)}</div></div>
       <div class="stat"><div class="stat-lbl">Current ROI (1 wk)</div><div class="stat-val blue" id="currentRoiStat">${state.currentRoi.toFixed(2)}%</div></div>
-      <div class="stat"><div class="stat-lbl">Wholesale Factor</div><div class="stat-val">${(state.totalWholesale/totalMSRP*100).toFixed(0)}%</div></div>
     </div>
   `;
   content.appendChild(stats);
@@ -538,7 +537,6 @@ function renderResults() {
   tableWrap.innerHTML = `
     <div class="slabel" style="margin-bottom:10px;">Gear List · Wholesale Cost Breakdown</div>
     <p style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:12px;">Click any <span style="color:var(--accent)">Wholesale Cost/Unit</span> value to edit it — totals and ROI update live.</p>
-  </div>
   `;
   content.appendChild(tableWrap);
 
@@ -558,7 +556,7 @@ function renderResults() {
   const tfoot = document.createElement('tfoot');
   tfoot.id = 'gearFoot';
   tfoot.innerHTML = `<tr>
-    <td colspan="3">TOTALS</td>
+    <td colspan="4">TOTALS</td>
     <td class="r total-green" id="wholesaleTotalCell">${fmtCAD(state.totalWholesale)}</td>
   </tr>`;
   table.appendChild(tfoot);

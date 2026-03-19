@@ -305,7 +305,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 <header>
   <div class="logo">APEX <em>·</em> ROI</div>
   <div class="subtitle">Rental Rate Pricer</div>
-  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.0.7</div><div class="pill" id="statusPill">READY</div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.0.8</div><div class="pill" id="statusPill">READY</div>
 </header>
 
 <div class="app">
@@ -801,7 +801,7 @@ function resetAll() {
 // ─── BUILD GEAR ROWS ─────────────────────────────────────
 function buildGearRows(tbody) {
   tbody.innerHTML = '';
-  gearData.forEach((g, i) => {
+  state.gear.forEach((g, i) => {
     const tr = document.createElement('tr');
 
     // # cell
@@ -860,7 +860,7 @@ function buildGearRows(tbody) {
 
 // ─── LIVE EDIT HANDLER ───────────────────────────────────
 function updateAfterEdit() {
-  state.totalWholesale = gearData.reduce((s, g) => s + g.wholesaleCost * g.qty, 0);
+  state.totalWholesale = state.gear.reduce((s, g) => s + g.wholesaleCost * g.qty, 0);
   state.currentRoi = (state.quoteTotal / state.totalWholesale) * 100;
 
   const totalCell = document.getElementById('wholesaleTotalCell');

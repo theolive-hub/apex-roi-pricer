@@ -305,7 +305,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 <header>
   <div class="logo">APEX <em>·</em> ROI</div>
   <div class="subtitle">Rental Rate Pricer</div>
-  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.1.0</div><div class="pill" id="statusPill">READY</div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.1.1</div><div class="pill" id="statusPill">READY</div>
 </header>
 
 <div class="app">
@@ -827,7 +827,7 @@ function buildGearRows(tbody) {
     inp.min = '0';
     inp.step = '10';
     inp.value = g.wholesaleCost.toFixed(2);
-    inp.style.cssText = 'width:120px;padding:5px 8px;font-size:14px;background:var(--bg);border:1px solid transparent;color:var(--green);text-align:right;border-radius:3px;';
+    inp.style.cssText = 'width:130px;padding:6px 10px;font-size:14px;background:var(--panel);border:1px solid var(--border);color:var(--green);text-align:right;border-radius:3px;';
     inp.addEventListener('mouseover', () => inp.style.borderColor = 'var(--border)');
     inp.addEventListener('mouseout',  () => { if (document.activeElement !== inp) inp.style.borderColor = 'transparent'; });
     inp.addEventListener('focus',     () => inp.style.borderColor = 'var(--accent)');

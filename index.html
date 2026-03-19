@@ -305,7 +305,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 <header>
   <div class="logo">APEX <em>·</em> ROI</div>
   <div class="subtitle">Rental Rate Pricer</div>
-  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.1.4</div><div class="pill" id="statusPill">READY</div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.1.5</div><div class="pill" id="statusPill">READY</div>
 </header>
 
 <div class="app">
@@ -839,17 +839,21 @@ function buildGearRows(tbody) {
 
 // ─── LIVE EDIT HANDLER ───────────────────────────────────
 function updateAfterEdit() {
+  // Recalc wholesale total
   state.totalWholesale = state.gear.reduce((s, g) => s + g.wholesaleCost * g.qty, 0);
-  state.currentRoi = (state.quoteTotal / state.totalWholesale) * 100;
+  state.currentRoi = state.totalWholesale > 0 ? (state.quoteTotal / state.totalWholesale) * 100 : 0;
 
+  // Update tfoot total
   const totalCell = document.getElementById('wholesaleTotalCell');
   if (totalCell) totalCell.textContent = fmtCAD(state.totalWholesale);
 
+  // Update stat cards
   const wCard = document.getElementById('wholesaleStatCard');
   if (wCard) wCard.textContent = fmtCAD(state.totalWholesale);
   const roiCard = document.getElementById('currentRoiStat');
   if (roiCard) roiCard.textContent = state.currentRoi.toFixed(2) + '%';
 
+  // Update pricer output — use current targetRoi against new totalWholesale
   updateOutput();
 }
 </script>

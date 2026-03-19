@@ -440,7 +440,7 @@ async function runExtract() {
     const b64 = await toB64(state.file);
     const factor = parseFloat(document.getElementById('wholesaleFactor').value);
 
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('https://apex-api-proxy.theonlyalexoliveira.workers.dev', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

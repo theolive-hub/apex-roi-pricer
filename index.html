@@ -294,6 +294,21 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .delta-note.neg { background:rgba(232,57,14,.07); border:1px solid rgba(232,57,14,.2); color:var(--red); }
 .delta-note.neutral { background:var(--bg); border:1px solid var(--border); color:var(--muted); }
 
+
+/* QUOTE MODELLER */
+.qm-section { margin-top: 8px; }
+.qm-table-wrap { overflow-x: auto; }
+.qm-note { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:14px; line-height:1.6; }
+.qm-note span { color:var(--accent); }
+.qm-total-bar {
+  background:var(--panel); border:1px solid var(--border); border-radius:3px;
+  padding:16px 20px; margin-top:16px;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+}
+.qm-total-label { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
+.qm-total-val { font-family:var(--display); font-size:32px; letter-spacing:2px; color:var(--accent); }
+.qm-copy-note { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:6px; }
+
 /* SCROLLBAR */
 ::-webkit-scrollbar { width:5px; height:5px; }
 ::-webkit-scrollbar-track { background:var(--bg); }
@@ -305,7 +320,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 <header>
   <div class="logo">APEX <em>·</em> ROI</div>
   <div class="subtitle">Rental Rate Pricer</div>
-  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.1.7</div><div class="pill" id="statusPill">READY</div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.2.0</div><div class="pill" id="statusPill">READY</div>
 </header>
 
 <div class="app">
@@ -490,7 +505,7 @@ Be thorough — include every line item. Base estimates on your knowledge of ETC
     }
 
     state.currentRoi = (state.quoteTotal / state.totalWholesale) * 100;
-    state.targetRoi  = parseFloat(Math.min(state.currentRoi, 10).toFixed(1));
+    state.targetRoi  = parseFloat(Math.min(state.currentRoi, 5).toFixed(2));
     state.weeks = 1;
 
     // Update sidebar
@@ -576,6 +591,11 @@ function renderResults() {
   pricer.id = 'pricerPanel';
   content.appendChild(pricer);
 
+  // Quote Modeller placeholder
+  const qmSection = document.createElement('div');
+  qmSection.id = 'quoteModellerSection';
+  content.appendChild(qmSection);
+
   renderPricer();
 }
 
@@ -583,8 +603,8 @@ function renderPricer() {
   const pricer = document.getElementById('pricerPanel');
   if (!pricer) return;
 
-  const sliderMin = 0.5;
-  const sliderMax = 15;
+  const sliderMin = 0.1;
+  const sliderMax = 5;
   const pct = ((state.targetRoi - sliderMin) / (sliderMax - sliderMin) * 100).toFixed(1);
 
   pricer.innerHTML = `
@@ -599,12 +619,12 @@ function renderPricer() {
           <div class="roi-readout" id="roiReadout">${state.targetRoi.toFixed(2)}%</div>
         </div>
         <input type="range" id="roiSlider"
-          min="${sliderMin}" max="${sliderMax}" step="0.05"
+          min="${sliderMin}" max="${sliderMax}" step="0.01"
           value="${state.targetRoi}"
           style="--pct:${pct}%"
           oninput="onSlider(this.value)">
         <div class="slider-scale">
-          <span>0.5%</span><span>3%</span><span>6%</span><span>9%</span><span>12%</span><span>15%</span>
+          <span>0.1%</span><span>1%</span><span>2%</span><span>3%</span><span>4%</span><span>5%</span>
         </div>
         <div style="margin-top:10px;">
           <div class="field">
@@ -624,14 +644,14 @@ function renderPricer() {
           <div class="weeks-readout" id="weeksReadout">${state.weeks}w</div>
         </div>
         <div class="weeks-btns">
-          ${[1,2,3,4,5].map(w => `
-            <div class="wbtn${state.weeks===w?' active':''}" onclick="setWeeks(${w})">${w}wk</div>
+          ${[0.5,1,2,3,4].map(w => `
+            <div class="wbtn${state.weeks===w?' active':''}" onclick="setWeeks(${w})">${w === 0.5 ? '½wk' : w+'wk'}</div>
           `).join('')}
         </div>
         <div class="weeks-custom">
           <label>Custom weeks:</label>
-          <input type="number" id="weeksInput" min="1" max="52" step="1"
-            value="${state.weeks}" oninput="setWeeks(parseInt(this.value)||1, true)">
+          <input type="number" id="weeksInput" min="0.5" max="52" step="0.5"
+            value="${state.weeks}" oninput="setWeeks(parseFloat(this.value)||0.5, true)">
         </div>
         <div style="margin-top:10px; font-family:var(--mono); font-size:10px; color:var(--muted); line-height:1.6;">
           Your 1-week rate is the base.<br>
@@ -672,7 +692,7 @@ function renderPricer() {
 // ─── LIVE UPDATES ─────────────────────────────────────────
 function onSlider(val) {
   state.targetRoi = parseFloat(val);
-  const sliderMin = 0.5, sliderMax = 15;
+  const sliderMin = 0.1, sliderMax = 5;
   const pct = ((state.targetRoi - sliderMin) / (sliderMax - sliderMin) * 100).toFixed(1);
   document.getElementById('roiSlider').style.setProperty('--pct', pct + '%');
   document.getElementById('roiReadout').textContent = state.targetRoi.toFixed(2) + '%';
@@ -684,7 +704,7 @@ function onManualRoi(val) {
   const v = parseFloat(val);
   if (isNaN(v) || v <= 0) return;
   state.targetRoi = v;
-  const sliderMin = 0.5, sliderMax = 15;
+  const sliderMin = 0.1, sliderMax = 5;
   const clamped = Math.min(Math.max(v, sliderMin), sliderMax);
   const pct = ((clamped - sliderMin) / (sliderMax - sliderMin) * 100).toFixed(1);
   const slider = document.getElementById('roiSlider');
@@ -695,12 +715,12 @@ function onManualRoi(val) {
 }
 
 function setWeeks(w, skipBtns) {
-  state.weeks = Math.max(1, w);
-  document.getElementById('weeksReadout').textContent = state.weeks + 'w';
+  state.weeks = Math.max(0.5, parseFloat(w) || 0.5);
+  document.getElementById('weeksReadout').textContent = (state.weeks % 1 === 0 ? state.weeks : state.weeks.toFixed(1)) + 'w';
   document.getElementById('weeksInput').value = state.weeks;
   if (!skipBtns) {
     document.querySelectorAll('.wbtn').forEach((b,i) => {
-      b.classList.toggle('active', [1,2,3,4,5][i] === state.weeks);
+      b.classList.toggle('active', [0.5,1,2,3,4][i] === state.weeks);
     });
   } else {
     document.querySelectorAll('.wbtn').forEach(b => b.classList.remove('active'));
@@ -713,6 +733,8 @@ function recalc() {
 }
 
 function updateOutput() {
+  // Refresh quote modeller on every output update
+  setTimeout(() => renderQuoteModeller(), 0);
   const perWeek  = state.totalWholesale * (state.targetRoi / 100);
   const netTotal = perWeek * state.weeks;
   const quoted   = state.quoteTotal * state.weeks;
@@ -857,7 +879,107 @@ function updateAfterEdit() {
 
   // Update pricer output — use current targetRoi against new totalWholesale
   updateOutput();
+  renderQuoteModeller();
 }
+
+// ─── QUOTE MODELLER ──────────────────────────────────────
+function renderQuoteModeller() {
+  const section = document.getElementById('quoteModellerSection');
+  if (!section || !state.gear.length) return;
+
+  const perWeekRate = state.totalWholesale * (state.targetRoi / 100);
+  const weeksLabel = state.weeks % 1 === 0 ? state.weeks : state.weeks.toFixed(1);
+
+  let rows = '';
+  state.gear.forEach((g, i) => {
+    const unitWholesale = parseFloat(g.wholesaleCost) || 0;
+    const unitRentalRate = unitWholesale * (state.targetRoi / 100);
+    const totalLine = unitRentalRate * state.weeks * g.qty;
+    rows += `
+      <tr>
+        <td style="font-family:var(--mono);color:var(--muted);font-size:12px;">${String(i+1).padStart(2,'0')}</td>
+        <td class="name">${g.name}</td>
+        <td class="r">${g.qty}</td>
+        <td class="r" style="color:var(--green);">${fmtCAD(unitWholesale)}</td>
+        <td class="r" style="color:#4da6ff;">${fmtCAD(unitRentalRate)}/wk</td>
+        <td class="r" style="font-family:var(--mono); font-weight:600;">
+          <input type="number" min="0" step="0.01"
+            value="${unitRentalRate.toFixed(2)}"
+            data-qm-idx="${i}"
+            style="width:120px;padding:5px 8px;font-size:13px;background:var(--panel);border:1px solid var(--border);color:var(--text);text-align:right;border-radius:3px;"
+            oninput="onQmPriceEdit(${i}, this.value)"
+            onfocus="this.style.borderColor='var(--accent)'"
+            onblur="this.style.borderColor='var(--border)'">
+        </td>
+        <td class="r" style="color:var(--accent); font-weight:600;" id="qm-ext-${i}">${fmtCAD(totalLine)}</td>
+      </tr>`;
+  });
+
+  const modelTotal = state.gear.reduce((s,g) => {
+    const r = parseFloat(g.wholesaleCost) * (state.targetRoi/100) * state.weeks;
+    return s + r * g.qty;
+  }, 0);
+
+  section.innerHTML = `
+    <hr class="divider">
+    <div class="slabel" style="margin-bottom:14px;">Theoretical Quote · Line Item Model</div>
+    <p class="qm-note">
+      Based on <span>${state.targetRoi.toFixed(2)}% ROI</span> over <span>${weeksLabel} week${state.weeks!==1?'s':''}</span>.
+      Unit price = Wholesale Cost × ROI%. Override any line price to model custom scenarios.
+      Grand total updates live.
+    </p>
+    <div class="qm-table-wrap">
+      <table>
+        <thead><tr>
+          <th>#</th><th>Item</th><th class="r">QTY</th>
+          <th class="r">Wholesale/Unit</th>
+          <th class="r">Calc Rate/Unit/Wk</th>
+          <th class="r">Your Price/Unit/Wk</th>
+          <th class="r">Line Total (${weeksLabel}wk)</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+        <tfoot><tr>
+          <td colspan="6">GRAND TOTAL · ${weeksLabel} week${state.weeks!==1?'s':''} · Pre-Tax</td>
+          <td class="r" style="color:var(--accent);font-size:15px;font-family:var(--mono);font-weight:600;" id="qmGrandTotal">${fmtCAD(modelTotal)}</td>
+        </tr></tfoot>
+      </table>
+    </div>
+    <div class="qm-total-bar">
+      <div>
+        <div class="qm-total-label">Modelled Quote Total · Pre-Tax</div>
+        <div class="qm-total-val" id="qmTotalBig">${fmtCAD(modelTotal)}</div>
+        <div class="qm-copy-note">Enter these line prices into Rental Point to match your target ROI</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="qm-total-label">vs. Original Quote</div>
+        <div style="font-family:var(--display);font-size:24px;color:${modelTotal >= state.quoteTotal ? 'var(--green)' : 'var(--red)'};">
+          ${modelTotal >= state.quoteTotal ? '+' : ''}${fmtCAD(modelTotal - state.quoteTotal)}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function onQmPriceEdit(idx, val) {
+  const price = parseFloat(val) || 0;
+  const qty = state.gear[idx].qty;
+  const ext = price * state.weeks * qty;
+  const extCell = document.getElementById('qm-ext-' + idx);
+  if (extCell) extCell.textContent = fmtCAD(ext);
+
+  // Recalc grand total from all inputs
+  let total = 0;
+  document.querySelectorAll('[data-qm-idx]').forEach(inp => {
+    const i = parseInt(inp.dataset.qmIdx);
+    const p = parseFloat(inp.value) || 0;
+    total += p * state.weeks * (state.gear[i]?.qty || 0);
+  });
+  const gt = document.getElementById('qmGrandTotal');
+  const tb = document.getElementById('qmTotalBig');
+  if (gt) gt.textContent = fmtCAD(total);
+  if (tb) tb.textContent = fmtCAD(total);
+}
+
 </script>
 </body>
 </html>

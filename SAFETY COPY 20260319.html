@@ -335,7 +335,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 <header>
   <div class="logo">APEX <em>·</em> ROI</div>
   <div class="subtitle">Rental Rate Pricer</div>
-  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.2.5</div><div class="pill" id="statusPill">READY</div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.2.4</div><div class="pill" id="statusPill">READY</div>
 </header>
 
 <div class="app">
@@ -621,7 +621,6 @@ function renderResults() {
   content.appendChild(qmDiv);
 
   renderPricer();
-  renderQuoteModeller();
 }
 
 function renderPricer() {
@@ -751,7 +750,10 @@ function recalc() {
 }
 
 function updateOutput() {
-  setTimeout(() => renderQuoteModeller(), 50);
+  setTimeout(() => {
+    const qm = document.getElementById('quoteModellerSection');
+    if (qm && qm.innerHTML) renderQuoteModeller();
+  }, 30);
   const perWeek  = state.totalWholesale * (state.targetRoi / 100);
   const netTotal = perWeek * state.weeks;
   const elNet   = document.getElementById('outNetPrice');
@@ -957,18 +959,16 @@ function renderQuoteModeller() {
   if (!section || !state.gear || !state.gear.length) return;
 
   const weeksLabel = state.weeks % 1 === 0 ? state.weeks : state.weeks.toFixed(1);
-  const roi = state.targetRoi / 100;
 
-  let initModelTotal = 0;
   let rows = '';
-
+  let initModelTotal = 0;
   state.gear.forEach((g, i) => {
     const unitWholesale = parseFloat(g.wholesaleCost) || 0;
-    // Unit rental rate per week = wholesale cost × ROI%
-    const calcRate = unitWholesale * roi;
+    // Pro-rate the 1-week quote total across items by wholesale weight
+    const weightedRate = state.totalWholesale > 0 ? (unitWholesale / state.totalWholesale) * state.quoteTotal : 0;
+    const calcRate = weightedRate / (g.qty || 1);
     const lineTotal = calcRate * state.weeks * g.qty;
-    initModelTotal += lineTotal;
-
+    initModelTotal += calcRate * state.weeks * g.qty;
     rows += `
       <tr>
         <td style="font-family:var(--mono);color:var(--muted);font-size:12px;padding:8px 12px;">${String(i+1).padStart(2,'0')}</td>
@@ -989,32 +989,40 @@ function renderQuoteModeller() {
       </tr>`;
   });
 
+  const diff = initModelTotal - state.quoteTotal;
+
   section.innerHTML = `
     <hr class="divider">
-    <div class="slabel" style="margin-bottom:14px;">Quote Builder · Unit Prices for Rental Point</div>
+    <div class="slabel" style="margin-bottom:14px;">Theoretical Quote · Line Item Model</div>
     <p class="qm-note">
-      Unit price/wk = Wholesale Cost × <span>${state.targetRoi.toFixed(2)}% ROI</span> × <span>${weeksLabel} week${state.weeks!=1?'s':''}</span>.
-      Override any price — totals update live. Enter "Your Price/Wk" into Rental Point per line.
+      1-week total <span>${fmtCAD(state.quoteTotal)}</span> pro-rated across line items by wholesale weight × <span>${weeksLabel} week${state.weeks!=1?'s':''}</span>.
+      Override any unit price — totals update live. Enter "Your Price/Wk" into Rental Point.
     </p>
     <table>
       <thead><tr>
         <th>#</th><th>Item</th><th class="r">QTY</th>
         <th class="r">Wholesale/Unit</th>
-        <th class="r">Calc Price/Wk</th>
+        <th class="r">Pro-Rated Rate/Wk</th>
         <th class="r">Your Price/Wk</th>
         <th class="r">Line Total (${weeksLabel}wk)</th>
       </tr></thead>
       <tbody>${rows}</tbody>
       <tfoot><tr>
-        <td colspan="6" style="padding:10px 14px;">TOTAL · ${weeksLabel}wk · Pre-Tax</td>
+        <td colspan="6" style="padding:10px 14px;">GRAND TOTAL · ${weeksLabel}wk · Pre-Tax</td>
         <td class="r" style="color:var(--accent);font-size:15px;font-family:var(--mono);font-weight:600;padding:10px 14px;" id="qmGrandTotal">${fmtCAD(initModelTotal)}</td>
       </tr></tfoot>
     </table>
     <div class="qm-total-bar">
       <div>
-        <div class="qm-total-label">Quote Total · Pre-Tax</div>
+        <div class="qm-total-label">Modelled Quote Total · Pre-Tax</div>
         <div class="qm-total-val" id="qmTotalBig">${fmtCAD(initModelTotal)}</div>
-        <div class="qm-copy-note">Enter "Your Price/Wk" column into Rental Point line by line</div>
+        <div class="qm-copy-note">Enter these line prices into Rental Point to match your target ROI</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="qm-total-label">vs. Original Quote</div>
+        <div id="qmDelta" style="font-family:var(--display);font-size:28px;color:${diff>=0?'var(--green)':'var(--red)'};">
+          ${diff>=0?'+':''}${fmtCAD(diff)}
+        </div>
       </div>
     </div>
   `;

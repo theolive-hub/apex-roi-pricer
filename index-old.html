@@ -335,7 +335,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 <header>
   <div class="logo">APEX <em>·</em> ROI</div>
   <div class="subtitle">Rental Rate Pricer</div>
-  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.2.7</div><div class="pill" id="statusPill">READY</div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.2.6</div><div class="pill" id="statusPill">READY</div>
 </header>
 
 <div class="app">
@@ -476,14 +476,14 @@ Your job: extract every line-item piece of equipment from the rental PDF, and fo
 PRICING RULE: Canadian dealer wholesale = (USD retail MSRP) x 1.39 (USD to CAD) x 0.50 (dealer discount). For example: a fixture with USD MSRP of $1000 = $1390 CAD x 0.50 = $695 CAD wholesale. Return $695 as both msrp and wholesaleCost. Do NOT return USD retail prices. Do NOT return CAD retail prices. Return only CAD wholesale dealer cost.
 
 Also extract:
-- The NET pre-tax rental total from the PDF. If there is a discount line (e.g. "Rental Discount", "Discount", "Less discount"), subtract it from the gross rental to get the net. Return the net amount after any discounts.
+- The total pre-tax rental value from the PDF if present
 - The order/quote code
 - The client name
 
 Return ONLY valid JSON, no markdown, no preamble:
 {
   "quoteCode": "string or null",
-  "client": "string or null",
+  "client": "string or null", 
   "quotedRentalTotal": number or null,
   "gear": [
     {

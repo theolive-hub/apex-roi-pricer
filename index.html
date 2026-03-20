@@ -335,7 +335,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 <header>
   <div class="logo">APEX <em>·</em> ROI</div>
   <div class="subtitle">Rental Rate Pricer</div>
-  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.2.3</div><div class="pill" id="statusPill">READY</div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.2.4</div><div class="pill" id="statusPill">READY</div>
 </header>
 
 <div class="app">
@@ -518,7 +518,7 @@ Be thorough — include every line item. Base estimates on your knowledge of ETC
 
     state.gear = await applyPriceMemory(parsed.gear);
     state.quoteName = `${parsed.client || ''} · ${parsed.quoteCode || ''}`.trim().replace(/^·\s*|·\s*$/g, '');
-    state.totalWholesale = parsed.gear.reduce((s, g) => s + g.wholesaleCost * g.qty, 0);
+    state.totalWholesale = state.gear.reduce((s, g) => s + g.wholesaleCost * g.qty, 0);
 
     // Use PDF total if found, otherwise sum MSRP
     if (parsed.quotedRentalTotal && parsed.quotedRentalTotal > 0) {

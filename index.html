@@ -295,36 +295,33 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .delta-note.neutral { background:var(--bg); border:1px solid var(--border); color:var(--muted); }
 
 
-/* PRICE MEMORY BADGE */
 .mem-badge {
   display:inline-block; font-family:var(--mono); font-size:9px; letter-spacing:.8px;
   padding:1px 6px; border-radius:2px; margin-left:6px; vertical-align:middle;
   background:rgba(52,210,123,.12); border:1px solid rgba(52,210,123,.3); color:var(--green);
 }
-/* QUOTE MODELLER */
-.qm-note { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:14px; line-height:1.6; }
+.qm-note { font-family:var(--mono); font-size:12px; color:var(--muted); margin-bottom:14px; line-height:1.7; }
 .qm-note span { color:var(--accent); }
 .qm-total-bar {
   background:var(--panel); border:1px solid var(--border); border-radius:3px;
-  padding:16px 20px; margin-top:16px;
-  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  padding:18px 22px; margin-top:18px;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
 }
-.qm-total-label { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
-.qm-total-val { font-family:var(--display); font-size:32px; letter-spacing:2px; color:var(--accent); }
+.qm-total-label { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+.qm-total-val { font-family:var(--display); font-size:36px; letter-spacing:2px; color:var(--accent); }
 .qm-copy-note { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:6px; }
-/* PRICE DB PANEL */
 .price-db-panel {
   background:var(--panel); border:1px solid var(--border); border-radius:3px;
-  margin-top:10px; max-height:200px; overflow-y:auto; display:none;
+  margin-top:10px; max-height:220px; overflow-y:auto; display:none;
 }
 .price-db-row {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:7px 12px; border-bottom:1px solid var(--border); gap:8px;
+  display:flex; align-items:center; gap:8px;
+  padding:7px 12px; border-bottom:1px solid var(--border);
 }
 .price-db-row:last-child { border-bottom:none; }
-.price-db-name { font-family:var(--mono); font-size:10px; color:var(--text); flex:1; }
+.price-db-name { font-family:var(--mono); font-size:10px; color:var(--text); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .price-db-cost { font-family:var(--mono); font-size:11px; color:var(--green); white-space:nowrap; }
-.price-db-del { color:var(--muted); cursor:pointer; font-size:14px; padding:0 4px; }
+.price-db-del { color:var(--muted); cursor:pointer; font-size:15px; flex-shrink:0; }
 .price-db-del:hover { color:var(--red); }
 
 /* SCROLLBAR */
@@ -338,7 +335,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 <header>
   <div class="logo">APEX <em>·</em> ROI</div>
   <div class="subtitle">Rental Rate Pricer</div>
-  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.2.0</div><div class="pill" id="statusPill">READY</div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.2.1</div><div class="pill" id="statusPill">READY</div>
 </header>
 
 <div class="app">
@@ -378,12 +375,10 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
     <div>
       <div class="slabel">Price Memory</div>
       <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6;">
-        Shared across all Apex users. Costs saved when you edit them.
+        Shared across all Apex users.<br>Auto-saved when you edit costs.
       </div>
       <button class="btn-ghost" style="width:100%;margin-top:10px;" onclick="togglePriceDB()">View Saved Prices</button>
-      <div class="price-db-panel" id="priceDBPanel">
-        <div style="padding:10px 12px;font-family:var(--mono);font-size:10px;color:var(--muted);">Loading...</div>
-      </div>
+      <div class="price-db-panel" id="priceDBPanel"></div>
     </div>
 
     <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
@@ -620,9 +615,10 @@ function renderResults() {
   pricer.id = 'pricerPanel';
   content.appendChild(pricer);
 
-  const qmSection = document.createElement('div');
-  qmSection.id = 'quoteModellerSection';
-  content.appendChild(qmSection);
+  // Quote modeller section
+  const qmDiv = document.createElement('div');
+  qmDiv.id = 'quoteModellerSection';
+  content.appendChild(qmDiv);
 
   renderPricer();
 }
@@ -761,7 +757,10 @@ function recalc() {
 }
 
 function updateOutput() {
-  setTimeout(() => { if(document.getElementById("quoteModellerSection")?.children.length) renderQuoteModeller(); }, 20);
+  setTimeout(() => {
+    const qm = document.getElementById('quoteModellerSection');
+    if (qm && qm.innerHTML) renderQuoteModeller();
+  }, 30);
   const perWeek  = state.totalWholesale * (state.targetRoi / 100);
   const netTotal = perWeek * state.weeks;
   const quoted   = state.quoteTotal * state.weeks;
@@ -909,7 +908,7 @@ function updateAfterEdit() {
   updateOutput();
 }
 
-// ─── SHARED PRICE DB (Cloudflare KV via Worker) ──────────
+// ─── SHARED PRICE DB ─────────────────────────────────────
 const WORKER = 'https://apex-api-proxy.theonlyalexoliveira.workers.dev';
 
 function normalizeKey(name) {
@@ -948,8 +947,7 @@ async function deletePriceRemote(key) {
 async function applyPriceMemory(gear) {
   const db = await loadPriceDB();
   return gear.map(g => {
-    const key = normalizeKey(g.name);
-    const saved = db[key];
+    const saved = db[normalizeKey(g.name)];
     if (saved && saved.cost > 0) {
       return { ...g, wholesaleCost: saved.cost, msrp: saved.cost, fromMemory: true };
     }
@@ -970,7 +968,7 @@ async function togglePriceDB() {
   }
   panel.innerHTML = items.map(([key, p]) => `
     <div class="price-db-row">
-      <span class="price-db-name">${p.name}</span>
+      <span class="price-db-name" title="${p.name}">${p.name}</span>
       <span class="price-db-cost">${fmtCAD(p.cost)}</span>
       <span class="price-db-del" onclick="deleteAndRefresh('${key}')">×</span>
     </div>`).join('');
@@ -978,53 +976,54 @@ async function togglePriceDB() {
 
 async function deleteAndRefresh(key) {
   await deletePriceRemote(key);
-  togglePriceDB(); // close
-  togglePriceDB(); // reopen refreshed
+  const panel = document.getElementById('priceDBPanel');
+  panel.style.display = 'none';
+  togglePriceDB();
 }
 
 // ─── QUOTE MODELLER ──────────────────────────────────────
 function renderQuoteModeller() {
   const section = document.getElementById('quoteModellerSection');
-  if (!section || !state.gear.length) return;
+  if (!section || !state.gear || !state.gear.length) return;
 
   const weeksLabel = state.weeks % 1 === 0 ? state.weeks : state.weeks.toFixed(1);
 
   let rows = '';
+  let initModelTotal = 0;
   state.gear.forEach((g, i) => {
     const unitWholesale = parseFloat(g.wholesaleCost) || 0;
     const calcRate = unitWholesale * (state.targetRoi / 100);
     const lineTotal = calcRate * state.weeks * g.qty;
+    initModelTotal += lineTotal;
     rows += `
       <tr>
-        <td style="font-family:var(--mono);color:var(--muted);font-size:12px;">${String(i+1).padStart(2,'0')}</td>
-        <td class="name">${g.name}</td>
-        <td class="r">${g.qty}</td>
-        <td class="r" style="color:var(--green);">${fmtCAD(unitWholesale)}</td>
-        <td class="r" style="color:#4da6ff;">${fmtCAD(calcRate)}</td>
-        <td class="r">
+        <td style="font-family:var(--mono);color:var(--muted);font-size:12px;padding:8px 12px;">${String(i+1).padStart(2,'0')}</td>
+        <td class="name" style="padding:8px 12px;">${g.name}</td>
+        <td class="r" style="padding:8px 12px;">${g.qty}</td>
+        <td class="r" style="color:var(--green);padding:8px 12px;">${fmtCAD(unitWholesale)}</td>
+        <td class="r" style="color:#4da6ff;padding:8px 12px;">${fmtCAD(calcRate)}/wk</td>
+        <td class="r" style="padding:8px 12px;">
           <input type="number" min="0" step="0.01"
             value="${calcRate.toFixed(2)}"
             data-qm-idx="${i}"
-            style="width:120px;padding:5px 8px;font-size:13px;background:var(--panel);border:1px solid var(--border);color:var(--text);text-align:right;border-radius:3px;"
+            style="width:115px;padding:5px 8px;font-size:13px;background:var(--panel);border:1px solid var(--border);color:var(--text);text-align:right;border-radius:3px;"
             oninput="onQmEdit(${i},this.value)"
             onfocus="this.style.borderColor='var(--accent)'"
             onblur="this.style.borderColor='var(--border)'">
         </td>
-        <td class="r" style="color:var(--accent);font-weight:600;" id="qm-ext-${i}">${fmtCAD(lineTotal)}</td>
+        <td class="r" style="color:var(--accent);font-weight:600;padding:8px 12px;" id="qm-ext-${i}">${fmtCAD(lineTotal)}</td>
       </tr>`;
   });
 
-  const modelTotal = state.gear.reduce((s,g) => {
-    return s + (parseFloat(g.wholesaleCost)||0) * (state.targetRoi/100) * state.weeks * g.qty;
-  }, 0);
-  const diff = modelTotal - state.quoteTotal;
+  const diff = initModelTotal - state.quoteTotal;
 
   section.innerHTML = `
     <hr class="divider">
     <div class="slabel" style="margin-bottom:14px;">Theoretical Quote · Line Item Model</div>
     <p class="qm-note">
-      Based on <span>${state.targetRoi.toFixed(2)}% ROI</span> × <span>${weeksLabel} week${state.weeks!==1?'s':''}</span>.
-      Override any unit price — grand total updates live. Enter these into Rental Point.
+      <span>${state.targetRoi.toFixed(2)}% ROI</span> × <span>${weeksLabel} week${state.weeks!=1?'s':''}</span>.
+      Unit price = Wholesale × ROI%. Override any price — totals update live.
+      Enter "Your Price/Wk" values into Rental Point.
     </p>
     <table>
       <thead><tr>
@@ -1037,18 +1036,18 @@ function renderQuoteModeller() {
       <tbody>${rows}</tbody>
       <tfoot><tr>
         <td colspan="6" style="padding:10px 14px;">GRAND TOTAL · ${weeksLabel}wk · Pre-Tax</td>
-        <td class="r" style="color:var(--accent);font-size:15px;font-family:var(--mono);font-weight:600;padding:10px 14px;" id="qmGrandTotal">${fmtCAD(modelTotal)}</td>
+        <td class="r" style="color:var(--accent);font-size:15px;font-family:var(--mono);font-weight:600;padding:10px 14px;" id="qmGrandTotal">${fmtCAD(initModelTotal)}</td>
       </tr></tfoot>
     </table>
     <div class="qm-total-bar">
       <div>
         <div class="qm-total-label">Modelled Quote Total · Pre-Tax</div>
-        <div class="qm-total-val" id="qmTotalBig">${fmtCAD(modelTotal)}</div>
+        <div class="qm-total-val" id="qmTotalBig">${fmtCAD(initModelTotal)}</div>
         <div class="qm-copy-note">Enter these line prices into Rental Point to match your target ROI</div>
       </div>
       <div style="text-align:right;">
         <div class="qm-total-label">vs. Original Quote</div>
-        <div id="qmDelta" style="font-family:var(--display);font-size:24px;color:${diff>=0?'var(--green)':'var(--red)'};">
+        <div id="qmDelta" style="font-family:var(--display);font-size:28px;color:${diff>=0?'var(--green)':'var(--red)'};">
           ${diff>=0?'+':''}${fmtCAD(diff)}
         </div>
       </div>
@@ -1072,9 +1071,9 @@ function onQmEdit(idx, val) {
   if (gt) gt.textContent = fmtCAD(total);
   if (tb) tb.textContent = fmtCAD(total);
   if (delt) {
-    const diff = total - state.quoteTotal;
-    delt.textContent = (diff>=0?'+':'') + fmtCAD(diff);
-    delt.style.color = diff>=0 ? 'var(--green)' : 'var(--red)';
+    const d = total - state.quoteTotal;
+    delt.textContent = (d>=0?'+':'') + fmtCAD(d);
+    delt.style.color = d>=0 ? 'var(--green)' : 'var(--red)';
   }
 }
 

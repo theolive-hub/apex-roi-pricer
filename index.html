@@ -335,7 +335,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 <header>
   <div class="logo">APEX <em>·</em> ROI</div>
   <div class="subtitle">Rental Rate Pricer</div>
-  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.2.1</div><div class="pill" id="statusPill">READY</div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.2.2</div><div class="pill" id="statusPill">READY</div>
 </header>
 
 <div class="app">
@@ -698,16 +698,9 @@ function renderPricer() {
         <div class="out-val green" id="outPerWeek">${fmtCAD(state.totalWholesale * state.targetRoi/100)}</div>
         <div class="out-sub">at ${state.targetRoi.toFixed(2)}% ROI</div>
       </div>
-      <div class="out-divider"></div>
-      <div class="out-item">
-        <div class="out-lbl">vs. Your Quote</div>
-        <div class="out-val blue" id="outDelta">${fmtCAD((state.totalWholesale * state.targetRoi/100 * state.weeks) - (state.quoteTotal * state.weeks))}</div>
-        <div class="out-sub" id="outDeltaSub">difference from quoted rate</div>
-      </div>
+
     </div>
-    <div class="delta-note neutral" id="deltaNoteBox">
-      Set your target ROI using the slider above to see how your net client price compares to your current quoted rate.
-    </div>
+
   `;
 
   updateOutput();
@@ -763,36 +756,15 @@ function updateOutput() {
   }, 30);
   const perWeek  = state.totalWholesale * (state.targetRoi / 100);
   const netTotal = perWeek * state.weeks;
-  const quoted   = state.quoteTotal * state.weeks;
-  const delta    = netTotal - quoted;
-
   const elNet   = document.getElementById('outNetPrice');
   const elWeek  = document.getElementById('outPerWeek');
-  const elDelta = document.getElementById('outDelta');
-  const elDSub  = document.getElementById('outDeltaSub');
-  const elNote  = document.getElementById('deltaNoteBox');
   const elWL    = document.getElementById('outWeeksLabel');
 
   if (!elNet) return;
 
   elNet.textContent   = fmtCAD(netTotal);
   elWeek.textContent  = fmtCAD(perWeek);
-  elWL.textContent    = `${state.weeks} week${state.weeks!==1?'s':''}`;
-  elDelta.textContent = (delta >= 0 ? '+' : '') + fmtCAD(delta);
-  elDSub.textContent  = `vs. quoted ${fmtCAD(state.quoteTotal)}/wk × ${state.weeks}`;
-
-  const pctDiff = ((netTotal - quoted) / quoted * 100);
-
-  if (Math.abs(delta) < 1) {
-    elNote.className = 'delta-note neutral';
-    elNote.textContent = '✓ Your target rate matches your current quote exactly.';
-  } else if (delta > 0) {
-    elNote.className = 'delta-note pos';
-    elNote.textContent = `▲ At ${state.targetRoi.toFixed(2)}% ROI you'd earn ${fmtCAD(delta)} more than your current quoted rate over ${state.weeks} week${state.weeks!==1?'s':''} (+${pctDiff.toFixed(1)}%).`;
-  } else {
-    elNote.className = 'delta-note neg';
-    elNote.textContent = `▼ At ${state.targetRoi.toFixed(2)}% ROI your rate is ${fmtCAD(Math.abs(delta))} below your current quoted rate over ${state.weeks} week${state.weeks!==1?'s':''} (${pctDiff.toFixed(1)}%).`;
-  }
+  elWL.textContent    = `${state.weeks % 1 === 0 ? state.weeks : state.weeks.toFixed(1)} week${state.weeks!==1?'s':''}`;
 }
 
 // ─── HELPERS ─────────────────────────────────────────────
@@ -1067,14 +1039,10 @@ function onQmEdit(idx, val) {
   });
   const gt = document.getElementById('qmGrandTotal');
   const tb = document.getElementById('qmTotalBig');
-  const delt = document.getElementById('qmDelta');
+
   if (gt) gt.textContent = fmtCAD(total);
   if (tb) tb.textContent = fmtCAD(total);
-  if (delt) {
-    const d = total - state.quoteTotal;
-    delt.textContent = (d>=0?'+':'') + fmtCAD(d);
-    delt.style.color = d>=0 ? 'var(--green)' : 'var(--red)';
-  }
+
 }
 
 </script>

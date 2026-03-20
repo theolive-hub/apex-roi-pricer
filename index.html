@@ -335,7 +335,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 <header>
   <div class="logo">APEX <em>·</em> ROI</div>
   <div class="subtitle">Rental Rate Pricer</div>
-  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.2.2</div><div class="pill" id="statusPill">READY</div>
+  <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-right:8px;">v1.2.3</div><div class="pill" id="statusPill">READY</div>
 </header>
 
 <div class="app">
@@ -964,9 +964,11 @@ function renderQuoteModeller() {
   let initModelTotal = 0;
   state.gear.forEach((g, i) => {
     const unitWholesale = parseFloat(g.wholesaleCost) || 0;
-    const calcRate = unitWholesale * (state.targetRoi / 100);
+    // Pro-rate the 1-week quote total across items by wholesale weight
+    const weightedRate = state.totalWholesale > 0 ? (unitWholesale / state.totalWholesale) * state.quoteTotal : 0;
+    const calcRate = weightedRate / (g.qty || 1);
     const lineTotal = calcRate * state.weeks * g.qty;
-    initModelTotal += lineTotal;
+    initModelTotal += calcRate * state.weeks * g.qty;
     rows += `
       <tr>
         <td style="font-family:var(--mono);color:var(--muted);font-size:12px;padding:8px 12px;">${String(i+1).padStart(2,'0')}</td>
@@ -993,15 +995,14 @@ function renderQuoteModeller() {
     <hr class="divider">
     <div class="slabel" style="margin-bottom:14px;">Theoretical Quote · Line Item Model</div>
     <p class="qm-note">
-      <span>${state.targetRoi.toFixed(2)}% ROI</span> × <span>${weeksLabel} week${state.weeks!=1?'s':''}</span>.
-      Unit price = Wholesale × ROI%. Override any price — totals update live.
-      Enter "Your Price/Wk" values into Rental Point.
+      1-week total <span>${fmtCAD(state.quoteTotal)}</span> pro-rated across line items by wholesale weight × <span>${weeksLabel} week${state.weeks!=1?'s':''}</span>.
+      Override any unit price — totals update live. Enter "Your Price/Wk" into Rental Point.
     </p>
     <table>
       <thead><tr>
         <th>#</th><th>Item</th><th class="r">QTY</th>
         <th class="r">Wholesale/Unit</th>
-        <th class="r">Calc Rate/Wk</th>
+        <th class="r">Pro-Rated Rate/Wk</th>
         <th class="r">Your Price/Wk</th>
         <th class="r">Line Total (${weeksLabel}wk)</th>
       </tr></thead>

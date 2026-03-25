@@ -16,6 +16,7 @@
   --green:   #34d27b;
   --red:     #e8390e;
   --blue:    #4da6ff;
+  --purple:  #a78bfa;
   --text:    #e2e5ec;
   --muted:   #8b92a5;
   --mono:    'IBM Plex Mono', monospace;
@@ -32,21 +33,11 @@ body::before {
   pointer-events: none; z-index: 0;
 }
 
-header {
-  position: sticky; top: 0; z-index: 50;
-  background: var(--surface); border-bottom: 1px solid var(--border);
-  padding: 0 28px; height: 54px;
-  display: flex; align-items: center; gap: 16px;
-}
+header { position: sticky; top: 0; z-index: 50; background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 28px; height: 54px; display: flex; align-items: center; gap: 16px; }
 .logo { font-family: var(--display); font-size: 26px; letter-spacing: 4px; color: #fff; }
 .logo em { color: var(--accent); font-style: normal; }
 .subtitle { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; border-left: 1px solid var(--border); padding-left: 14px; }
-.pill {
-  font-family: var(--mono); font-size: 12px; letter-spacing: 1px;
-  padding: 4px 12px; border-radius: 2px;
-  background: var(--panel); border: 1px solid var(--border); color: var(--muted);
-  margin-left: auto;
-}
+.pill { font-family: var(--mono); font-size: 12px; letter-spacing: 1px; padding: 4px 12px; border-radius: 2px; background: var(--panel); border: 1px solid var(--border); color: var(--muted); margin-left: auto; }
 .pill.live    { border-color: var(--green); color: var(--green); }
 .pill.working { border-color: var(--accent); color: var(--accent); animation: blink 1s ease-in-out infinite; }
 .pill.err     { border-color: var(--red); color: var(--red); }
@@ -54,34 +45,18 @@ header {
 
 .app { position: relative; z-index: 1; display: grid; grid-template-columns: 320px 1fr; min-height: calc(100vh - 54px); }
 
-.sidebar {
-  background: var(--surface); border-right: 1px solid var(--border);
-  padding: 24px 20px; display: flex; flex-direction: column; gap: 24px;
-}
-.slabel {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 2px;
-  text-transform: uppercase; color: var(--muted);
-  display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
-}
+.sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 24px 20px; display: flex; flex-direction: column; gap: 24px; }
+.slabel { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
 .slabel::after { content:''; flex:1; height:1px; background: var(--border); }
 
-.drop-zone {
-  border: 1.5px dashed var(--border); border-radius: 3px;
-  padding: 22px 14px; text-align: center; cursor: pointer;
-  transition: border-color .2s, background .2s;
-  position: relative; background: var(--panel);
-}
+.drop-zone { border: 1.5px dashed var(--border); border-radius: 3px; padding: 22px 14px; text-align: center; cursor: pointer; transition: border-color .2s, background .2s; position: relative; background: var(--panel); }
 .drop-zone:hover, .drop-zone.dragging { border-color: var(--accent); background: rgba(240,180,41,.04); }
 .drop-zone input { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
 .drop-icon { font-size: 26px; opacity:.35; margin-bottom: 7px; }
 .drop-text { font-family: var(--mono); font-size: 13px; color: var(--muted); line-height:1.6; }
 .drop-text strong { color: var(--text); display:block; margin-bottom:3px; font-size:14px; }
 
-.file-chip {
-  display:flex; align-items:center; gap:9px;
-  background: var(--panel); border: 1px solid var(--border);
-  border-radius: 3px; padding: 9px 12px; margin-top: 10px;
-}
+.file-chip { display:flex; align-items:center; gap:9px; background: var(--panel); border: 1px solid var(--border); border-radius: 3px; padding: 9px 12px; margin-top: 10px; }
 .file-chip .fi { color: var(--accent); font-size:16px; flex-shrink:0; }
 .file-chip .fn { font-family: var(--mono); font-size:10px; line-height:1.5; word-break:break-all; }
 .file-chip .fn span { color: var(--muted); display:block; }
@@ -93,36 +68,19 @@ header {
 
 .field { display:flex; flex-direction:column; gap:5px; }
 .field label { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
-.field input {
-  background:var(--panel); border:1px solid var(--border);
-  color:var(--text); font-family:var(--mono); font-size:13px;
-  padding:8px 11px; border-radius:3px; outline:none; width:100%;
-  transition:border-color .15s;
-}
+.field input { background:var(--panel); border:1px solid var(--border); color:var(--text); font-family:var(--mono); font-size:13px; padding:8px 11px; border-radius:3px; outline:none; width:100%; transition:border-color .15s; }
 .field input:focus { border-color: var(--accent); }
 
-.btn-primary {
-  font-family: var(--display); font-size:16px; letter-spacing:3px;
-  background: var(--accent); color:#000; border:none; border-radius:3px; padding:12px;
-  width:100%; cursor:pointer; transition: opacity .15s, transform .1s;
-}
+.btn-primary { font-family: var(--display); font-size:16px; letter-spacing:3px; background: var(--accent); color:#000; border:none; border-radius:3px; padding:12px; width:100%; cursor:pointer; transition: opacity .15s, transform .1s; }
 .btn-primary:hover:not(:disabled) { opacity:.85; }
 .btn-primary:active { transform:scale(.98); }
 .btn-primary:disabled { opacity:.25; cursor:not-allowed; }
-.btn-ghost {
-  font-family:var(--mono); font-size:11px; letter-spacing:1px;
-  background:transparent; border:1px solid var(--border); color:var(--muted);
-  border-radius:3px; padding:8px; width:100%; cursor:pointer;
-  transition: border-color .15s, color .15s;
-}
+.btn-ghost { font-family:var(--mono); font-size:11px; letter-spacing:1px; background:transparent; border:1px solid var(--border); color:var(--muted); border-radius:3px; padding:8px; width:100%; cursor:pointer; transition: border-color .15s, color .15s; }
 .btn-ghost:hover { border-color:var(--text); color:var(--text); }
 
 .content { padding: 28px 32px; overflow:auto; }
 
-.empty {
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  height:100%; gap:14px; color:var(--muted); text-align:center; padding:60px;
-}
+.empty { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:14px; color:var(--muted); text-align:center; padding:60px; }
 .empty-glyph { font-family:var(--display); font-size:96px; color:var(--accent); opacity:.06; line-height:1; }
 .empty p { max-width:300px; font-size:13px; line-height:1.7; }
 .empty code { font-family:var(--mono); font-size:11px; color:var(--accent); }
@@ -132,11 +90,7 @@ header {
 @keyframes spin { to { transform:rotate(360deg); } }
 .loading p { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:.5px; }
 
-.error-box {
-  background:rgba(232,57,14,.07); border:1px solid rgba(232,57,14,.25);
-  border-radius:3px; padding:14px 16px; margin-bottom:20px;
-  font-family:var(--mono); font-size:11px; color:var(--red); line-height:1.6;
-}
+.error-box { background:rgba(232,57,14,.07); border:1px solid rgba(232,57,14,.25); border-radius:3px; padding:14px 16px; margin-bottom:20px; font-family:var(--mono); font-size:11px; color:var(--red); line-height:1.6; }
 
 .results-head { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:22px; flex-wrap:wrap; gap:12px; }
 .rh-title { font-family:var(--display); font-size:32px; letter-spacing:2px; color:#fff; line-height:1; }
@@ -156,23 +110,23 @@ th { padding:10px 14px; text-align:left; font-family:var(--mono); font-size:11px
 th.r { text-align:right; }
 tbody tr { border-bottom:1px solid var(--border); transition:background .1s; }
 tbody tr:hover { background:rgba(255,255,255,.02); }
+tbody tr.subpart-row { opacity:.5; background: rgba(167,139,250,.03); }
+tbody tr.subpart-row:hover { background: rgba(167,139,250,.06); }
 td { padding:10px 14px; vertical-align:middle; }
 td.r { text-align:right; font-family:var(--mono); }
 td.name { color:#fff; font-weight:500; }
+td.name.subpart { color:var(--muted); font-weight:400; padding-left:28px; font-style:italic; }
 tfoot tr { background:var(--panel); border-top:2px solid var(--border); }
 tfoot td { font-family:var(--mono); font-size:12px; font-weight:500; padding:9px 12px; }
 tfoot td.total-green { color:var(--green); font-size:14px; }
 
+/* sub-part badge */
+.subpart-badge { display:inline-block; font-family:var(--mono); font-size:9px; letter-spacing:.8px; padding:1px 6px; border-radius:2px; margin-left:6px; vertical-align:middle; background:rgba(167,139,250,.12); border:1px solid rgba(167,139,250,.3); color:var(--purple); }
+
 .divider { border:none; border-top:1px solid var(--border); margin:28px 0; }
 
-.pricer {
-  background:var(--panel); border:1px solid var(--border); border-radius:4px;
-  padding:28px 28px 24px; position:relative; overflow:hidden;
-}
-.pricer::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:2px;
-  background:linear-gradient(90deg, var(--accent), var(--green));
-}
+.pricer { background:var(--panel); border:1px solid var(--border); border-radius:4px; padding:28px 28px 24px; position:relative; overflow:hidden; }
+.pricer::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--accent), var(--green)); }
 .pricer-title { font-family:var(--display); font-size:26px; letter-spacing:2px; color:#fff; margin-bottom:20px; }
 .pricer-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:28px; }
 
@@ -180,16 +134,8 @@ tfoot td.total-green { color:var(--green); font-size:14px; }
 .slider-top { display:flex; justify-content:space-between; align-items:center; }
 .slider-top label { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
 .roi-readout { font-family:var(--display); font-size:40px; letter-spacing:2px; color:var(--accent); line-height:1; }
-input[type=range] {
-  -webkit-appearance:none; appearance:none; width:100%; height:4px; border-radius:2px;
-  background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--pct, 50%), var(--border) var(--pct, 50%));
-  outline:none; cursor:pointer;
-}
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance:none; appearance:none; width:18px; height:18px; border-radius:50%;
-  background:var(--accent); border:2px solid var(--bg); box-shadow:0 0 0 2px var(--accent);
-  cursor:pointer; transition:transform .1s;
-}
+input[type=range] { -webkit-appearance:none; appearance:none; width:100%; height:4px; border-radius:2px; background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--pct, 50%), var(--border) var(--pct, 50%)); outline:none; cursor:pointer; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:18px; height:18px; border-radius:50%; background:var(--accent); border:2px solid var(--bg); box-shadow:0 0 0 2px var(--accent); cursor:pointer; transition:transform .1s; }
 input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .slider-scale { display:flex; justify-content:space-between; font-family:var(--mono); font-size:11px; color:var(--muted); }
 
@@ -198,26 +144,15 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .weeks-top label { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
 .weeks-readout { font-family:var(--display); font-size:40px; letter-spacing:2px; color:var(--blue); line-height:1; }
 .weeks-btns { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-top:4px; }
-.wbtn {
-  font-family:var(--mono); font-size:13px; padding:8px 4px; text-align:center;
-  background:var(--bg); border:1px solid var(--border); color:var(--muted);
-  border-radius:2px; cursor:pointer; transition:all .12s;
-}
+.wbtn { font-family:var(--mono); font-size:13px; padding:8px 4px; text-align:center; background:var(--bg); border:1px solid var(--border); color:var(--muted); border-radius:2px; cursor:pointer; transition:all .12s; }
 .wbtn:hover { border-color:var(--text); color:var(--text); }
 .wbtn.active { background:rgba(77,166,255,.1); border-color:var(--blue); color:var(--blue); }
 .weeks-custom { display:flex; align-items:center; gap:8px; margin-top:8px; }
 .weeks-custom label { font-family:var(--mono); font-size:10px; color:var(--muted); white-space:nowrap; }
-.weeks-custom input {
-  background:var(--bg); border:1px solid var(--border); color:var(--text);
-  font-family:var(--mono); font-size:13px; padding:6px 10px;
-  border-radius:3px; outline:none; width:80px; transition:border-color .15s;
-}
+.weeks-custom input { background:var(--bg); border:1px solid var(--border); color:var(--text); font-family:var(--mono); font-size:13px; padding:6px 10px; border-radius:3px; outline:none; width:80px; transition:border-color .15s; }
 .weeks-custom input:focus { border-color:var(--blue); }
 
-.output-panel {
-  background:var(--bg); border:1px solid var(--border); border-radius:3px;
-  padding:20px 24px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; align-items:center;
-}
+.output-panel { background:var(--bg); border:1px solid var(--border); border-radius:3px; padding:20px 24px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; align-items:center; }
 .out-item { text-align:center; }
 .out-lbl { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:8px; }
 .out-val { font-family:var(--display); font-size:36px; letter-spacing:2px; line-height:1; }
@@ -226,25 +161,14 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .out-sub { font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:4px; }
 .out-divider { width:1px; height:60px; background:var(--border); margin:0 auto; }
 
-.mem-badge {
-  display:inline-block; font-family:var(--mono); font-size:9px; letter-spacing:.8px;
-  padding:1px 6px; border-radius:2px; margin-left:6px; vertical-align:middle;
-  background:rgba(52,210,123,.12); border:1px solid rgba(52,210,123,.3); color:var(--green);
-}
+.mem-badge { display:inline-block; font-family:var(--mono); font-size:9px; letter-spacing:.8px; padding:1px 6px; border-radius:2px; margin-left:6px; vertical-align:middle; background:rgba(52,210,123,.12); border:1px solid rgba(52,210,123,.3); color:var(--green); }
 .qm-note { font-family:var(--mono); font-size:12px; color:var(--muted); margin-bottom:14px; line-height:1.7; }
 .qm-note span { color:var(--accent); }
-.qm-total-bar {
-  background:var(--panel); border:1px solid var(--border); border-radius:3px;
-  padding:18px 22px; margin-top:18px;
-  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
-}
+.qm-total-bar { background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:18px 22px; margin-top:18px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
 .qm-total-label { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
 .qm-total-val { font-family:var(--display); font-size:36px; letter-spacing:2px; color:var(--accent); }
 .qm-copy-note { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:6px; }
-.price-db-panel {
-  background:var(--panel); border:1px solid var(--border); border-radius:3px;
-  margin-top:10px; max-height:220px; overflow-y:auto; display:none;
-}
+.price-db-panel { background:var(--panel); border:1px solid var(--border); border-radius:3px; margin-top:10px; max-height:220px; overflow-y:auto; display:none; }
 .price-db-row { display:flex; align-items:center; gap:8px; padding:7px 12px; border-bottom:1px solid var(--border); }
 .price-db-row:last-child { border-bottom:none; }
 .price-db-name { font-family:var(--mono); font-size:10px; color:var(--text); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
@@ -256,114 +180,72 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 ::-webkit-scrollbar-track { background:var(--bg); }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
 
-/* ── MATCH MODAL ── */
-.modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,.78);
-  z-index: 200; display: flex; align-items: center; justify-content: center;
-  backdrop-filter: blur(3px);
-}
-.modal {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 6px; padding: 26px 26px 22px; width: 620px; max-width: 96vw;
-  max-height: 92vh; overflow-y: auto;
-  box-shadow: 0 24px 64px rgba(0,0,0,.65); position: relative;
-}
-.modal::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:2px;
-  background: linear-gradient(90deg, var(--accent), var(--green)); border-radius:6px 6px 0 0;
-}
+/* MODAL */
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.78); z-index:200; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(3px); }
+.modal { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:26px 26px 22px; width:620px; max-width:96vw; max-height:92vh; overflow-y:auto; box-shadow:0 24px 64px rgba(0,0,0,.65); position:relative; }
+.modal::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--accent), var(--green)); border-radius:6px 6px 0 0; }
 .modal-title { font-family:var(--display); font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:3px; }
 .modal-sub { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:18px; }
-.modal-item-name {
-  background: var(--panel); border:1px solid var(--border); border-radius:3px;
-  padding:10px 14px; font-size:14px; color:#fff; font-weight:500; margin-bottom:18px;
-}
-.modal-section-label {
-  font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:1.5px;
-  text-transform:uppercase; margin-bottom:8px;
-}
+.modal-item-name { background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:10px 14px; font-size:14px; color:#fff; font-weight:500; margin-bottom:18px; }
+.modal-section-label { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; }
 
-/* ── MATCH OPTIONS with force-save checkbox ── */
-.match-option {
-  display:flex; align-items:flex-start; gap:10px;
-  background: var(--panel); border:1px solid var(--border);
-  border-radius:3px; padding:9px 13px; margin-bottom:7px;
-  transition: border-color .15s, background .15s;
+/* sub-part callout box */
+.subpart-callout {
+  background: rgba(167,139,250,.07); border:1px solid rgba(167,139,250,.25);
+  border-radius:3px; padding:12px 16px; margin-bottom:16px;
+  font-family:var(--mono); font-size:11px; color:var(--purple); line-height:1.6;
 }
-.match-option.selected { border-color: var(--green); background: rgba(52,210,123,.06); }
-.match-option.force-save-active { border-color: var(--accent); background: rgba(240,180,41,.06); }
+.subpart-callout strong { display:block; font-size:12px; margin-bottom:4px; letter-spacing:.5px; }
+
+.btn-subpart {
+  font-family:var(--mono); font-size:11px; letter-spacing:1px;
+  background: rgba(167,139,250,.1); border:1px solid rgba(167,139,250,.35); color:var(--purple);
+  border-radius:3px; padding:9px 16px; cursor:pointer; transition:all .15s; white-space:nowrap;
+}
+.btn-subpart:hover { background: rgba(167,139,250,.2); border-color:var(--purple); }
+
+.match-option { display:flex; align-items:flex-start; gap:10px; background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:9px 13px; margin-bottom:7px; transition:border-color .15s, background .15s; }
+.match-option.selected { border-color:var(--green); background:rgba(52,210,123,.06); }
+.match-option.force-save-active { border-color:var(--accent); background:rgba(240,180,41,.06); }
 .match-radio-col { display:flex; flex-direction:column; align-items:center; gap:6px; padding-top:2px; flex-shrink:0; }
-.match-option input[type=radio] { accent-color: var(--green); width:15px; height:15px; cursor:pointer; }
+.match-option input[type=radio] { accent-color:var(--green); width:15px; height:15px; cursor:pointer; }
 .match-option-body { flex:1; min-width:0; cursor:pointer; }
 .match-option-name { font-size:12px; color:#fff; line-height:1.4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .match-option-meta { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:1px; }
 .match-option-cost { font-family:var(--display); font-size:17px; color:var(--green); letter-spacing:1px; flex-shrink:0; padding-top:2px; }
 
-/* force-save checkbox row under each candidate */
-.force-save-row {
-  display:none; align-items:center; gap:7px; margin-top:6px;
-  padding:6px 10px; border-radius:3px;
-  background:rgba(240,180,41,.05); border:1px dashed rgba(240,180,41,.25);
-}
+.force-save-row { display:none; align-items:center; gap:7px; margin-top:6px; padding:6px 10px; border-radius:3px; background:rgba(240,180,41,.05); border:1px dashed rgba(240,180,41,.25); }
 .force-save-row.visible { display:flex; }
 .force-save-row input[type=checkbox] { accent-color:var(--accent); width:13px; height:13px; cursor:pointer; flex-shrink:0; }
 .force-save-row label { font-family:var(--mono); font-size:10px; color:var(--accent); cursor:pointer; line-height:1.5; }
 
 .modal-divider { border:none; border-top:1px solid var(--border); margin:14px 0; }
 
-/* ── FORCE PART LOOKUP ── */
-.force-lookup-wrap {
-  background: rgba(77,166,255,.05); border:1px solid rgba(77,166,255,.2);
-  border-radius:3px; padding:12px 14px; margin-bottom:14px;
-}
+.force-lookup-wrap { background:rgba(77,166,255,.05); border:1px solid rgba(77,166,255,.2); border-radius:3px; padding:12px 14px; margin-bottom:14px; }
 .force-lookup-label { font-family:var(--mono); font-size:10px; color:var(--blue); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; }
 .force-lookup-row { display:flex; gap:8px; align-items:center; }
-.force-lookup-input {
-  background:var(--panel); border:1px solid var(--border); color:var(--text);
-  font-family:var(--mono); font-size:13px; padding:7px 11px; border-radius:3px;
-  outline:none; flex:1; transition:border-color .15s;
-}
+.force-lookup-input { background:var(--panel); border:1px solid var(--border); color:var(--text); font-family:var(--mono); font-size:13px; padding:7px 11px; border-radius:3px; outline:none; flex:1; transition:border-color .15s; }
 .force-lookup-input:focus { border-color:var(--blue); }
-.force-lookup-btn {
-  font-family:var(--mono); font-size:11px; letter-spacing:1px;
-  background: var(--blue); color:#000; border:none; border-radius:3px;
-  padding:7px 14px; cursor:pointer; white-space:nowrap; transition:opacity .15s;
-}
+.force-lookup-btn { font-family:var(--mono); font-size:11px; letter-spacing:1px; background:var(--blue); color:#000; border:none; border-radius:3px; padding:7px 14px; cursor:pointer; white-space:nowrap; transition:opacity .15s; }
 .force-lookup-btn:hover { opacity:.8; }
-
-/* lookup result states */
 .force-lookup-result { margin-top:8px; padding:9px 12px; border-radius:3px; font-family:var(--mono); font-size:11px; line-height:1.6; display:none; }
 .force-lookup-result.found { background:rgba(52,210,123,.08); border:1px solid rgba(52,210,123,.25); color:var(--green); }
 .force-lookup-result.notfound { background:rgba(232,57,14,.06); border:1px solid rgba(232,57,14,.2); color:var(--red); }
 
-/* not-found add form inside lookup result */
 .add-to-db-form { margin-top:10px; padding-top:10px; border-top:1px solid rgba(232,57,14,.2); }
 .add-to-db-row { display:flex; gap:8px; align-items:center; margin-bottom:8px; }
 .add-to-db-row label { font-family:var(--mono); font-size:10px; color:var(--muted); white-space:nowrap; min-width:90px; }
-.add-to-db-input {
-  background:var(--bg); border:1px solid var(--border); color:var(--text);
-  font-family:var(--mono); font-size:12px; padding:5px 9px; border-radius:3px;
-  outline:none; flex:1; transition:border-color .15s;
-}
+.add-to-db-input { background:var(--bg); border:1px solid var(--border); color:var(--text); font-family:var(--mono); font-size:12px; padding:5px 9px; border-radius:3px; outline:none; flex:1; transition:border-color .15s; }
 .add-to-db-input:focus { border-color:var(--accent); }
-.add-to-db-btn {
-  font-family:var(--mono); font-size:11px; letter-spacing:1px; width:100%;
-  background:var(--accent); color:#000; border:none; border-radius:3px;
-  padding:7px; cursor:pointer; margin-top:4px; transition:opacity .15s;
-}
+.add-to-db-btn { font-family:var(--mono); font-size:11px; letter-spacing:1px; width:100%; background:var(--accent); color:#000; border:none; border-radius:3px; padding:7px; cursor:pointer; margin-top:4px; transition:opacity .15s; }
 .add-to-db-btn:hover { opacity:.85; }
 
-/* manual price */
 .manual-price-wrap { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
 .manual-price-wrap label { font-family:var(--mono); font-size:11px; color:var(--muted); white-space:nowrap; }
-.manual-price-input {
-  background:var(--panel); border:1px solid var(--border); color:var(--text);
-  font-family:var(--mono); font-size:14px; padding:8px 12px; border-radius:3px;
-  outline:none; width:140px; transition:border-color .15s;
-}
-.manual-price-input:focus { border-color: var(--accent); }
+.manual-price-input { background:var(--panel); border:1px solid var(--border); color:var(--text); font-family:var(--mono); font-size:14px; padding:8px 12px; border-radius:3px; outline:none; width:140px; transition:border-color .15s; }
+.manual-price-input:focus { border-color:var(--accent); }
 
-.modal-actions { display:flex; gap:10px; margin-top:18px; justify-content:flex-end; }
+.modal-actions { display:flex; gap:10px; margin-top:18px; justify-content:flex-end; flex-wrap:wrap; }
 .modal-skip { font-family:var(--mono); font-size:11px; background:transparent; border:1px solid var(--border); color:var(--muted); border-radius:3px; padding:9px 16px; cursor:pointer; transition:all .15s; }
 .modal-skip:hover { border-color:var(--text); color:var(--text); }
 .modal-confirm { font-family:var(--display); font-size:16px; letter-spacing:2px; background:var(--accent); color:#000; border:none; border-radius:3px; padding:10px 24px; cursor:pointer; transition:opacity .15s; }
@@ -387,10 +269,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
       <div class="drop-zone" id="dropZone">
         <input type="file" id="pdfFile" accept=".pdf">
         <div class="drop-icon">📄</div>
-        <div class="drop-text">
-          <strong>Drop Rental Point PDF</strong>
-          Quote, work order, or inventory export
-        </div>
+        <div class="drop-text"><strong>Drop Rental Point PDF</strong>Quote, work order, or inventory export</div>
       </div>
       <div id="fileChip" style="display:none"></div>
     </div>
@@ -430,22 +309,17 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 
 <script>
 // ─── VERSION ─────────────────────────────────────────────
-const VERSION = '2.0.3';
-const CHANGELOG = [
-  { v:'2.0.3', date:'2026-03-25', notes:'Force-save checkbox on candidates; failed part lookup shows add-to-DB form with cost entry' },
-  { v:'2.0.2', date:'2026-03-25', notes:'5 match candidates, force part number lookup' },
-  { v:'2.0.1', date:'2026-03-25', notes:'Fix Sheets tab name to apex_asset_db' },
-  { v:'2.0.0', date:'2026-03-25', notes:'Spire DB fuzzy matching, match review modal, OAuth write-back' },
-];
+const VERSION = '2.0.4';
 document.getElementById('versionBadge').textContent = 'v' + VERSION;
 
 // ─── CONFIG ──────────────────────────────────────────────
-const SHEETS_ID       = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';
-const SHEETS_KEY      = 'AIzaSyAiRlEx6DbYc6BAlYTcyAcoBzb5gd3fI3c';
-const SHEETS_TAB      = 'apex_asset_db';
-const OAUTH_CLIENT_ID = '253838190928-9igjv2fu3g8frjpsf3ef0fvjr8a593dc.apps.googleusercontent.com';
-const OAUTH_SCOPES    = 'https://www.googleapis.com/auth/spreadsheets';
-let   gAuthToken      = null;
+const SHEETS_ID  = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';
+const SHEETS_KEY = 'AIzaSyAiRlEx6DbYc6BAlYTcyAcoBzb5gd3fI3c';
+const SHEETS_TAB = 'apex_asset_db';
+const WORKER     = 'https://apex-api-proxy.theonlyalexoliveira.workers.dev';
+
+// ─── SUBPART SENTINEL — stored in Spire DB with cost = 0 and this prefix ─────
+const SUBPART_MARKER = '__SUBPART__';
 
 // ─── STATE ───────────────────────────────────────────────
 window.state = { file:null, quoteTotal:0, quoteName:'', gear:[], totalWholesale:0, currentRoi:0, targetRoi:0, weeks:1 };
@@ -481,51 +355,27 @@ function setStatus(cls, txt) {
   p.className = 'pill ' + cls; p.textContent = txt;
 }
 
-// ─── GOOGLE OAUTH ────────────────────────────────────────
-function getGoogleAuthToken() {
-  return new Promise((resolve, reject) => {
-    if (gAuthToken) { resolve(gAuthToken); return; }
-    const width = 500, height = 600;
-    const left = window.screenX + (window.outerWidth - width) / 2;
-    const top  = window.screenY + (window.outerHeight - height) / 2;
-    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
-      `client_id=${encodeURIComponent(OAUTH_CLIENT_ID)}` +
-      `&redirect_uri=${encodeURIComponent(window.location.href.split('?')[0])}` +
-      `&response_type=token&scope=${encodeURIComponent(OAUTH_SCOPES)}&prompt=select_account`;
-    const popup = window.open(authUrl, 'googleAuth', `width=${width},height=${height},left=${left},top=${top}`);
-    const timer = setInterval(() => {
-      try {
-        if (!popup || popup.closed) { clearInterval(timer); reject(new Error('Auth window closed')); return; }
-        const url = popup.location.href;
-        if (url.includes('access_token=')) {
-          clearInterval(timer); popup.close();
-          gAuthToken = new URLSearchParams(url.split('#')[1]).get('access_token');
-          resolve(gAuthToken);
-        }
-      } catch(e) {}
-    }, 300);
-  });
-}
-
+// ─── SPIRE APPEND — via Worker, no OAuth ─────────────────
 async function appendToSpireSheet(partNo, description, cost) {
   try {
-    const token = await getGoogleAuthToken();
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEETS_ID}/values/${SHEETS_TAB}!A:C:append?valueInputOption=USER_ENTERED`;
-    const res = await fetch(url, {
-      method:'POST',
-      headers:{'Authorization':`Bearer ${token}`,'Content-Type':'application/json'},
-      body:JSON.stringify({values:[[partNo||'MANUAL', description, cost]]})
+    const res = await fetch(`${WORKER}/spire-append`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ partNo: partNo || 'MANUAL', description, cost: parseFloat(cost) })
     });
-    if (!res.ok) throw new Error('Sheet write failed');
-    // Also add to local cache so it matches in this session
+    if (!res.ok) throw new Error('Worker append failed');
     if (spireDB) spireDB.push({ part_no: partNo||'MANUAL', description: description.toLowerCase(), cost: parseFloat(cost) });
     return true;
-  } catch(err) { console.error('Append error:', err); return false; }
+  } catch(err) { console.error('Spire append error:', err); return false; }
 }
 
-// ─── SPIRE DB ────────────────────────────────────────────
-let spireDB = null;
+// Save item as sub-part: cost=0, description prefixed with SUBPART_MARKER
+async function saveSubpartToSpire(itemName) {
+  return await appendToSpireSheet('SUBPART', SUBPART_MARKER + itemName.toLowerCase(), 0);
+}
 
+// ─── SPIRE DB LOADER ─────────────────────────────────────
+let spireDB = null;
 async function loadSpireDB() {
   if (spireDB) return spireDB;
   setStatus('working','LOADING DB…');
@@ -537,12 +387,21 @@ async function loadSpireDB() {
     part_no:     (r[0]||'').toString().trim(),
     description: (r[1]||'').toString().trim().toLowerCase(),
     cost:         parseFloat(r[2])||0
-  })).filter(r => r.description && r.cost > 0);
+  })).filter(r => r.description);
   return spireDB;
+}
+
+// Check if an item name is a known sub-part in the DB
+function isKnownSubpart(name) {
+  if (!spireDB) return false;
+  const key = SUBPART_MARKER + name.toLowerCase().trim();
+  return spireDB.some(r => r.description === key);
 }
 
 // ─── FUZZY MATCH (top 5) ─────────────────────────────────
 function fuzzyMatch(name, db) {
+  // Filter out subpart sentinel rows from matching
+  const matchableDB = db.filter(r => !r.description.startsWith(SUBPART_MARKER) && r.cost > 0);
   const normalize = s => s.toLowerCase().replace(/['']/g,'').replace(/[^a-z0-9.x]/g,' ').replace(/\s+/g,' ').trim();
   const needle = normalize(name);
   const words  = needle.split(' ').filter(w => w.length > 1);
@@ -550,7 +409,7 @@ function fuzzyMatch(name, db) {
   const techWords = words.filter(isTechnical);
   const descWords = words.filter(w => !isTechnical(w) && w.length > 3);
   const candidates = [];
-  for (const row of db) {
+  for (const row of matchableDB) {
     const hay = normalize(row.description);
     let score = 0;
     for (const w of techWords) if (hay.includes(w)) score += w.length * 3;
@@ -569,35 +428,59 @@ function fuzzyMatch(name, db) {
   return {match:top[0], confidence, candidates:top};
 }
 
-// ─── PART NUMBER LOOKUP ──────────────────────────────────
 function lookupPartNo(code) {
   if (!spireDB || !code) return null;
   const key = code.trim().toUpperCase();
-  return spireDB.find(r => r.part_no.toUpperCase() === key)
-      || spireDB.find(r => r.part_no.toUpperCase().includes(key) || key.includes(r.part_no.toUpperCase()))
+  const matchable = spireDB.filter(r => !r.description.startsWith(SUBPART_MARKER) && r.cost > 0);
+  return matchable.find(r => r.part_no.toUpperCase() === key)
+      || matchable.find(r => r.part_no.toUpperCase().includes(key) || key.includes(r.part_no.toUpperCase()))
       || null;
+}
+
+// ─── DETECT INDENTED / SUB-PART ITEMS ────────────────────
+// Items whose name starts with whitespace or indent characters are sub-parts
+function detectSubpartFromName(name) {
+  return /^[\s\t\u00a0\u2003]+/.test(name);
 }
 
 async function matchGearToSpire(gear) {
   const db = await loadSpireDB();
   const codeIndex = {};
-  for (const row of db) if (row.part_no) codeIndex[row.part_no.trim().toUpperCase()] = row;
+  for (const row of db) if (row.part_no && !row.description.startsWith(SUBPART_MARKER)) codeIndex[row.part_no.trim().toUpperCase()] = row;
+
   return gear.map(g => {
+    const cleanName = g.name.trim();
+
+    // 1. Auto-detect sub-part from indentation
+    if (detectSubpartFromName(g.name)) {
+      return {...g, name: cleanName, matchSource:'subpart', wholesaleCost:0, msrp:0, confidence:100, candidates:[], isSubpart:true};
+    }
+
+    // 2. Check if already known as sub-part in Spire DB
+    if (isKnownSubpart(cleanName)) {
+      return {...g, name: cleanName, matchSource:'subpart', wholesaleCost:0, msrp:0, confidence:100, candidates:[], isSubpart:true};
+    }
+
+    // 3. Exact part number match
     if (g.code) {
       const exact = codeIndex[g.code.trim().toUpperCase()];
       if (exact && exact.cost > 0)
-        return {...g, wholesaleCost:exact.cost, msrp:exact.cost, matchSource:'spire', matchName:exact.description, matchPartNo:exact.part_no, confidence:100, candidates:[]};
+        return {...g, name: cleanName, wholesaleCost:exact.cost, msrp:exact.cost, matchSource:'spire', matchName:exact.description, matchPartNo:exact.part_no, confidence:100, candidates:[], isSubpart:false};
     }
-    const result = fuzzyMatch(g.name, db);
+
+    // 4. Fuzzy match
+    const result = fuzzyMatch(cleanName, db);
     if (result.match && result.confidence >= 80)
-      return {...g, wholesaleCost:result.match.cost, msrp:result.match.cost, matchSource:'spire', matchName:result.match.description, matchPartNo:result.match.part_no, confidence:result.confidence, candidates:result.candidates};
-    return {...g, matchSource:'pending', confidence:result.confidence, candidates:result.candidates};
+      return {...g, name: cleanName, wholesaleCost:result.match.cost, msrp:result.match.cost, matchSource:'spire', matchName:result.match.description, matchPartNo:result.match.part_no, confidence:result.confidence, candidates:result.candidates, isSubpart:false};
+
+    return {...g, name: cleanName, matchSource:'pending', confidence:result.confidence, candidates:result.candidates, isSubpart:false};
   });
 }
 
 // ─── MODAL ───────────────────────────────────────────────
 function promptMatchQueue(gearList) {
   return new Promise(resolve => {
+    // Only show modal for pending items — subparts are already resolved
     const pending = gearList.map((g,i)=>({...g,_idx:i})).filter(g=>g.matchSource==='pending');
     if (pending.length === 0) { resolve(gearList); return; }
     let current = 0;
@@ -608,18 +491,23 @@ function promptMatchQueue(gearList) {
       const overlay = document.createElement('div');
       overlay.className = 'modal-overlay'; overlay.id = 'matchModal';
       overlay._forceLookupMatch = null;
-
       const hasCandidates = item.candidates && item.candidates.length > 0;
 
       overlay.innerHTML = `
         <div class="modal">
           <div class="modal-progress">${current+1} of ${pending.length}</div>
           <div class="modal-title">MATCH REQUIRED</div>
-          <div class="modal-sub">Select a match, force-lookup a part number, or enter a manual price</div>
+          <div class="modal-sub">Select a Spire match, force-lookup a part number, mark as sub-part, or enter a manual price</div>
           <div class="modal-item-name">📦 ${item.name} &nbsp;×&nbsp; ${item.qty}</div>
 
+          <!-- SUB-PART OPTION -->
+          <div class="subpart-callout">
+            <strong>⬡ Is this a sub-part / accessory?</strong>
+            If cost is expressed elsewhere (e.g. cabling, hardware, accessories included in a parent item), mark it as a sub-part. It will be excluded from totals and remembered for future PDFs.
+          </div>
+
           ${hasCandidates ? `
-            <div class="modal-section-label">Top ${item.candidates.length} Spire Matches — select one, or check "Force Save" to confirm a match and write it to Spire DB</div>
+            <div class="modal-section-label">Top ${item.candidates.length} Spire Matches — tick to save association to Spire DB</div>
             <div id="candidateList">
             ${item.candidates.map((c,ci) => `
               <div class="match-option" id="mo-${ci}">
@@ -631,27 +519,24 @@ function promptMatchQueue(gearList) {
                   <div class="match-option-meta">${c.part_no||'—'}</div>
                   <div class="force-save-row" id="fsr-${ci}">
                     <input type="checkbox" id="fscb-${ci}" onchange="onForceSaveCheck(${ci}, this.checked)">
-                    <label for="fscb-${ci}">This IS this item — save "<strong>${item.name}</strong>" under part# <strong>${c.part_no||'MANUAL'}</strong> in Spire DB for future auto-matches</label>
+                    <label for="fscb-${ci}">This IS this item — save "<strong>${item.name}</strong>" → <strong>${c.part_no||'MANUAL'}</strong> in Spire DB</label>
                   </div>
                 </div>
                 <div class="match-option-cost">${fmtCAD(c.cost)}</div>
               </div>`).join('')}
             </div>
             <hr class="modal-divider">
-          ` : `<div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:14px;">No fuzzy matches found. Use part number lookup or manual price below.</div>`}
+          ` : `<div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:14px;">No fuzzy matches found. Use part number lookup, sub-part, or manual price below.</div>`}
 
-          <!-- FORCE PART NUMBER LOOKUP -->
           <div class="force-lookup-wrap">
             <div class="force-lookup-label">🔍 Force Match by Part Number</div>
             <div class="force-lookup-row">
-              <input class="force-lookup-input" id="forceLookupInput" type="text" placeholder="e.g. SL-NITRO510C"
-                onkeydown="if(event.key==='Enter') doForceLookup()">
+              <input class="force-lookup-input" id="forceLookupInput" type="text" placeholder="e.g. SL-NITRO510C" onkeydown="if(event.key==='Enter') doForceLookup()">
               <button class="force-lookup-btn" onclick="doForceLookup()">LOOKUP</button>
             </div>
             <div class="force-lookup-result" id="forceLookupResult"></div>
           </div>
 
-          <!-- MANUAL PRICE -->
           <div class="modal-section-label">Manual Price Override (CAD)</div>
           <div class="manual-price-wrap">
             <label>Wholesale Cost:</label>
@@ -667,51 +552,40 @@ function promptMatchQueue(gearList) {
               Save manual price to Spire DB
             </label>
           </div>
-
           <div class="modal-actions">
             <button class="modal-skip" id="modalSkip">Skip (use estimate)</button>
+            <button class="btn-subpart" id="modalSubpart">⬡ Mark as Sub-Part</button>
             <button class="modal-confirm" id="modalConfirm">CONFIRM →</button>
           </div>
         </div>`;
 
       document.body.appendChild(overlay);
 
-      // ── wire radio select styling ──
       window.selectCandidate = (ci) => {
-        overlay.querySelectorAll('.match-option').forEach((el,i) => {
-          el.classList.toggle('selected', i === ci);
-          document.getElementById(`fsr-${i}`).classList.add('visible'); // show all force-save rows when any is interacted
-        });
+        overlay.querySelectorAll('.match-option').forEach((el,i) => el.classList.toggle('selected', i===ci));
         document.getElementById(`radio-${ci}`).checked = true;
-        // show force-save row for selected
-        overlay.querySelectorAll('.force-save-row').forEach((r,i) => r.classList.toggle('visible', i === ci));
+        overlay.querySelectorAll('.force-save-row').forEach((r,i) => r.classList.toggle('visible', i===ci));
         overlay._forceLookupMatch = null;
         const flr = document.getElementById('forceLookupResult');
-        if (flr) { flr.style.display='none'; }
+        if (flr) flr.style.display = 'none';
       };
-
-      // Mark first as selected, show its force-save row
       if (hasCandidates) {
         document.getElementById('mo-0')?.classList.add('selected');
         document.getElementById('fsr-0')?.classList.add('visible');
       }
 
-      // ── force-save checkbox handler ──
       window.onForceSaveCheck = (ci, checked) => {
-        const mo = document.getElementById(`mo-${ci}`);
-        if (mo) mo.classList.toggle('force-save-active', checked);
-        // uncheck others
+        document.getElementById(`mo-${ci}`)?.classList.toggle('force-save-active', checked);
         if (checked) {
           item.candidates.forEach((_,i) => {
             if (i !== ci) {
               const cb = document.getElementById(`fscb-${i}`);
-              if (cb) { cb.checked = false; document.getElementById(`mo-${i}`)?.classList.remove('force-save-active'); }
+              if (cb) { cb.checked=false; document.getElementById(`mo-${i}`)?.classList.remove('force-save-active'); }
             }
           });
         }
       };
 
-      // ── force part lookup ──
       window.doForceLookup = () => {
         const code = document.getElementById('forceLookupInput').value.trim();
         const resultEl = document.getElementById('forceLookupResult');
@@ -722,35 +596,23 @@ function promptMatchQueue(gearList) {
           overlay._forceLookupMatch = found;
           resultEl.className = 'force-lookup-result found';
           resultEl.innerHTML = `✓ MATCHED: <strong>${found.description}</strong><br>Part# ${found.part_no} · <strong>${fmtCAD(found.cost)}</strong><br><span style="color:var(--muted);font-size:10px;">Click CONFIRM to apply.</span>`;
-          // deselect candidates
           overlay.querySelectorAll('.match-option').forEach(e=>e.classList.remove('selected'));
           overlay.querySelectorAll('input[name=matchChoice]').forEach(e=>e.checked=false);
         } else {
           overlay._forceLookupMatch = null;
           resultEl.className = 'force-lookup-result notfound';
-          // ← NEW: show add-to-DB form when not found
           resultEl.innerHTML = `
             ✗ "<strong>${code}</strong>" not found in Spire DB.
             <div class="add-to-db-form">
               <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:1px;margin-bottom:8px;">ADD THIS CODE TO SPIRE DB</div>
-              <div class="add-to-db-row">
-                <label>Part No:</label>
-                <input class="add-to-db-input" id="newPartNo" type="text" value="${code}" placeholder="Part number">
-              </div>
-              <div class="add-to-db-row">
-                <label>Description:</label>
-                <input class="add-to-db-input" id="newDesc" type="text" value="${item.name}" placeholder="Description">
-              </div>
-              <div class="add-to-db-row">
-                <label>Cost (CAD):</label>
-                <input class="add-to-db-input" id="newCost" type="number" min="0" step="10" placeholder="0.00">
-              </div>
+              <div class="add-to-db-row"><label>Part No:</label><input class="add-to-db-input" id="newPartNo" type="text" value="${code}"></div>
+              <div class="add-to-db-row"><label>Description:</label><input class="add-to-db-input" id="newDesc" type="text" value="${item.name}"></div>
+              <div class="add-to-db-row"><label>Cost (CAD):</label><input class="add-to-db-input" id="newCost" type="number" min="0" step="10" placeholder="0.00"></div>
               <button class="add-to-db-btn" onclick="doAddNewToSpire()">SAVE TO SPIRE DB + USE THIS PRICE →</button>
             </div>`;
         }
       };
 
-      // ── add new part to Spire and use it ──
       window.doAddNewToSpire = async () => {
         const partNo = document.getElementById('newPartNo').value.trim();
         const desc   = document.getElementById('newDesc').value.trim();
@@ -760,65 +622,69 @@ function promptMatchQueue(gearList) {
         btn.textContent = 'SAVING…'; btn.disabled = true;
         const saved = await appendToSpireSheet(partNo, desc, cost);
         if (saved) {
-          // Use this as the confirmed match and advance
-          result[item._idx] = {...result[item._idx], wholesaleCost:cost, msrp:cost, matchSource:'spire', matchName:desc, matchPartNo:partNo, confidence:100};
+          result[item._idx] = {...result[item._idx], wholesaleCost:cost, msrp:cost, matchSource:'spire', matchName:desc, matchPartNo:partNo, confidence:100, isSubpart:false};
           btn.textContent = '✓ SAVED — advancing…';
           await new Promise(r=>setTimeout(r,700));
           next();
         } else {
-          btn.textContent = '✗ SAVE FAILED — check OAuth'; btn.disabled = false;
+          btn.textContent = '✗ SAVE FAILED'; btn.disabled = false;
         }
       };
 
-      // ── confirm handler ──
+      // ── MARK AS SUB-PART ──
+      document.getElementById('modalSubpart').onclick = async () => {
+        const btn = document.getElementById('modalSubpart');
+        btn.textContent = 'SAVING…'; btn.disabled = true;
+        // Save to Spire DB so future PDFs auto-skip this item
+        await saveSubpartToSpire(item.name);
+        result[item._idx] = {...result[item._idx], wholesaleCost:0, msrp:0, matchSource:'subpart', isSubpart:true, confidence:100};
+        btn.textContent = '✓ MARKED';
+        await new Promise(r=>setTimeout(r,500));
+        next();
+      };
+
+      // ── CONFIRM ──
       document.getElementById('modalConfirm').onclick = async () => {
         const manualVal    = parseFloat(document.getElementById('manualMatchPrice').value);
         const manualPartNo = document.getElementById('manualPartNo').value.trim();
         const saveToSpire  = document.getElementById('saveToSpire').checked;
         const radioEl      = overlay.querySelector('input[name=matchChoice]:checked');
         const forceMatch   = overlay._forceLookupMatch;
+        const confirmBtn   = document.getElementById('modalConfirm');
 
-        // Priority 1: force part lookup match
         if (forceMatch) {
-          result[item._idx] = {...result[item._idx], wholesaleCost:forceMatch.cost, msrp:forceMatch.cost, matchSource:'spire', matchName:forceMatch.description, matchPartNo:forceMatch.part_no, confidence:100};
+          result[item._idx] = {...result[item._idx], wholesaleCost:forceMatch.cost, msrp:forceMatch.cost, matchSource:'spire', matchName:forceMatch.description, matchPartNo:forceMatch.part_no, confidence:100, isSubpart:false};
           next(); return;
         }
-
-        // Priority 2: fuzzy candidate selected — check if force-save checkbox is ticked
         if (radioEl && hasCandidates) {
           const ci = parseInt(radioEl.value);
           const chosen = item.candidates[ci];
           const forceSaveCb = document.getElementById(`fscb-${ci}`);
-          result[item._idx] = {...result[item._idx], wholesaleCost:chosen.cost, msrp:chosen.cost, matchSource:'spire', matchName:chosen.description, matchPartNo:chosen.part_no, confidence:item.confidence};
-          // If force-save checked: write merged record to Spire DB (item.name under chosen.part_no)
+          result[item._idx] = {...result[item._idx], wholesaleCost:chosen.cost, msrp:chosen.cost, matchSource:'spire', matchName:chosen.description, matchPartNo:chosen.part_no, confidence:item.confidence, isSubpart:false};
           if (forceSaveCb?.checked) {
-            document.getElementById('modalConfirm').textContent = 'SAVING…';
-            // Save: existing part_no, but description = item.name (the rental item name) so future fuzzy hits
+            confirmBtn.textContent = 'SAVING…';
             await appendToSpireSheet(chosen.part_no, item.name, chosen.cost);
-            document.getElementById('modalConfirm').textContent = '✓ SAVED';
+            confirmBtn.textContent = '✓ SAVED';
             await new Promise(r=>setTimeout(r,600));
           }
           next(); return;
         }
-
-        // Priority 3: manual price
         if (manualVal > 0) {
-          result[item._idx] = {...result[item._idx], wholesaleCost:manualVal, msrp:manualVal, matchSource:'manual', confidence:100};
+          result[item._idx] = {...result[item._idx], wholesaleCost:manualVal, msrp:manualVal, matchSource:'manual', confidence:100, isSubpart:false};
           if (saveToSpire) {
-            document.getElementById('modalConfirm').textContent = 'SAVING…';
-            const saved = await appendToSpireSheet(manualPartNo, item.name, manualVal);
-            if (saved) { document.getElementById('modalConfirm').textContent = '✓ SAVED'; await new Promise(r=>setTimeout(r,700)); }
+            confirmBtn.textContent = 'SAVING…';
+            await appendToSpireSheet(manualPartNo, item.name, manualVal);
+            confirmBtn.textContent = '✓ SAVED';
+            await new Promise(r=>setTimeout(r,700));
           }
           next(); return;
         }
-
-        // Fallback: estimate
-        result[item._idx] = {...result[item._idx], matchSource:'estimate'};
+        result[item._idx] = {...result[item._idx], matchSource:'estimate', isSubpart:false};
         next();
       };
 
       document.getElementById('modalSkip').onclick = () => {
-        result[item._idx] = {...result[item._idx], matchSource:'estimate'}; next();
+        result[item._idx] = {...result[item._idx], matchSource:'estimate', isSubpart:false}; next();
       };
     }
 
@@ -840,7 +706,7 @@ async function runExtract() {
   showLoading('Claude is reading your PDF and extracting gear…');
   try {
     const b64 = await toB64(state.file);
-    const res = await fetch('https://apex-api-proxy.theonlyalexoliveira.workers.dev', {
+    const res = await fetch(WORKER, {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
@@ -851,6 +717,8 @@ Extract every line-item piece of equipment from the rental PDF. For each item re
 
 PRICING RULE: Canadian dealer wholesale = (USD retail MSRP) x 1.39 (USD to CAD) x 0.50 (dealer discount). Return only CAD wholesale dealer cost.
 
+IMPORTANT: If a line item is visually indented in the document (a sub-item, accessory, or component whose cost is included in a parent line), prefix its name with two spaces "  " to indicate it is a sub-part.
+
 Also extract the NET pre-tax rental total (after any discounts), the order/quote code, and client name.
 
 Return ONLY valid JSON, no markdown:
@@ -858,7 +726,7 @@ Return ONLY valid JSON, no markdown:
   "quoteCode": "string or null",
   "client": "string or null",
   "quotedRentalTotal": number or null,
-  "gear": [{ "name": "Full product name", "qty": number, "msrp": number, "wholesaleCost": number }]
+  "gear": [{ "name": "Full product name (indented with 2 spaces if sub-part)", "qty": number, "msrp": number, "wholesaleCost": number }]
 }
 
 Be thorough. Base estimates on ETC, Astera, ROBE, Martin, GLP, L-Acoustics, d&b, Shure, disguise, Barco, Christie, ROE, and other professional AV brands.`,
@@ -888,20 +756,23 @@ Be thorough. Base estimates on ETC, Astera, ROBE, Martin, GLP, L-Acoustics, d&b,
     setStatus('working','REVIEW…');
     state.gear = await promptMatchQueue(preMatched);
     state.quoteName = `${parsed.client||''} · ${parsed.quoteCode||''}`.trim().replace(/^·\s*|·\s*$/g,'');
-    state.totalWholesale = state.gear.reduce((s,g)=>s+g.wholesaleCost*g.qty,0);
+
+    // Only count non-subpart items in totals
+    state.totalWholesale = state.gear.filter(g=>!g.isSubpart).reduce((s,g)=>s+g.wholesaleCost*g.qty,0);
 
     if (parsed.quotedRentalTotal && parsed.quotedRentalTotal > 0) {
       state.quoteTotal = parsed.quotedRentalTotal;
     } else if (state.quoteTotal === 0) {
-      state.quoteTotal = parsed.gear.reduce((s,g)=>s+g.msrp*g.qty,0)*0.15;
+      state.quoteTotal = parsed.gear.filter(g=>!g.isSubpart).reduce((s,g)=>s+g.msrp*g.qty,0)*0.15;
     }
 
-    state.currentRoi = (state.quoteTotal / state.totalWholesale) * 100;
+    state.currentRoi = state.totalWholesale > 0 ? (state.quoteTotal / state.totalWholesale) * 100 : 0;
     state.targetRoi  = parseFloat(Math.min(state.currentRoi,5).toFixed(2));
     state.weeks = 1;
 
+    const subpartCount = state.gear.filter(g=>g.isSubpart).length;
     document.getElementById('quoteTotalDisplay').textContent = fmtCAD(state.quoteTotal);
-    document.getElementById('quoteMeta').textContent = `${state.quoteName||'Quote'} · 1-week base rate · pre-tax`;
+    document.getElementById('quoteMeta').textContent = `${state.quoteName||'Quote'} · 1-week base rate · pre-tax${subpartCount ? ` · ${subpartCount} sub-part${subpartCount>1?'s':''} excluded` : ''}`;
     setStatus('live',`${state.gear.length} ITEMS`);
     document.getElementById('resetBtn').style.display = 'block';
     renderResults();
@@ -915,11 +786,12 @@ Be thorough. Base estimates on ETC, Astera, ROBE, Martin, GLP, L-Acoustics, d&b,
 function renderResults() {
   const content = document.getElementById('content');
   content.innerHTML = '';
+  const subpartCount = state.gear.filter(g=>g.isSubpart).length;
   const stats = document.createElement('div');
   stats.innerHTML = `
     <div class="results-head">
       <div><div class="rh-title">EXTRACTION COMPLETE</div>
-      <div class="rh-meta">${state.quoteName||'Rental Quote'} · ${state.gear.length} line items</div></div>
+      <div class="rh-meta">${state.quoteName||'Rental Quote'} · ${state.gear.length} line items${subpartCount ? ` · <span style="color:var(--purple)">${subpartCount} sub-part${subpartCount>1?'s':''} excluded from totals</span>` : ''}</div></div>
     </div>
     <div class="stat-row">
       <div class="stat"><div class="stat-lbl">Quote Total (1 wk)</div><div class="stat-val gold">${fmtCAD(state.quoteTotal)}</div></div>
@@ -931,21 +803,18 @@ function renderResults() {
   const tableWrap = document.createElement('div');
   tableWrap.innerHTML = `
     <div class="slabel" style="margin-bottom:10px;">Gear List · Wholesale Cost Breakdown</div>
-    <p style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:12px;">Click any <span style="color:var(--accent)">Wholesale Cost/Unit</span> to edit — totals update live.</p>`;
+    <p style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:12px;">Click any <span style="color:var(--accent)">Wholesale Cost/Unit</span> to edit — totals update live. <span style="color:var(--purple)">Sub-parts</span> are excluded from totals.</p>`;
   content.appendChild(tableWrap);
 
   const table = document.createElement('table');
-  table.innerHTML = `<thead><tr>
-    <th>#</th><th>Item</th><th class="r">QTY</th>
-    <th class="r">Wholesale Cost / Unit</th><th class="r">Ext. Wholesale</th>
-  </tr></thead>`;
+  table.innerHTML = `<thead><tr><th>#</th><th>Item</th><th class="r">QTY</th><th class="r">Wholesale Cost / Unit</th><th class="r">Ext. Wholesale</th></tr></thead>`;
   const tbody = document.createElement('tbody'); tbody.id = 'gearTbody';
   buildGearRows(tbody); table.appendChild(tbody);
   const tfoot = document.createElement('tfoot');
-  tfoot.innerHTML = `<tr><td colspan="3">TOTALS</td><td class="total-green" id="wholesaleTotalCell" colspan="2" style="text-align:right;">${fmtCAD(state.totalWholesale)}</td></tr>`;
+  tfoot.innerHTML = `<tr><td colspan="3">TOTALS (excl. sub-parts)</td><td class="total-green" id="wholesaleTotalCell" colspan="2" style="text-align:right;">${fmtCAD(state.totalWholesale)}</td></tr>`;
   table.appendChild(tfoot); tableWrap.appendChild(table); content.appendChild(tableWrap);
 
-  const div = document.createElement('hr'); div.className = 'divider'; content.appendChild(div);
+  const divider = document.createElement('hr'); divider.className = 'divider'; content.appendChild(divider);
   const pricer = document.createElement('div'); pricer.className = 'pricer'; pricer.id = 'pricerPanel'; content.appendChild(pricer);
   const qm = document.createElement('div'); qm.id = 'quoteModellerSection'; content.appendChild(qm);
   renderPricer(); renderQuoteModeller();
@@ -960,37 +829,16 @@ function renderPricer() {
     <div class="pricer-title">RENTAL RATE PRICER</div>
     <div class="pricer-grid">
       <div class="slider-wrap">
-        <div class="slider-top">
-          <label>Target ROI % of Wholesale Cost</label>
-          <div class="roi-readout" id="roiReadout">${state.targetRoi.toFixed(2)}%</div>
-        </div>
-        <input type="range" id="roiSlider" min="${sliderMin}" max="${sliderMax}" step="0.01"
-          value="${state.targetRoi}" style="--pct:${pct}%" oninput="onSlider(this.value)">
+        <div class="slider-top"><label>Target ROI % of Wholesale Cost</label><div class="roi-readout" id="roiReadout">${state.targetRoi.toFixed(2)}%</div></div>
+        <input type="range" id="roiSlider" min="${sliderMin}" max="${sliderMax}" step="0.01" value="${state.targetRoi}" style="--pct:${pct}%" oninput="onSlider(this.value)">
         <div class="slider-scale"><span>0.1%</span><span>1%</span><span>2%</span><span>3%</span><span>4%</span><span>5%</span></div>
-        <div style="margin-top:10px;">
-          <div class="field">
-            <label>Or type exact %</label>
-            <input type="number" id="roiManual" min="0.1" max="99" step="0.05"
-              value="${state.targetRoi.toFixed(2)}" oninput="onManualRoi(this.value)" style="font-size:14px;">
-          </div>
-        </div>
+        <div style="margin-top:10px;"><div class="field"><label>Or type exact %</label><input type="number" id="roiManual" min="0.1" max="99" step="0.05" value="${state.targetRoi.toFixed(2)}" oninput="onManualRoi(this.value)" style="font-size:14px;"></div></div>
       </div>
       <div class="weeks-wrap">
-        <div class="weeks-top">
-          <label>Number of Weeks</label>
-          <div class="weeks-readout" id="weeksReadout">${state.weeks}w</div>
-        </div>
-        <div class="weeks-btns">
-          ${[0.5,1,2,3,4].map(w=>`<div class="wbtn${state.weeks===w?' active':''}" onclick="setWeeks(${w})">${w===0.5?'½wk':w+'wk'}</div>`).join('')}
-        </div>
-        <div class="weeks-custom">
-          <label>Custom weeks:</label>
-          <input type="number" id="weeksInput" min="0.5" max="52" step="0.5"
-            value="${state.weeks}" oninput="setWeeks(parseFloat(this.value)||0.5,true)">
-        </div>
-        <div style="margin-top:10px;font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.6;">
-          1-week rate is base.<br>Total = (Wholesale × ROI%) × Weeks
-        </div>
+        <div class="weeks-top"><label>Number of Weeks</label><div class="weeks-readout" id="weeksReadout">${state.weeks}w</div></div>
+        <div class="weeks-btns">${[0.5,1,2,3,4].map(w=>`<div class="wbtn${state.weeks===w?' active':''}" onclick="setWeeks(${w})">${w===0.5?'½wk':w+'wk'}</div>`).join('')}</div>
+        <div class="weeks-custom"><label>Custom weeks:</label><input type="number" id="weeksInput" min="0.5" max="52" step="0.5" value="${state.weeks}" oninput="setWeeks(parseFloat(this.value)||0.5,true)"></div>
+        <div style="margin-top:10px;font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.6;">1-week rate is base.<br>Total = (Wholesale × ROI%) × Weeks</div>
       </div>
     </div>
     <div class="output-panel">
@@ -1047,23 +895,15 @@ function updateOutput() {
 }
 
 function toB64(file) {
-  return new Promise((res,rej)=>{
-    const r=new FileReader(); r.onload=()=>res(r.result.split(',')[1]); r.onerror=()=>rej(new Error('File read failed')); r.readAsDataURL(file);
-  });
+  return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result.split(',')[1]); r.onerror=()=>rej(new Error('File read failed')); r.readAsDataURL(file); });
 }
 function fmtCAD(n) {
   const abs=Math.abs(n),sign=n<0?'-':'';
   return sign+'$'+abs.toLocaleString('en-CA',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
-function showLoading(msg) {
-  document.getElementById('content').innerHTML=`<div class="loading"><div class="spinner"></div><p>${msg}</p></div>`;
-}
+function showLoading(msg) { document.getElementById('content').innerHTML=`<div class="loading"><div class="spinner"></div><p>${msg}</p></div>`; }
 function showError(msg) {
-  document.getElementById('content').innerHTML=`
-    <div style="padding:40px;">
-      <div class="error-box">⚠ ${msg}</div>
-      <p style="font-family:var(--mono);font-size:11px;color:var(--muted);">Check that the PDF is a text-based Rental Point export, then try again.</p>
-    </div>`;
+  document.getElementById('content').innerHTML=`<div style="padding:40px;"><div class="error-box">⚠ ${msg}</div><p style="font-family:var(--mono);font-size:11px;color:var(--muted);">Check that the PDF is a text-based Rental Point export, then try again.</p></div>`;
 }
 function resetAll() {
   window.state={file:null,quoteTotal:0,quoteName:'',gear:[],totalWholesale:0,currentRoi:0,targetRoi:0,weeks:1};
@@ -1075,56 +915,68 @@ function resetAll() {
   document.getElementById('extractBtn').disabled=true;
   document.getElementById('resetBtn').style.display='none';
   setStatus('','READY');
-  document.getElementById('content').innerHTML=`
-    <div class="empty">
-      <div class="empty-glyph">%</div>
-      <p>Upload a Rental Point PDF. Claude will extract your gear list, match it against the <code>Apex Spire DB</code>, and calculate live ROI-based pricing.</p>
-    </div>`;
+  document.getElementById('content').innerHTML=`<div class="empty"><div class="empty-glyph">%</div><p>Upload a Rental Point PDF. Claude will extract your gear list, match it against the <code>Apex Spire DB</code>, and calculate live ROI-based pricing.</p></div>`;
 }
 
 function buildGearRows(tbody) {
   tbody.innerHTML='';
   state.gear.forEach((g,i)=>{
-    const costVal=parseFloat(g.wholesaleCost)||parseFloat(g.msrp)||0;
-    state.gear[i].wholesaleCost=costVal; state.gear[i].msrp=costVal;
-    const tr=document.createElement('tr');
-    tr.innerHTML=`
+    const isSubpart = !!g.isSubpart;
+    const costVal = isSubpart ? 0 : (parseFloat(g.wholesaleCost)||parseFloat(g.msrp)||0);
+    state.gear[i].wholesaleCost = costVal;
+    state.gear[i].msrp = costVal;
+
+    const tr = document.createElement('tr');
+    if (isSubpart) tr.classList.add('subpart-row');
+
+    tr.innerHTML = `
       <td style="font-family:var(--mono);color:var(--muted);font-size:13px;">${String(i+1).padStart(2,'0')}</td>
-      <td class="name">${g.name}${g.fromMemory?'<span class="mem-badge">SAVED</span>':''}</td>
+      <td class="name${isSubpart?' subpart':''}">
+        ${isSubpart ? '↳ ' : ''}${g.name}
+        ${isSubpart ? '<span class="subpart-badge">SUB-PART</span>' : (g.fromMemory ? '<span class="mem-badge">SAVED</span>' : '')}
+      </td>
       <td class="r">${g.qty}</td>
       <td class="r">
-        <input type="number" min="0" step="10" value="${costVal.toFixed(2)}" data-idx="${i}" data-qty="${g.qty}"
-          style="width:130px;padding:6px 10px;font-size:14px;background:var(--panel);border:1px solid var(--border);color:#34d27b;text-align:right;border-radius:3px;">
+        ${isSubpart
+          ? `<span style="font-family:var(--mono);font-size:12px;color:var(--purple);">cost elsewhere</span>`
+          : `<input type="number" min="0" step="10" value="${costVal.toFixed(2)}" data-idx="${i}" data-qty="${g.qty}"
+              style="width:130px;padding:6px 10px;font-size:14px;background:var(--panel);border:1px solid var(--border);color:#34d27b;text-align:right;border-radius:3px;">`
+        }
       </td>
-      <td class="r" style="color:#34d27b;" id="ext-${i}">${fmtCAD(costVal*g.qty)}</td>`;
-    const inp=tr.querySelector('input');
-    inp.addEventListener('input',()=>{
-      const idx=parseInt(inp.dataset.idx),qty=parseInt(inp.dataset.qty),val=parseFloat(inp.value)||0;
-      state.gear[idx].wholesaleCost=val; state.gear[idx].msrp=val;
-      savePrice(state.gear[idx].name,val);
-      const ec=document.getElementById('ext-'+idx); if(ec) ec.textContent=fmtCAD(val*qty);
-      updateAfterEdit();
-    });
-    inp.addEventListener('focus',()=>inp.style.borderColor='#f0b429');
-    inp.addEventListener('blur', ()=>inp.style.borderColor='var(--border)');
+      <td class="r" style="color:${isSubpart?'var(--purple)':'#34d27b'};" id="ext-${i}">
+        ${isSubpart ? '—' : fmtCAD(costVal*g.qty)}
+      </td>`;
+
+    if (!isSubpart) {
+      const inp = tr.querySelector('input');
+      inp.addEventListener('input',()=>{
+        const idx=parseInt(inp.dataset.idx),qty=parseInt(inp.dataset.qty),val=parseFloat(inp.value)||0;
+        state.gear[idx].wholesaleCost=val; state.gear[idx].msrp=val;
+        savePrice(state.gear[idx].name,val);
+        const ec=document.getElementById('ext-'+idx); if(ec) ec.textContent=fmtCAD(val*qty);
+        updateAfterEdit();
+      });
+      inp.addEventListener('focus',()=>inp.style.borderColor='#f0b429');
+      inp.addEventListener('blur', ()=>inp.style.borderColor='var(--border)');
+    }
     tbody.appendChild(tr);
   });
 }
+
 function updateAfterEdit() {
-  state.totalWholesale=state.gear.reduce((s,g)=>s+g.wholesaleCost*g.qty,0);
-  state.currentRoi=state.totalWholesale>0?(state.quoteTotal/state.totalWholesale)*100:0;
+  state.totalWholesale = state.gear.filter(g=>!g.isSubpart).reduce((s,g)=>s+g.wholesaleCost*g.qty,0);
+  state.currentRoi = state.totalWholesale>0?(state.quoteTotal/state.totalWholesale)*100:0;
   const tc=document.getElementById('wholesaleTotalCell'); if(tc) tc.textContent=fmtCAD(state.totalWholesale);
   const wc=document.getElementById('wholesaleStatCard'); if(wc) wc.textContent=fmtCAD(state.totalWholesale);
   const rc=document.getElementById('currentRoiStat'); if(rc) rc.textContent=state.currentRoi.toFixed(2)+'%';
   updateOutput();
 }
 
-const WORKER='https://apex-api-proxy.theonlyalexoliveira.workers.dev';
-function normalizeKey(n){return n.toLowerCase().replace(/[^a-z0-9]+/g,'-').trim().replace(/^-|-$/g,'');}
 async function loadPriceDB(){try{const r=await fetch(WORKER+'/prices');if(!r.ok)return{};return await r.json();}catch(e){return{};}}
 async function savePrice(name,cost){
   if(!name||!cost||cost<=0)return;
-  try{await fetch(WORKER+'/prices',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:normalizeKey(name),name,cost:parseFloat(cost)})});}catch(e){}
+  const key=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').trim().replace(/^-|-$/g,'');
+  try{await fetch(WORKER+'/prices',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key,name,cost:parseFloat(cost)})});}catch(e){}
 }
 async function deletePriceRemote(key){
   try{await fetch(WORKER+'/prices/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key})});}catch(e){}
@@ -1137,16 +989,9 @@ async function togglePriceDB(){
   const db=await loadPriceDB();
   const items=Object.entries(db).sort((a,b)=>a[1].name.localeCompare(b[1].name));
   if(!items.length){panel.innerHTML='<div style="padding:10px 12px;font-family:var(--mono);font-size:10px;color:var(--muted);">No saved prices yet.</div>';return;}
-  panel.innerHTML=items.map(([key,p])=>`
-    <div class="price-db-row">
-      <span class="price-db-name" title="${p.name}">${p.name}</span>
-      <span class="price-db-cost">${fmtCAD(p.cost)}</span>
-      <span class="price-db-del" onclick="deleteAndRefresh('${key}')">×</span>
-    </div>`).join('');
+  panel.innerHTML=items.map(([key,p])=>`<div class="price-db-row"><span class="price-db-name" title="${p.name}">${p.name}</span><span class="price-db-cost">${fmtCAD(p.cost)}</span><span class="price-db-del" onclick="deleteAndRefresh('${key}')">×</span></div>`).join('');
 }
-async function deleteAndRefresh(key){
-  await deletePriceRemote(key); const p=document.getElementById('priceDBPanel'); p.style.display='none'; togglePriceDB();
-}
+async function deleteAndRefresh(key){ await deletePriceRemote(key); const p=document.getElementById('priceDBPanel'); p.style.display='none'; togglePriceDB(); }
 
 function renderQuoteModeller(){
   const section=document.getElementById('quoteModellerSection');
@@ -1155,55 +1000,43 @@ function renderQuoteModeller(){
   const roi=state.targetRoi/100;
   let total=0,rows='';
   state.gear.forEach((g,i)=>{
-    const uw=parseFloat(g.wholesaleCost)||0, cr=uw*roi, lt=cr*state.weeks*g.qty;
-    total+=lt;
-    rows+=`
-      <tr>
+    if (g.isSubpart) {
+      rows+=`<tr style="opacity:.45;">
         <td style="font-family:var(--mono);color:var(--muted);font-size:12px;padding:8px 12px;">${String(i+1).padStart(2,'0')}</td>
-        <td class="name" style="padding:8px 12px;">${g.name}</td>
+        <td class="name" style="padding:8px 12px;color:var(--purple);font-style:italic;">↳ ${g.name} <span class="subpart-badge">SUB-PART</span></td>
         <td class="r" style="padding:8px 12px;">${g.qty}</td>
-        <td class="r" style="color:var(--green);padding:8px 12px;">${fmtCAD(uw)}</td>
-        <td class="r" style="color:var(--blue);padding:8px 12px;">${fmtCAD(cr)}/wk</td>
-        <td class="r" style="padding:8px 12px;">
-          <input type="number" min="0" step="0.01" value="${cr.toFixed(2)}" data-qm-idx="${i}"
-            style="width:115px;padding:5px 8px;font-size:13px;background:var(--panel);border:1px solid var(--border);color:var(--text);text-align:right;border-radius:3px;"
-            oninput="onQmEdit(${i},this.value)"
-            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
-        </td>
-        <td class="r" style="color:var(--accent);font-weight:600;padding:8px 12px;" id="qm-ext-${i}">${fmtCAD(lt)}</td>
+        <td class="r" style="color:var(--purple);padding:8px 12px;" colspan="4">cost expressed elsewhere — excluded</td>
       </tr>`;
+      return;
+    }
+    const uw=parseFloat(g.wholesaleCost)||0,cr=uw*roi,lt=cr*state.weeks*g.qty;
+    total+=lt;
+    rows+=`<tr>
+      <td style="font-family:var(--mono);color:var(--muted);font-size:12px;padding:8px 12px;">${String(i+1).padStart(2,'0')}</td>
+      <td class="name" style="padding:8px 12px;">${g.name}</td>
+      <td class="r" style="padding:8px 12px;">${g.qty}</td>
+      <td class="r" style="color:var(--green);padding:8px 12px;">${fmtCAD(uw)}</td>
+      <td class="r" style="color:var(--blue);padding:8px 12px;">${fmtCAD(cr)}/wk</td>
+      <td class="r" style="padding:8px 12px;"><input type="number" min="0" step="0.01" value="${cr.toFixed(2)}" data-qm-idx="${i}" style="width:115px;padding:5px 8px;font-size:13px;background:var(--panel);border:1px solid var(--border);color:var(--text);text-align:right;border-radius:3px;" oninput="onQmEdit(${i},this.value)" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"></td>
+      <td class="r" style="color:var(--accent);font-weight:600;padding:8px 12px;" id="qm-ext-${i}">${fmtCAD(lt)}</td>
+    </tr>`;
   });
   section.innerHTML=`
     <hr class="divider">
     <div class="slabel" style="margin-bottom:14px;">Quote Builder · Unit Prices for Rental Point</div>
     <p class="qm-note">Unit price/wk = Wholesale × <span>${state.targetRoi.toFixed(2)}% ROI</span> × <span>${wl} week${state.weeks!=1?'s':''}</span>. Override any price — totals update live.</p>
     <table>
-      <thead><tr>
-        <th>#</th><th>Item</th><th class="r">QTY</th>
-        <th class="r">Wholesale/Unit</th><th class="r">Calc Price/Wk</th>
-        <th class="r">Your Price/Wk</th><th class="r">Line Total (${wl}wk)</th>
-      </tr></thead>
+      <thead><tr><th>#</th><th>Item</th><th class="r">QTY</th><th class="r">Wholesale/Unit</th><th class="r">Calc Price/Wk</th><th class="r">Your Price/Wk</th><th class="r">Line Total (${wl}wk)</th></tr></thead>
       <tbody>${rows}</tbody>
-      <tfoot><tr>
-        <td colspan="6" style="padding:10px 14px;">TOTAL · ${wl}wk · Pre-Tax</td>
-        <td class="r" style="color:var(--accent);font-size:15px;font-family:var(--mono);font-weight:600;padding:10px 14px;" id="qmGrandTotal">${fmtCAD(total)}</td>
-      </tr></tfoot>
+      <tfoot><tr><td colspan="6" style="padding:10px 14px;">TOTAL · ${wl}wk · Pre-Tax</td><td class="r" style="color:var(--accent);font-size:15px;font-family:var(--mono);font-weight:600;padding:10px 14px;" id="qmGrandTotal">${fmtCAD(total)}</td></tr></tfoot>
     </table>
-    <div class="qm-total-bar">
-      <div>
-        <div class="qm-total-label">Quote Total · Pre-Tax</div>
-        <div class="qm-total-val" id="qmTotalBig">${fmtCAD(total)}</div>
-        <div class="qm-copy-note">Enter "Your Price/Wk" column into Rental Point line by line</div>
-      </div>
-    </div>`;
+    <div class="qm-total-bar"><div><div class="qm-total-label">Quote Total · Pre-Tax</div><div class="qm-total-val" id="qmTotalBig">${fmtCAD(total)}</div><div class="qm-copy-note">Enter "Your Price/Wk" column into Rental Point line by line</div></div></div>`;
 }
 function onQmEdit(idx,val){
   const price=parseFloat(val)||0,qty=state.gear[idx]?.qty||0;
   const ec=document.getElementById('qm-ext-'+idx); if(ec) ec.textContent=fmtCAD(price*state.weeks*qty);
   let t=0;
-  document.querySelectorAll('[data-qm-idx]').forEach(inp=>{
-    const i=parseInt(inp.dataset.qmIdx); t+=(parseFloat(inp.value)||0)*state.weeks*(state.gear[i]?.qty||0);
-  });
+  document.querySelectorAll('[data-qm-idx]').forEach(inp=>{const i=parseInt(inp.dataset.qmIdx); if(!state.gear[i]?.isSubpart) t+=(parseFloat(inp.value)||0)*state.weeks*(state.gear[i]?.qty||0);});
   const gt=document.getElementById('qmGrandTotal'),tb=document.getElementById('qmTotalBig');
   if(gt) gt.textContent=fmtCAD(t); if(tb) tb.textContent=fmtCAD(t);
 }

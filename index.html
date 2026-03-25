@@ -115,7 +115,6 @@ header {
   transition:border-color .15s;
 }
 .field input:focus, .field select:focus { border-color: var(--accent); }
-.field .hint { font-family:var(--mono); font-size:10px; color:var(--muted); }
 
 /* BUTTONS */
 .btn-primary {
@@ -169,16 +168,12 @@ header {
   display:flex; align-items:flex-start; justify-content:space-between;
   margin-bottom:22px; flex-wrap:wrap; gap:12px;
 }
-.rh-left {}
 .rh-title { font-family:var(--display); font-size:32px; letter-spacing:2px; color:#fff; line-height:1; }
 .rh-meta { font-family:var(--mono); font-size:13px; color:var(--muted); margin-top:6px; }
 
 /* STAT CARDS */
 .stat-row { display:grid; grid-template-columns:repeat(auto-fill, minmax(155px,1fr)); gap:10px; margin-bottom:28px; }
-.stat {
-  background:var(--panel); border:1px solid var(--border); border-radius:3px;
-  padding:12px 14px;
-}
+.stat { background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:12px 14px; }
 .stat-lbl { font-family:var(--mono); font-size:9px; color:var(--muted); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:5px; }
 .stat-val { font-family:var(--display); font-size:22px; letter-spacing:1px; color:#fff; line-height:1; }
 .stat-val.gold  { color:var(--accent); }
@@ -195,15 +190,9 @@ tbody tr:hover { background:rgba(255,255,255,.02); }
 td { padding:10px 14px; vertical-align:middle; }
 td.r { text-align:right; font-family:var(--mono); }
 td.name { color:#fff; font-weight:500; }
-td.cat span {
-  display:inline-block; padding:2px 7px; border-radius:2px;
-  font-family:var(--mono); font-size:9px; letter-spacing:.8px; text-transform:uppercase;
-  background:rgba(240,180,41,.1); color:var(--accent);
-}
 tfoot tr { background:var(--panel); border-top:2px solid var(--border); }
 tfoot td { font-family:var(--mono); font-size:12px; font-weight:500; padding:9px 12px; }
 tfoot td.r { text-align:right; }
-tfoot td.total-gold { color:var(--accent); font-size:14px; }
 tfoot td.total-green { color:var(--green); font-size:14px; }
 
 /* DIVIDER */
@@ -212,25 +201,20 @@ tfoot td.total-green { color:var(--green); font-size:14px; }
 /* ROI PRICER */
 .pricer {
   background:var(--panel); border:1px solid var(--border); border-radius:4px;
-  padding:28px 28px 24px;
-  position:relative; overflow:hidden;
+  padding:28px 28px 24px; position:relative; overflow:hidden;
 }
 .pricer::before {
   content:''; position:absolute; top:0; left:0; right:0; height:2px;
   background:linear-gradient(90deg, var(--accent), var(--green));
 }
 .pricer-title { font-family:var(--display); font-size:26px; letter-spacing:2px; color:#fff; margin-bottom:20px; }
-
 .pricer-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:28px; }
 
 /* SLIDER */
 .slider-wrap { display:flex; flex-direction:column; gap:8px; }
 .slider-top { display:flex; justify-content:space-between; align-items:center; }
 .slider-top label { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
-.roi-readout {
-  font-family:var(--display); font-size:40px; letter-spacing:2px;
-  color:var(--accent); line-height:1;
-}
+.roi-readout { font-family:var(--display); font-size:40px; letter-spacing:2px; color:var(--accent); line-height:1; }
 input[type=range] {
   -webkit-appearance:none; appearance:none;
   width:100%; height:4px; border-radius:2px;
@@ -241,8 +225,7 @@ input[type=range]::-webkit-slider-thumb {
   -webkit-appearance:none; appearance:none;
   width:18px; height:18px; border-radius:50%;
   background:var(--accent); border:2px solid var(--bg);
-  box-shadow:0 0 0 2px var(--accent);
-  cursor:pointer; transition:transform .1s;
+  box-shadow:0 0 0 2px var(--accent); cursor:pointer; transition:transform .1s;
 }
 input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .slider-scale { display:flex; justify-content:space-between; font-family:var(--mono); font-size:11px; color:var(--muted); }
@@ -272,28 +255,15 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 /* OUTPUT */
 .output-panel {
   background:var(--bg); border:1px solid var(--border); border-radius:3px;
-  padding:20px 24px;
-  display:grid; grid-template-columns:repeat(3,1fr); gap:16px;
-  align-items:center;
+  padding:20px 24px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px; align-items:center;
 }
 .out-item { text-align:center; }
 .out-lbl { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:8px; }
 .out-val { font-family:var(--display); font-size:36px; letter-spacing:2px; line-height:1; }
 .out-val.gold  { color:var(--accent); }
 .out-val.green { color:var(--green); }
-.out-val.blue  { color:#4da6ff; }
 .out-sub { font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:4px; }
 .out-divider { width:1px; height:60px; background:var(--border); margin:0 auto; }
-
-.delta-note {
-  margin-top:14px; padding:12px 16px;
-  border-radius:3px; font-family:var(--mono); font-size:13px; line-height:1.6;
-  display:flex; align-items:center; gap:10px;
-}
-.delta-note.pos { background:rgba(52,210,123,.07); border:1px solid rgba(52,210,123,.2); color:var(--green); }
-.delta-note.neg { background:rgba(232,57,14,.07); border:1px solid rgba(232,57,14,.2); color:var(--red); }
-.delta-note.neutral { background:var(--bg); border:1px solid var(--border); color:var(--muted); }
-
 
 .mem-badge {
   display:inline-block; font-family:var(--mono); font-size:9px; letter-spacing:.8px;
@@ -314,10 +284,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
   background:var(--panel); border:1px solid var(--border); border-radius:3px;
   margin-top:10px; max-height:220px; overflow-y:auto; display:none;
 }
-.price-db-row {
-  display:flex; align-items:center; gap:8px;
-  padding:7px 12px; border-bottom:1px solid var(--border);
-}
+.price-db-row { display:flex; align-items:center; gap:8px; padding:7px 12px; border-bottom:1px solid var(--border); }
 .price-db-row:last-child { border-bottom:none; }
 .price-db-name { font-family:var(--mono); font-size:10px; color:var(--text); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .price-db-cost { font-family:var(--mono); font-size:11px; color:var(--green); white-space:nowrap; }
@@ -329,7 +296,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 ::-webkit-scrollbar-track { background:var(--bg); }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
 
-/* ── MATCH MODAL ── */
+/* MATCH MODAL */
 .modal-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,.75);
   z-index: 200; display: flex; align-items: center; justify-content: center;
@@ -338,13 +305,11 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .modal {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 6px; padding: 28px 28px 24px; width: 560px; max-width: 95vw;
-  box-shadow: 0 24px 64px rgba(0,0,0,.6);
-  position: relative;
+  box-shadow: 0 24px 64px rgba(0,0,0,.6); position: relative;
 }
 .modal::before {
   content:''; position:absolute; top:0; left:0; right:0; height:2px;
-  background: linear-gradient(90deg, var(--accent), var(--green));
-  border-radius: 6px 6px 0 0;
+  background: linear-gradient(90deg, var(--accent), var(--green)); border-radius: 6px 6px 0 0;
 }
 .modal-title { font-family:var(--display); font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:4px; }
 .modal-sub { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
@@ -352,10 +317,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
   background: var(--panel); border:1px solid var(--border); border-radius:3px;
   padding:10px 14px; font-size:14px; color:#fff; font-weight:500; margin-bottom:20px;
 }
-.modal-section-label {
-  font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:1.5px;
-  text-transform:uppercase; margin-bottom:10px;
-}
+.modal-section-label { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px; }
 .match-option {
   display:flex; align-items:center; gap:12px;
   background: var(--panel); border:1px solid var(--border);
@@ -384,7 +346,6 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .modal-confirm { font-family:var(--display); font-size:16px; letter-spacing:2px; background:var(--accent); color:#000; border:none; border-radius:3px; padding:10px 24px; cursor:pointer; transition:opacity .15s; }
 .modal-confirm:hover { opacity:.85; }
 .modal-progress { font-family:var(--mono); font-size:10px; color:var(--muted); position:absolute; top:20px; right:20px; }
-
 </style>
 </head>
 <body>
@@ -397,10 +358,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 </header>
 
 <div class="app">
-
-  <!-- SIDEBAR -->
   <aside class="sidebar">
-
     <div>
       <div class="slabel">PDF Quote</div>
       <div class="drop-zone" id="dropZone">
@@ -440,62 +398,44 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
     </div>
 
     <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
-      <button class="btn-primary" id="extractBtn" disabled onclick="runExtract()">
-        ANALYSE PDF
-      </button>
-      <button class="btn-ghost" id="resetBtn" style="display:none" onclick="resetAll()">
-        Reset / New Quote
-      </button>
+      <button class="btn-primary" id="extractBtn" disabled onclick="runExtract()">ANALYSE PDF</button>
+      <button class="btn-ghost" id="resetBtn" style="display:none" onclick="resetAll()">Reset / New Quote</button>
     </div>
-
   </aside>
 
-  <!-- CONTENT -->
   <main class="content" id="content">
     <div class="empty">
       <div class="empty-glyph">%</div>
-      <p>Upload a Rental Point PDF. Claude will extract your gear list, estimate <code>wholesale replacement value</code>, and calculate your live ROI-based pricing.</p>
+      <p>Upload a Rental Point PDF. Claude will extract your gear list, match it against the <code>Apex Spire DB</code>, and calculate live ROI-based pricing.</p>
     </div>
   </main>
-
 </div>
 
 <script>
 // ─── VERSION ─────────────────────────────────────────────
-const VERSION = '2.0.0';
+const VERSION = '2.0.1';
 const CHANGELOG = [
-  { v:'2.0.0', date:'2026-03-25', notes:'Spire DB fuzzy matching, match review modal, OAuth write-back, Pull Sheet support, 8k token limit, section grouping' },
+  { v:'2.0.1', date:'2026-03-25', notes:'Fix Sheets tab name to apex_asset_db' },
+  { v:'2.0.0', date:'2026-03-25', notes:'Spire DB fuzzy matching, match review modal, OAuth write-back, Pull Sheet support, 8k token limit' },
   { v:'1.2.7', date:'2026-03-19', notes:'Editable wholesale costs, dynamic line recalc, font/contrast improvements' },
-  { v:'1.0.0', date:'2026-03-19', notes:'Initial release — PDF extraction, ROI slider, weeks input' },
+  { v:'1.0.0', date:'2026-03-19', notes:'Initial release' },
 ];
-
-// Wire version badge to VERSION constant
 document.getElementById('versionBadge').textContent = 'v' + VERSION;
 
 // ─── CONFIG ──────────────────────────────────────────────
-const SHEETS_ID      = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';
-const SHEETS_KEY     = 'AIzaSyAiRlEx6DbYc6BAlYTcyAcoBzb5gd3fI3c';
-const SHEETS_TAB     = 'Sheet1';
+const SHEETS_ID       = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';
+const SHEETS_KEY      = 'AIzaSyAiRlEx6DbYc6BAlYTcyAcoBzb5gd3fI3c';
+const SHEETS_TAB      = 'apex_asset_db';   // ← FIXED (was 'Sheet1')
 const OAUTH_CLIENT_ID = '253838190928-9igjv2fu3g8frjpsf3ef0fvjr8a593dc.apps.googleusercontent.com';
 const OAUTH_SCOPES    = 'https://www.googleapis.com/auth/spreadsheets';
-let   gAuthToken      = null; // set after OAuth login
+let   gAuthToken      = null;
 
 // ─── STATE ───────────────────────────────────────────────
-window.state = {
-  file: null,
-  quoteTotal: 0,       // from PDF or manual entry
-  quoteName: '',
-  gear: [],            // [{name, qty, msrp, wholesaleCost}]
-  totalWholesale: 0,
-  currentRoi: 0,       // actual ROI of current quote
-  targetRoi: 0,        // slider value
-  weeks: 1,
-};
+window.state = { file:null, quoteTotal:0, quoteName:'', gear:[], totalWholesale:0, currentRoi:0, targetRoi:0, weeks:1 };
 
 // ─── FILE HANDLING ───────────────────────────────────────
 const dropZone = document.getElementById('dropZone');
 const pdfFile  = document.getElementById('pdfFile');
-
 pdfFile.onchange = e => loadFile(e.target.files[0]);
 dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragging'); });
 dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragging'));
@@ -508,8 +448,7 @@ dropZone.addEventListener('drop', e => {
 function loadFile(file) {
   state.file = file;
   const chip = document.getElementById('fileChip');
-  chip.style.display = 'flex';
-  chip.className = 'file-chip';
+  chip.style.display = 'flex'; chip.className = 'file-chip';
   chip.innerHTML = `<span class="fi">📄</span><div class="fn">${file.name}<span>${(file.size/1024).toFixed(1)} KB</span></div>`;
   document.getElementById('extractBtn').disabled = false;
   setStatus('', 'PDF LOADED');
@@ -526,8 +465,7 @@ function onManualTotal(val) {
 // ─── STATUS ──────────────────────────────────────────────
 function setStatus(cls, txt) {
   const p = document.getElementById('statusPill');
-  p.className = 'pill ' + cls;
-  p.textContent = txt;
+  p.className = 'pill ' + cls; p.textContent = txt;
 }
 
 // ─── GOOGLE OAUTH ────────────────────────────────────────
@@ -535,33 +473,23 @@ function getGoogleAuthToken() {
   return new Promise((resolve, reject) => {
     if (gAuthToken) { resolve(gAuthToken); return; }
     const width = 500, height = 600;
-    const left  = window.screenX + (window.outerWidth - width) / 2;
-    const top   = window.screenY + (window.outerHeight - height) / 2;
+    const left = window.screenX + (window.outerWidth - width) / 2;
+    const top  = window.screenY + (window.outerHeight - height) / 2;
     const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
       `client_id=${encodeURIComponent(OAUTH_CLIENT_ID)}` +
       `&redirect_uri=${encodeURIComponent(window.location.href.split('?')[0])}` +
-      `&response_type=token` +
-      `&scope=${encodeURIComponent(OAUTH_SCOPES)}` +
-      `&prompt=select_account`;
-
+      `&response_type=token&scope=${encodeURIComponent(OAUTH_SCOPES)}&prompt=select_account`;
     const popup = window.open(authUrl, 'googleAuth', `width=${width},height=${height},left=${left},top=${top}`);
-
     const timer = setInterval(() => {
       try {
-        if (!popup || popup.closed) {
-          clearInterval(timer);
-          reject(new Error('Auth window closed'));
-          return;
-        }
+        if (!popup || popup.closed) { clearInterval(timer); reject(new Error('Auth window closed')); return; }
         const url = popup.location.href;
         if (url.includes('access_token=')) {
-          clearInterval(timer);
-          popup.close();
-          const params = new URLSearchParams(url.split('#')[1]);
-          gAuthToken = params.get('access_token');
+          clearInterval(timer); popup.close();
+          gAuthToken = new URLSearchParams(url.split('#')[1]).get('access_token');
           resolve(gAuthToken);
         }
-      } catch(e) { /* cross-origin, still loading */ }
+      } catch(e) {}
     }, 300);
   });
 }
@@ -571,297 +499,164 @@ async function appendToSpireSheet(partNo, description, cost) {
     const token = await getGoogleAuthToken();
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEETS_ID}/values/${SHEETS_TAB}!A:C:append?valueInputOption=USER_ENTERED`;
     const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        values: [[partNo || 'MANUAL', description, cost]]
-      })
+      method:'POST',
+      headers:{'Authorization':`Bearer ${token}`,'Content-Type':'application/json'},
+      body:JSON.stringify({values:[[partNo||'MANUAL',description,cost]]})
     });
     if (!res.ok) throw new Error('Sheet write failed');
-    // Also add to local cache
-    if (spireDB) {
-      spireDB.push({
-        part_no: partNo || 'MANUAL',
-        description: description.toLowerCase(),
-        cost: parseFloat(cost)
-      });
-    }
+    if (spireDB) spireDB.push({part_no:partNo||'MANUAL',description:description.toLowerCase(),cost:parseFloat(cost)});
     return true;
-  } catch(err) {
-    console.error('Append error:', err);
-    return false;
-  }
+  } catch(err) { console.error('Append error:',err); return false; }
 }
 
 // ─── SPIRE DB LOADER ─────────────────────────────────────
-let spireDB = null; // cached after first load
+let spireDB = null;
 
 async function loadSpireDB() {
   if (spireDB) return spireDB;
-  setStatus('working', 'LOADING DB…');
+  setStatus('working','LOADING DB…');
   const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEETS_ID}/values/${SHEETS_TAB}!A:C?key=${SHEETS_KEY}`;
-  const res = await fetch(url);
+  const res  = await fetch(url);
   const data = await res.json();
   if (!data.values) throw new Error('Could not load Spire asset database from Google Sheets.');
-  // Skip header row, build array of {part_no, description, cost}
   spireDB = data.values.slice(1).map(r => ({
-    part_no:     (r[0] || '').toString().trim(),
-    description: (r[1] || '').toString().trim().toLowerCase(),
-    cost:         parseFloat(r[2]) || 0
+    part_no:     (r[0]||'').toString().trim(),
+    description: (r[1]||'').toString().trim().toLowerCase(),
+    cost:         parseFloat(r[2])||0
   })).filter(r => r.description && r.cost > 0);
   return spireDB;
 }
 
+// ─── FUZZY MATCH ─────────────────────────────────────────
 function fuzzyMatch(name, db) {
-  const normalize = s => s.toLowerCase()
-    .replace(/['']/g, '')
-    .replace(/[^a-z0-9.x]/g, ' ')
-    .replace(/\s+/g, ' ').trim();
-
+  const normalize = s => s.toLowerCase().replace(/['']/g,'').replace(/[^a-z0-9.x]/g,' ').replace(/\s+/g,' ').trim();
   const needle = normalize(name);
   const words  = needle.split(' ').filter(w => w.length > 1);
-
-  // Extract technical tokens — model numbers, dimensions, specs
-  // These are short alphanumeric tokens that are highly specific
   const isTechnical = w => /[0-9]/.test(w) || w.length <= 4;
-  const techWords   = words.filter(isTechnical);
-  const descWords   = words.filter(w => !isTechnical(w) && w.length > 3);
-
+  const techWords = words.filter(isTechnical);
+  const descWords = words.filter(w => !isTechnical(w) && w.length > 3);
   const candidates = [];
-
   for (const row of db) {
     const hay = normalize(row.description);
-    const hayWords = hay.split(' ');
-
     let score = 0;
-
-    // Technical token matches weighted heavily (model numbers, dimensions)
-    for (const w of techWords) {
-      if (hay.includes(w)) score += w.length * 3;
-    }
-
-    // Descriptive word matches
-    for (const w of descWords) {
-      if (hay.includes(w)) score += w.length;
-    }
-
-    // Exact full match bonus
+    for (const w of techWords) if (hay.includes(w)) score += w.length * 3;
+    for (const w of descWords) if (hay.includes(w)) score += w.length;
     if (hay === needle) score += 100;
-    // Substring bonus
     if (hay.includes(needle)) score += 40;
     if (needle.includes(hay) && hay.length > 8) score += 20;
-
-    // Penalty if none of the technical tokens match at all
-    if (techWords.length > 0) {
-      const techMatches = techWords.filter(w => hay.includes(w)).length;
-      if (techMatches === 0) score = Math.floor(score * 0.3);
-    }
-
-    if (score > 0) candidates.push({ ...row, score });
+    if (techWords.length > 0 && techWords.filter(w => hay.includes(w)).length === 0) score = Math.floor(score * 0.3);
+    if (score > 0) candidates.push({...row, score});
   }
-
-  candidates.sort((a, b) => b.score - a.score);
-  const top = candidates.slice(0, 3);
-
-  if (top.length === 0) return { match: null, confidence: 0, candidates: [] };
-
-  // Confidence: ratio of score to theoretical max
-  const maxScore = techWords.reduce((s,w) => s + w.length*3, 0)
-                 + descWords.reduce((s,w) => s + w.length, 0) + 100;
-  const confidence = Math.min(98, Math.round((top[0].score / Math.max(maxScore * 0.35, 1)) * 100));
-
-  return { match: top[0], confidence, candidates: top };
+  candidates.sort((a,b) => b.score - a.score);
+  const top = candidates.slice(0,3);
+  if (top.length === 0) return {match:null, confidence:0, candidates:[]};
+  const maxScore = techWords.reduce((s,w)=>s+w.length*3,0) + descWords.reduce((s,w)=>s+w.length,0) + 100;
+  const confidence = Math.min(98, Math.round((top[0].score / Math.max(maxScore*0.35,1))*100));
+  return {match:top[0], confidence, candidates:top};
 }
 
 async function matchGearToSpire(gear) {
   const db = await loadSpireDB();
-
-  // Build a part_no index for instant code lookup
   const codeIndex = {};
-  for (const row of db) {
-    if (row.part_no) codeIndex[row.part_no.trim().toUpperCase()] = row;
-  }
-
+  for (const row of db) if (row.part_no) codeIndex[row.part_no.trim().toUpperCase()] = row;
   return gear.map(g => {
-    // 1. Try exact code match first
     if (g.code) {
-      const key = g.code.trim().toUpperCase();
-      const exact = codeIndex[key];
-      if (exact && exact.cost > 0) {
-        return {
-          ...g,
-          wholesaleCost: exact.cost,
-          msrp:          exact.cost,
-          matchSource:   'spire',
-          matchName:     exact.description,
-          matchPartNo:   exact.part_no,
-          confidence:    100,
-          candidates:    []
-        };
-      }
+      const exact = codeIndex[g.code.trim().toUpperCase()];
+      if (exact && exact.cost > 0) return {...g, wholesaleCost:exact.cost, msrp:exact.cost, matchSource:'spire', matchName:exact.description, matchPartNo:exact.part_no, confidence:100, candidates:[]};
     }
-
-    // 2. Fall back to fuzzy description match
     const result = fuzzyMatch(g.name, db);
-    if (result.match && result.confidence >= 80) {
-      return {
-        ...g,
-        wholesaleCost: result.match.cost,
-        msrp:          result.match.cost,
-        matchSource:   'spire',
-        matchName:     result.match.description,
-        matchPartNo:   result.match.part_no,
-        confidence:    result.confidence,
-        candidates:    result.candidates
-      };
-    } else {
-      // Needs user review
-      return {
-        ...g,
-        matchSource: 'pending',
-        confidence:  result.confidence,
-        candidates:  result.candidates
-      };
-    }
+    if (result.match && result.confidence >= 80)
+      return {...g, wholesaleCost:result.match.cost, msrp:result.match.cost, matchSource:'spire', matchName:result.match.description, matchPartNo:result.match.part_no, confidence:result.confidence, candidates:result.candidates};
+    return {...g, matchSource:'pending', confidence:result.confidence, candidates:result.candidates};
   });
 }
 
 // ─── MODAL MATCH SYSTEM ───────────────────────────────────
 function promptMatchQueue(gearList) {
   return new Promise(resolve => {
-    const pending = gearList.map((g, i) => ({ ...g, _idx: i }))
-                            .filter(g => g.matchSource === 'pending');
+    const pending = gearList.map((g,i)=>({...g,_idx:i})).filter(g=>g.matchSource==='pending');
     if (pending.length === 0) { resolve(gearList); return; }
-
     let current = 0;
     const result = [...gearList];
 
     function showModal(item) {
-      // Remove existing modal
       document.getElementById('matchModal')?.remove();
-
       const overlay = document.createElement('div');
-      overlay.className = 'modal-overlay';
-      overlay.id = 'matchModal';
-
+      overlay.className = 'modal-overlay'; overlay.id = 'matchModal';
       const hasCandidates = item.candidates && item.candidates.length > 0;
-
       overlay.innerHTML = `
         <div class="modal">
-          <div class="modal-progress">${current + 1} of ${pending.length}</div>
+          <div class="modal-progress">${current+1} of ${pending.length}</div>
           <div class="modal-title">MATCH REQUIRED</div>
           <div class="modal-sub">Select a Spire record or enter a manual price</div>
           <div class="modal-item-name">📦 ${item.name} &nbsp;×&nbsp; ${item.qty}</div>
-
           ${hasCandidates ? `
-          <div class="modal-section-label">Possible Spire Matches</div>
-          ${item.candidates.map((c, ci) => `
-            <label class="match-option" onclick="this.classList.add('selected'); this.querySelectorAll('.match-option').forEach&&null; document.querySelectorAll('.match-option').forEach(el=>el.classList.remove('selected')); this.classList.add('selected');">
-              <input type="radio" name="matchChoice" value="${ci}" ${ci===0?'checked':''}>
-              <div class="match-option-body">
-                <div class="match-option-name">${c.description}</div>
-                <div class="match-option-meta">${c.part_no || '—'}</div>
-              </div>
-              <div class="match-option-cost">${fmtCAD(c.cost)}</div>
-            </label>
-          `).join('')}
-          <hr class="modal-divider">
+            <div class="modal-section-label">Possible Spire Matches</div>
+            ${item.candidates.map((c,ci)=>`
+              <label class="match-option">
+                <input type="radio" name="matchChoice" value="${ci}" ${ci===0?'checked':''}>
+                <div class="match-option-body">
+                  <div class="match-option-name">${c.description}</div>
+                  <div class="match-option-meta">${c.part_no||'—'}</div>
+                </div>
+                <div class="match-option-cost">${fmtCAD(c.cost)}</div>
+              </label>`).join('')}
+            <hr class="modal-divider">
           ` : `<div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:16px;">No Spire matches found for this item.</div>`}
-
           <div class="modal-section-label">Manual Price Override (CAD)</div>
           <div class="manual-price-wrap">
             <label>Wholesale Cost:</label>
             <input class="manual-price-input" id="manualMatchPrice" type="number" min="0" step="10" placeholder="0.00">
           </div>
-
           <div style="margin-top:14px;">
-            <label style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;display:block;margin-bottom:6px;">Part No. (optional — for Spire DB save)</label>
+            <label style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;display:block;margin-bottom:6px;">Part No. (optional)</label>
             <input class="manual-price-input" id="manualPartNo" type="text" placeholder="e.g. CF2-72" style="width:100%;">
           </div>
           <div style="margin-top:10px;">
             <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:var(--mono);font-size:11px;color:var(--muted);">
               <input type="checkbox" id="saveToSpire" style="accent-color:var(--green);width:14px;height:14px;">
-              Save this item to Spire DB (Google Sheets) for future matches
+              Save to Spire DB (Google Sheets) for future matches
             </label>
           </div>
           <div class="modal-actions">
             <button class="modal-skip" id="modalSkip">Skip (use estimate)</button>
             <button class="modal-confirm" id="modalConfirm">CONFIRM →</button>
           </div>
-        </div>
-      `;
-
+        </div>`;
       document.body.appendChild(overlay);
-
-      // Radio selection styling
       overlay.querySelectorAll('.match-option').forEach(el => {
-        el.addEventListener('click', () => {
-          overlay.querySelectorAll('.match-option').forEach(e => e.classList.remove('selected'));
-          el.classList.add('selected');
-        });
+        el.addEventListener('click', () => { overlay.querySelectorAll('.match-option').forEach(e=>e.classList.remove('selected')); el.classList.add('selected'); });
       });
-      if (overlay.querySelector('.match-option')) {
-        overlay.querySelector('.match-option').classList.add('selected');
-      }
+      if (overlay.querySelector('.match-option')) overlay.querySelector('.match-option').classList.add('selected');
 
       document.getElementById('modalConfirm').onclick = async () => {
-        const manualVal   = parseFloat(document.getElementById('manualMatchPrice').value);
+        const manualVal    = parseFloat(document.getElementById('manualMatchPrice').value);
         const manualPartNo = document.getElementById('manualPartNo').value.trim();
         const saveToSpire  = document.getElementById('saveToSpire').checked;
         const radioEl      = overlay.querySelector('input[name=matchChoice]:checked');
-
         if (manualVal > 0) {
-          result[item._idx] = {
-            ...result[item._idx],
-            wholesaleCost: manualVal,
-            msrp:          manualVal,
-            matchSource:   'manual',
-            confidence:    100
-          };
+          result[item._idx] = {...result[item._idx], wholesaleCost:manualVal, msrp:manualVal, matchSource:'manual', confidence:100};
           if (saveToSpire) {
             document.getElementById('modalConfirm').textContent = 'SAVING…';
             const saved = await appendToSpireSheet(manualPartNo, item.name, manualVal);
-            if (saved) {
-              document.getElementById('modalConfirm').textContent = '✓ SAVED';
-              await new Promise(r => setTimeout(r, 700));
-            }
+            if (saved) { document.getElementById('modalConfirm').textContent = '✓ SAVED'; await new Promise(r=>setTimeout(r,700)); }
           }
         } else if (radioEl && hasCandidates) {
           const chosen = item.candidates[parseInt(radioEl.value)];
-          result[item._idx] = {
-            ...result[item._idx],
-            wholesaleCost: chosen.cost,
-            msrp:          chosen.cost,
-            matchSource:   'spire',
-            matchName:     chosen.description,
-            matchPartNo:   chosen.part_no,
-            confidence:    item.confidence
-          };
+          result[item._idx] = {...result[item._idx], wholesaleCost:chosen.cost, msrp:chosen.cost, matchSource:'spire', matchName:chosen.description, matchPartNo:chosen.part_no, confidence:item.confidence};
         } else {
-          result[item._idx] = { ...result[item._idx], matchSource: 'estimate' };
+          result[item._idx] = {...result[item._idx], matchSource:'estimate'};
         }
         next();
       };
-
-      document.getElementById('modalSkip').onclick = () => {
-        result[item._idx] = { ...result[item._idx], matchSource: 'estimate' };
-        next();
-      };
+      document.getElementById('modalSkip').onclick = () => { result[item._idx] = {...result[item._idx], matchSource:'estimate'}; next(); };
     }
 
     function next() {
       document.getElementById('matchModal')?.remove();
       current++;
-      if (current < pending.length) {
-        showModal(pending[current]);
-      } else {
-        resolve(result);
-      }
+      if (current < pending.length) showModal(pending[current]); else resolve(result);
     }
-
     showModal(pending[0]);
   });
 }
@@ -871,14 +666,13 @@ async function runExtract() {
   if (!state.file) return;
   document.getElementById('extractBtn').disabled = true;
   document.getElementById('resetBtn').style.display = 'none';
-  setStatus('working', 'ANALYSING…');
+  setStatus('working','ANALYSING…');
   showLoading('Claude is reading your PDF and extracting gear…');
 
   try {
     const b64 = await toB64(state.file);
     const res = await fetch('https://apex-api-proxy.theonlyalexoliveira.workers.dev', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 8000,
@@ -899,21 +693,16 @@ Return ONLY valid JSON, no markdown, no preamble:
   "client": "string or null",
   "quotedRentalTotal": number or null,
   "gear": [
-    {
-      "name": "Full product name",
-      "qty": number,
-      "msrp": number,
-      "wholesaleCost": number
-    }
+    { "name": "Full product name", "qty": number, "msrp": number, "wholesaleCost": number }
   ]
 }
 
 Be thorough — include every line item. Base estimates on your knowledge of ETC, Astera, ROBE, Martin, GLP, L-Acoustics, d&b, Shure, disguise, Barco, Christie, ROE, and other professional AV brands. All dollar values must be CAD dealer wholesale.`,
         messages: [{
-          role: 'user',
-          content: [
-            { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: b64 } },
-            { type: 'text', text: 'Extract the gear list and wholesale cost estimates from this rental document.' }
+          role:'user',
+          content:[
+            {type:'document', source:{type:'base64', media_type:'application/pdf', data:b64}},
+            {type:'text', text:'Extract the gear list and wholesale cost estimates from this rental document.'}
           ]
         }]
       })
@@ -921,60 +710,42 @@ Be thorough — include every line item. Base estimates on your knowledge of ETC
 
     const data = await res.json();
     if (data.error) throw new Error(data.error.message);
-
-    const raw = data.content.find(b => b.type === 'text')?.text || '{}';
-    let clean = raw.replace(/```json|```/g, '').trim();
-    // If JSON was truncated, try to repair it
+    const raw = data.content.find(b=>b.type==='text')?.text || '{}';
+    let clean = raw.replace(/```json|```/g,'').trim();
     if (!clean.endsWith('}')) {
-      // Find last complete gear item and close the JSON
       const lastComma = clean.lastIndexOf('},');
-      const lastClose = clean.lastIndexOf('}');
-      if (lastComma > 0) {
-        clean = clean.substring(0, lastComma + 1) + '],"_truncated":true}';
-      } else {
-        clean = clean + ']}';
-      }
+      clean = lastComma > 0 ? clean.substring(0,lastComma+1)+ '],"_truncated":true}' : clean+']}';
     }
     const parsed = JSON.parse(clean);
-    if (parsed._truncated) {
-      console.warn('Response was truncated — some items may be missing');
-    }
-
-    console.log("Parsed gear:", JSON.stringify(parsed.gear));
+    if (parsed._truncated) console.warn('Response was truncated — some items may be missing');
     if (!parsed.gear?.length) throw new Error('No gear items found in document. Is this a Rental Point PDF?');
 
-    setStatus('working', 'MATCHING DB…');
+    setStatus('working','MATCHING DB…');
     showLoading('Matching gear against Apex Spire asset database…');
     const preMatched = await matchGearToSpire(parsed.gear);
-    // Prompt user to confirm/override any pending matches
-    setStatus('working', 'REVIEW…');
+    setStatus('working','REVIEW…');
     state.gear = await promptMatchQueue(preMatched);
-    state.quoteName = `${parsed.client || ''} · ${parsed.quoteCode || ''}`.trim().replace(/^·\s*|·\s*$/g, '');
-    state.totalWholesale = state.gear.reduce((s, g) => s + g.wholesaleCost * g.qty, 0);
+    state.quoteName = `${parsed.client||''} · ${parsed.quoteCode||''}`.trim().replace(/^·\s*|·\s*$/g,'');
+    state.totalWholesale = state.gear.reduce((s,g)=>s+g.wholesaleCost*g.qty,0);
 
-    // Use PDF total if found, otherwise sum MSRP
     if (parsed.quotedRentalTotal && parsed.quotedRentalTotal > 0) {
       state.quoteTotal = parsed.quotedRentalTotal;
     } else if (state.quoteTotal === 0) {
-      // fallback: estimate from MSRP
-      state.quoteTotal = parsed.gear.reduce((s,g) => s + g.msrp * g.qty, 0) * 0.15;
+      state.quoteTotal = parsed.gear.reduce((s,g)=>s+g.msrp*g.qty,0)*0.15;
     }
 
     state.currentRoi = (state.quoteTotal / state.totalWholesale) * 100;
-    state.targetRoi  = parseFloat(Math.min(state.currentRoi, 5).toFixed(2));
+    state.targetRoi  = parseFloat(Math.min(state.currentRoi,5).toFixed(2));
     state.weeks = 1;
 
-    // Update sidebar
     document.getElementById('quoteTotalDisplay').textContent = fmtCAD(state.quoteTotal);
-    document.getElementById('quoteMeta').textContent =
-      `${state.quoteName || 'Quote'} · 1-week base rate · pre-tax`;
-
-    setStatus('live', `${state.gear.length} ITEMS`);
+    document.getElementById('quoteMeta').textContent = `${state.quoteName||'Quote'} · 1-week base rate · pre-tax`;
+    setStatus('live',`${state.gear.length} ITEMS`);
     document.getElementById('resetBtn').style.display = 'block';
     renderResults();
 
-  } catch (err) {
-    setStatus('err', 'ERROR');
+  } catch(err) {
+    setStatus('err','ERROR');
     showError(err.message);
     document.getElementById('extractBtn').disabled = false;
   }
@@ -985,423 +756,268 @@ function renderResults() {
   const content = document.getElementById('content');
   content.innerHTML = '';
 
-  // Stat row
-  const totalMSRP = state.gear.reduce((s,g) => s + g.msrp * g.qty, 0);
-
   const stats = document.createElement('div');
   stats.innerHTML = `
     <div class="results-head">
-      <div class="rh-left">
-        <div class="rh-title">EXTRACTION COMPLETE</div>
-        <div class="rh-meta">${state.quoteName || 'Rental Quote'} · ${state.gear.length} line items</div>
-      </div>
+      <div><div class="rh-title">EXTRACTION COMPLETE</div>
+      <div class="rh-meta">${state.quoteName||'Rental Quote'} · ${state.gear.length} line items</div></div>
     </div>
     <div class="stat-row">
       <div class="stat"><div class="stat-lbl">Quote Total (1 wk)</div><div class="stat-val gold">${fmtCAD(state.quoteTotal)}</div></div>
       <div class="stat"><div class="stat-lbl">Asset Value</div><div class="stat-val green" id="wholesaleStatCard">${fmtCAD(state.totalWholesale)}</div></div>
       <div class="stat"><div class="stat-lbl">Current ROI (1 wk)</div><div class="stat-val blue" id="currentRoiStat">${state.currentRoi.toFixed(2)}%</div></div>
-    </div>
-  `;
+    </div>`;
   content.appendChild(stats);
 
-  // Gear table
   const tableWrap = document.createElement('div');
   tableWrap.innerHTML = `
     <div class="slabel" style="margin-bottom:10px;">Gear List · Wholesale Cost Breakdown</div>
-    <p style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:12px;">Click any <span style="color:var(--accent)">Wholesale Cost/Unit</span> value to edit it — totals and ROI update live.</p>
-  `;
+    <p style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:12px;">Click any <span style="color:var(--accent)">Wholesale Cost/Unit</span> to edit — totals update live.</p>`;
   content.appendChild(tableWrap);
 
-  // Build gear table dynamically so IDs and events work correctly
   const table = document.createElement('table');
   table.innerHTML = `<thead><tr>
-    <th>#</th><th>Section</th><th>Item</th><th>Code</th><th class="r">QTY</th>
-    <th class="r">Wholesale Cost / Unit</th>
-    <th class="r">Ext. Wholesale (Unit × QTY)</th>
+    <th>#</th><th>Item</th><th class="r">QTY</th>
+    <th class="r">Wholesale Cost / Unit</th><th class="r">Ext. Wholesale</th>
   </tr></thead>`;
+  const tbody = document.createElement('tbody'); tbody.id = 'gearTbody';
+  buildGearRows(tbody); table.appendChild(tbody);
+  const tfoot = document.createElement('tfoot'); tfoot.id = 'gearFoot';
+  tfoot.innerHTML = `<tr><td colspan="3">TOTALS</td><td class="r total-green" id="wholesaleTotalCell" colspan="2">${fmtCAD(state.totalWholesale)}</td></tr>`;
+  table.appendChild(tfoot); tableWrap.appendChild(table); content.appendChild(tableWrap);
 
-  const tbody = document.createElement('tbody');
-  tbody.id = 'gearTbody';
-  buildGearRows(tbody);
-  table.appendChild(tbody);
-
-  const tfoot = document.createElement('tfoot');
-  tfoot.id = 'gearFoot';
-  tfoot.innerHTML = `<tr>
-    <td colspan="4">TOTALS</td>
-    <td class="r total-green" id="wholesaleTotalCell">${fmtCAD(state.totalWholesale)}</td>
-  </tr>`;
-  table.appendChild(tfoot);
-  tableWrap.appendChild(table);
-
-  content.appendChild(tableWrap);
-
-  // Divider
-  const divider = document.createElement('hr');
-  divider.className = 'divider';
-  content.appendChild(divider);
-
-  // Pricer
-  const pricer = document.createElement('div');
-  pricer.className = 'pricer';
-  pricer.id = 'pricerPanel';
-  content.appendChild(pricer);
-
-  // Quote modeller section
-  const qmDiv = document.createElement('div');
-  qmDiv.id = 'quoteModellerSection';
-  content.appendChild(qmDiv);
-
-  renderPricer();
-  renderQuoteModeller();
+  const divider = document.createElement('hr'); divider.className = 'divider'; content.appendChild(divider);
+  const pricer = document.createElement('div'); pricer.className = 'pricer'; pricer.id = 'pricerPanel'; content.appendChild(pricer);
+  const qmDiv = document.createElement('div'); qmDiv.id = 'quoteModellerSection'; content.appendChild(qmDiv);
+  renderPricer(); renderQuoteModeller();
 }
 
 function renderPricer() {
   const pricer = document.getElementById('pricerPanel');
   if (!pricer) return;
-
-  const sliderMin = 0.1;
-  const sliderMax = 5;
+  const sliderMin = 0.1, sliderMax = 5;
   const pct = ((state.targetRoi - sliderMin) / (sliderMax - sliderMin) * 100).toFixed(1);
-
   pricer.innerHTML = `
     <div class="pricer-title">RENTAL RATE PRICER</div>
-
     <div class="pricer-grid">
-
-      <!-- ROI SLIDER -->
       <div class="slider-wrap">
         <div class="slider-top">
           <label>Target ROI % of Wholesale Cost</label>
           <div class="roi-readout" id="roiReadout">${state.targetRoi.toFixed(2)}%</div>
         </div>
-        <input type="range" id="roiSlider"
-          min="${sliderMin}" max="${sliderMax}" step="0.01"
-          value="${state.targetRoi}"
-          style="--pct:${pct}%"
-          oninput="onSlider(this.value)">
-        <div class="slider-scale">
-          <span>0.1%</span><span>1%</span><span>2%</span><span>3%</span><span>4%</span><span>5%</span>
-        </div>
+        <input type="range" id="roiSlider" min="${sliderMin}" max="${sliderMax}" step="0.01"
+          value="${state.targetRoi}" style="--pct:${pct}%" oninput="onSlider(this.value)">
+        <div class="slider-scale"><span>0.1%</span><span>1%</span><span>2%</span><span>3%</span><span>4%</span><span>5%</span></div>
         <div style="margin-top:10px;">
           <div class="field">
             <label>Or type exact %</label>
             <input type="number" id="roiManual" min="0.1" max="99" step="0.05"
-              value="${state.targetRoi.toFixed(2)}"
-              oninput="onManualRoi(this.value)"
-              style="font-size:14px;">
+              value="${state.targetRoi.toFixed(2)}" oninput="onManualRoi(this.value)" style="font-size:14px;">
           </div>
         </div>
       </div>
-
-      <!-- WEEKS -->
       <div class="weeks-wrap">
         <div class="weeks-top">
           <label>Number of Weeks</label>
           <div class="weeks-readout" id="weeksReadout">${state.weeks}w</div>
         </div>
         <div class="weeks-btns">
-          ${[0.5,1,2,3,4].map(w => `
-            <div class="wbtn${state.weeks===w?' active':''}" onclick="setWeeks(${w})">${w === 0.5 ? '½wk' : w+'wk'}</div>
-          `).join('')}
+          ${[0.5,1,2,3,4].map(w=>`<div class="wbtn${state.weeks===w?' active':''}" onclick="setWeeks(${w})">${w===0.5?'½wk':w+'wk'}</div>`).join('')}
         </div>
         <div class="weeks-custom">
           <label>Custom weeks:</label>
           <input type="number" id="weeksInput" min="0.5" max="52" step="0.5"
-            value="${state.weeks}" oninput="setWeeks(parseFloat(this.value)||0.5, true)">
+            value="${state.weeks}" oninput="setWeeks(parseFloat(this.value)||0.5,true)">
         </div>
-        <div style="margin-top:10px; font-family:var(--mono); font-size:10px; color:var(--muted); line-height:1.6;">
-          Your 1-week rate is the base.<br>
-          Total = (Wholesale × ROI%) × Weeks
+        <div style="margin-top:10px;font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.6;">
+          Your 1-week rate is the base.<br>Total = (Wholesale × ROI%) × Weeks
         </div>
       </div>
-
     </div>
-
-    <!-- OUTPUT -->
     <div class="output-panel">
       <div class="out-item">
         <div class="out-lbl">Net Client Price · Pre-Tax</div>
-        <div class="out-val gold" id="outNetPrice">${fmtCAD(state.totalWholesale * state.targetRoi/100 * state.weeks)}</div>
+        <div class="out-val gold" id="outNetPrice">${fmtCAD(state.totalWholesale*state.targetRoi/100*state.weeks)}</div>
         <div class="out-sub" id="outWeeksLabel">${state.weeks} week${state.weeks!==1?'s':''}</div>
       </div>
       <div class="out-divider"></div>
       <div class="out-item">
         <div class="out-lbl">Per-Week Rate</div>
-        <div class="out-val green" id="outPerWeek">${fmtCAD(state.totalWholesale * state.targetRoi/100)}</div>
+        <div class="out-val green" id="outPerWeek">${fmtCAD(state.totalWholesale*state.targetRoi/100)}</div>
         <div class="out-sub">at ${state.targetRoi.toFixed(2)}% ROI</div>
       </div>
-
-    </div>
-
-  `;
-
+    </div>`;
   updateOutput();
 }
 
 // ─── LIVE UPDATES ─────────────────────────────────────────
 function onSlider(val) {
   state.targetRoi = parseFloat(val);
-  const sliderMin = 0.1, sliderMax = 5;
-  const pct = ((state.targetRoi - sliderMin) / (sliderMax - sliderMin) * 100).toFixed(1);
-  document.getElementById('roiSlider').style.setProperty('--pct', pct + '%');
-  document.getElementById('roiReadout').textContent = state.targetRoi.toFixed(2) + '%';
+  const pct = ((state.targetRoi-0.1)/(5-0.1)*100).toFixed(1);
+  document.getElementById('roiSlider').style.setProperty('--pct',pct+'%');
+  document.getElementById('roiReadout').textContent = state.targetRoi.toFixed(2)+'%';
   document.getElementById('roiManual').value = state.targetRoi.toFixed(2);
   updateOutput();
 }
 
 function onManualRoi(val) {
-  const v = parseFloat(val);
-  if (isNaN(v) || v <= 0) return;
+  const v = parseFloat(val); if (isNaN(v)||v<=0) return;
   state.targetRoi = v;
-  const sliderMin = 0.1, sliderMax = 5;
-  const clamped = Math.min(Math.max(v, sliderMin), sliderMax);
-  const pct = ((clamped - sliderMin) / (sliderMax - sliderMin) * 100).toFixed(1);
+  const clamped = Math.min(Math.max(v,0.1),5);
+  const pct = ((clamped-0.1)/(5-0.1)*100).toFixed(1);
   const slider = document.getElementById('roiSlider');
-  if (slider) { slider.value = clamped; slider.style.setProperty('--pct', pct + '%'); }
+  if (slider) { slider.value=clamped; slider.style.setProperty('--pct',pct+'%'); }
   const readout = document.getElementById('roiReadout');
-  if (readout) readout.textContent = v.toFixed(2) + '%';
+  if (readout) readout.textContent = v.toFixed(2)+'%';
   updateOutput();
 }
 
 function setWeeks(w, skipBtns) {
-  state.weeks = Math.max(0.5, parseFloat(w) || 0.5);
-  document.getElementById('weeksReadout').textContent = (state.weeks % 1 === 0 ? state.weeks : state.weeks.toFixed(1)) + 'w';
+  state.weeks = Math.max(0.5, parseFloat(w)||0.5);
+  document.getElementById('weeksReadout').textContent = (state.weeks%1===0?state.weeks:state.weeks.toFixed(1))+'w';
   document.getElementById('weeksInput').value = state.weeks;
-  if (!skipBtns) {
-    document.querySelectorAll('.wbtn').forEach((b,i) => {
-      b.classList.toggle('active', [0.5,1,2,3,4][i] === state.weeks);
-    });
-  } else {
-    document.querySelectorAll('.wbtn').forEach(b => b.classList.remove('active'));
-  }
+  if (!skipBtns) document.querySelectorAll('.wbtn').forEach((b,i)=>b.classList.toggle('active',[0.5,1,2,3,4][i]===state.weeks));
+  else document.querySelectorAll('.wbtn').forEach(b=>b.classList.remove('active'));
   updateOutput();
 }
 
-function recalc() {
-  if (state.gear.length > 0) updateOutput();
-}
+function recalc() { if (state.gear.length>0) updateOutput(); }
 
 function updateOutput() {
-  setTimeout(() => renderQuoteModeller(), 50);
-  const perWeek  = state.totalWholesale * (state.targetRoi / 100);
-  const netTotal = perWeek * state.weeks;
-  const elNet   = document.getElementById('outNetPrice');
-  const elWeek  = document.getElementById('outPerWeek');
-  const elWL    = document.getElementById('outWeeksLabel');
-
+  setTimeout(()=>renderQuoteModeller(),50);
+  const perWeek=state.totalWholesale*(state.targetRoi/100), netTotal=perWeek*state.weeks;
+  const elNet=document.getElementById('outNetPrice'), elWeek=document.getElementById('outPerWeek'), elWL=document.getElementById('outWeeksLabel');
   if (!elNet) return;
-
-  elNet.textContent   = fmtCAD(netTotal);
-  elWeek.textContent  = fmtCAD(perWeek);
-  elWL.textContent    = `${state.weeks % 1 === 0 ? state.weeks : state.weeks.toFixed(1)} week${state.weeks!==1?'s':''}`;
+  elNet.textContent=fmtCAD(netTotal); elWeek.textContent=fmtCAD(perWeek);
+  elWL.textContent=`${state.weeks%1===0?state.weeks:state.weeks.toFixed(1)} week${state.weeks!==1?'s':''}`;
 }
 
 // ─── HELPERS ─────────────────────────────────────────────
 function toB64(file) {
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result.split(',')[1]);
-    r.onerror = () => rej(new Error('File read failed'));
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(r.result.split(',')[1]);
+    r.onerror=()=>rej(new Error('File read failed'));
     r.readAsDataURL(file);
   });
 }
-
 function fmtCAD(n) {
-  const abs = Math.abs(n);
-  const sign = n < 0 ? '-' : '';
-  return sign + '$' + abs.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const abs=Math.abs(n),sign=n<0?'-':'';
+  return sign+'$'+abs.toLocaleString('en-CA',{minimumFractionDigits:2,maximumFractionDigits:2});
 }
-
 function showLoading(msg) {
-  document.getElementById('content').innerHTML = `
-    <div class="loading">
-      <div class="spinner"></div>
-      <p>${msg}</p>
-    </div>`;
+  document.getElementById('content').innerHTML=`<div class="loading"><div class="spinner"></div><p>${msg}</p></div>`;
 }
-
 function showError(msg) {
-  document.getElementById('content').innerHTML = `
+  document.getElementById('content').innerHTML=`
     <div style="padding:40px;">
       <div class="error-box">⚠ ${msg}</div>
-      <p style="font-family:var(--mono);font-size:11px;color:var(--muted);">
-        Check that the PDF is a text-based Rental Point export and not a scanned image, then try again.
-      </p>
+      <p style="font-family:var(--mono);font-size:11px;color:var(--muted);">Check that the PDF is a text-based Rental Point export and not a scanned image, then try again.</p>
     </div>`;
 }
-
 function resetAll() {
-  window.state = { file:null, quoteTotal:0, quoteName:'', gear:[], totalWholesale:0, currentRoi:0, targetRoi:0, weeks:1 };
-  document.getElementById('fileChip').style.display = 'none';
-  document.getElementById('pdfFile').value = '';
-  document.getElementById('manualTotal').value = '';
-  document.getElementById('quoteTotalDisplay').textContent = '—';
-  document.getElementById('quoteMeta').textContent = 'Upload a PDF to populate';
-  document.getElementById('extractBtn').disabled = true;
-  document.getElementById('resetBtn').style.display = 'none';
-  setStatus('', 'READY');
-  document.getElementById('content').innerHTML = `
+  window.state={file:null,quoteTotal:0,quoteName:'',gear:[],totalWholesale:0,currentRoi:0,targetRoi:0,weeks:1};
+  document.getElementById('fileChip').style.display='none';
+  document.getElementById('pdfFile').value='';
+  document.getElementById('manualTotal').value='';
+  document.getElementById('quoteTotalDisplay').textContent='—';
+  document.getElementById('quoteMeta').textContent='Upload a PDF to populate';
+  document.getElementById('extractBtn').disabled=true;
+  document.getElementById('resetBtn').style.display='none';
+  setStatus('','READY');
+  document.getElementById('content').innerHTML=`
     <div class="empty">
       <div class="empty-glyph">%</div>
-      <p>Upload a Rental Point PDF. Claude will extract your gear list, estimate <code>wholesale replacement value</code>, and calculate your live ROI-based pricing.</p>
+      <p>Upload a Rental Point PDF. Claude will extract your gear list, match it against the <code>Apex Spire DB</code>, and calculate live ROI-based pricing.</p>
     </div>`;
 }
 
 // ─── BUILD GEAR ROWS ─────────────────────────────────────
 function buildGearRows(tbody) {
-  tbody.innerHTML = '';
-  state.gear.forEach((g, i) => {
-    const costVal = parseFloat(g.wholesaleCost) || parseFloat(g.msrp) || 0;
-    state.gear[i].wholesaleCost = costVal;
-    state.gear[i].msrp = costVal;
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
+  tbody.innerHTML='';
+  state.gear.forEach((g,i)=>{
+    const costVal=parseFloat(g.wholesaleCost)||parseFloat(g.msrp)||0;
+    state.gear[i].wholesaleCost=costVal; state.gear[i].msrp=costVal;
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
       <td style="font-family:var(--mono);color:var(--muted);font-size:13px;">${String(i+1).padStart(2,'0')}</td>
-      <td class="name">${g.name}${g.fromMemory ? '<span class="mem-badge">SAVED</span>' : ''}</td>
+      <td class="name">${g.name}${g.fromMemory?'<span class="mem-badge">SAVED</span>':''}</td>
       <td class="r">${g.qty}</td>
       <td class="r">
-        <input type="number" min="0" step="10"
-          value="${costVal.toFixed(2)}"
-          data-idx="${i}"
-          data-qty="${g.qty}"
+        <input type="number" min="0" step="10" value="${costVal.toFixed(2)}" data-idx="${i}" data-qty="${g.qty}"
           style="width:130px;padding:6px 10px;font-size:14px;background:var(--panel);border:1px solid var(--border);color:#34d27b;text-align:right;border-radius:3px;">
       </td>
-      <td class="r" style="color:#34d27b;" id="ext-${i}">${fmtCAD(costVal * g.qty)}</td>
-    `;
-
-    const inp = tr.querySelector('input');
-    inp.addEventListener('input', () => {
-      const idx = parseInt(inp.dataset.idx);
-      const qty = parseInt(inp.dataset.qty);
-      const val = parseFloat(inp.value) || 0;
-      state.gear[idx].wholesaleCost = val;
-      state.gear[idx].msrp = val;
-      savePrice(state.gear[idx].name, val);
-      const extCell = document.getElementById('ext-' + idx);
-      if (extCell) extCell.textContent = fmtCAD(val * qty);
+      <td class="r" style="color:#34d27b;" id="ext-${i}">${fmtCAD(costVal*g.qty)}</td>`;
+    const inp=tr.querySelector('input');
+    inp.addEventListener('input',()=>{
+      const idx=parseInt(inp.dataset.idx),qty=parseInt(inp.dataset.qty),val=parseFloat(inp.value)||0;
+      state.gear[idx].wholesaleCost=val; state.gear[idx].msrp=val;
+      savePrice(state.gear[idx].name,val);
+      const extCell=document.getElementById('ext-'+idx);
+      if (extCell) extCell.textContent=fmtCAD(val*qty);
       updateAfterEdit();
     });
-    inp.addEventListener('focus', () => inp.style.borderColor = '#f0b429');
-    inp.addEventListener('blur',  () => inp.style.borderColor = 'var(--border)');
-
+    inp.addEventListener('focus',()=>inp.style.borderColor='#f0b429');
+    inp.addEventListener('blur', ()=>inp.style.borderColor='var(--border)');
     tbody.appendChild(tr);
   });
 }
 
 // ─── LIVE EDIT HANDLER ───────────────────────────────────
 function updateAfterEdit() {
-  // Recalc wholesale total
-  state.totalWholesale = state.gear.reduce((s, g) => s + g.wholesaleCost * g.qty, 0);
-  state.currentRoi = state.totalWholesale > 0 ? (state.quoteTotal / state.totalWholesale) * 100 : 0;
-
-  // Update tfoot total
-  const totalCell = document.getElementById('wholesaleTotalCell');
-  if (totalCell) totalCell.textContent = fmtCAD(state.totalWholesale);
-
-  // Update stat cards
-  const wCard = document.getElementById('wholesaleStatCard');
-  if (wCard) wCard.textContent = fmtCAD(state.totalWholesale);
-  const roiCard = document.getElementById('currentRoiStat');
-  if (roiCard) roiCard.textContent = state.currentRoi.toFixed(2) + '%';
-
-  // Update pricer output — use current targetRoi against new totalWholesale
+  state.totalWholesale=state.gear.reduce((s,g)=>s+g.wholesaleCost*g.qty,0);
+  state.currentRoi=state.totalWholesale>0?(state.quoteTotal/state.totalWholesale)*100:0;
+  const totalCell=document.getElementById('wholesaleTotalCell'); if(totalCell) totalCell.textContent=fmtCAD(state.totalWholesale);
+  const wCard=document.getElementById('wholesaleStatCard'); if(wCard) wCard.textContent=fmtCAD(state.totalWholesale);
+  const roiCard=document.getElementById('currentRoiStat'); if(roiCard) roiCard.textContent=state.currentRoi.toFixed(2)+'%';
   updateOutput();
 }
 
 // ─── SHARED PRICE DB ─────────────────────────────────────
-const WORKER = 'https://apex-api-proxy.theonlyalexoliveira.workers.dev';
-
-function normalizeKey(name) {
-  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').trim().replace(/^-|-$/g, '');
+const WORKER='https://apex-api-proxy.theonlyalexoliveira.workers.dev';
+function normalizeKey(name){return name.toLowerCase().replace(/[^a-z0-9]+/g,'-').trim().replace(/^-|-$/g,'');}
+async function loadPriceDB(){try{const res=await fetch(WORKER+'/prices');if(!res.ok)return{};return await res.json();}catch(e){return{};}}
+async function savePrice(name,cost){
+  if(!name||!cost||cost<=0)return;
+  try{await fetch(WORKER+'/prices',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:normalizeKey(name),name,cost:parseFloat(cost)})});}catch(e){}
 }
-
-async function loadPriceDB() {
-  try {
-    const res = await fetch(WORKER + '/prices');
-    if (!res.ok) return {};
-    return await res.json();
-  } catch(e) { return {}; }
+async function deletePriceRemote(key){
+  try{await fetch(WORKER+'/prices/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key})});}catch(e){}
 }
-
-async function savePrice(name, cost) {
-  if (!name || !cost || cost <= 0) return;
-  try {
-    await fetch(WORKER + '/prices', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ key: normalizeKey(name), name, cost: parseFloat(cost) })
-    });
-  } catch(e) {}
-}
-
-async function deletePriceRemote(key) {
-  try {
-    await fetch(WORKER + '/prices/delete', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ key })
-    });
-  } catch(e) {}
-}
-
-async function applyPriceMemory(gear) {
-  const db = await loadPriceDB();
-  return gear.map(g => {
-    const saved = db[normalizeKey(g.name)];
-    if (saved && saved.cost > 0) {
-      return { ...g, wholesaleCost: saved.cost, msrp: saved.cost, fromMemory: true };
-    }
-    return { ...g, fromMemory: false };
-  });
-}
-
-async function togglePriceDB() {
-  const panel = document.getElementById('priceDBPanel');
-  if (panel.style.display === 'block') { panel.style.display = 'none'; return; }
-  panel.style.display = 'block';
-  panel.innerHTML = '<div style="padding:10px 12px;font-family:var(--mono);font-size:10px;color:var(--muted);">Loading...</div>';
-  const db = await loadPriceDB();
-  const items = Object.entries(db).sort((a,b) => a[1].name.localeCompare(b[1].name));
-  if (!items.length) {
-    panel.innerHTML = '<div style="padding:10px 12px;font-family:var(--mono);font-size:10px;color:var(--muted);">No saved prices yet.</div>';
-    return;
-  }
-  panel.innerHTML = items.map(([key, p]) => `
+async function togglePriceDB(){
+  const panel=document.getElementById('priceDBPanel');
+  if(panel.style.display==='block'){panel.style.display='none';return;}
+  panel.style.display='block';
+  panel.innerHTML='<div style="padding:10px 12px;font-family:var(--mono);font-size:10px;color:var(--muted);">Loading...</div>';
+  const db=await loadPriceDB();
+  const items=Object.entries(db).sort((a,b)=>a[1].name.localeCompare(b[1].name));
+  if(!items.length){panel.innerHTML='<div style="padding:10px 12px;font-family:var(--mono);font-size:10px;color:var(--muted);">No saved prices yet.</div>';return;}
+  panel.innerHTML=items.map(([key,p])=>`
     <div class="price-db-row">
       <span class="price-db-name" title="${p.name}">${p.name}</span>
       <span class="price-db-cost">${fmtCAD(p.cost)}</span>
       <span class="price-db-del" onclick="deleteAndRefresh('${key}')">×</span>
     </div>`).join('');
 }
-
-async function deleteAndRefresh(key) {
+async function deleteAndRefresh(key){
   await deletePriceRemote(key);
-  const panel = document.getElementById('priceDBPanel');
-  panel.style.display = 'none';
-  togglePriceDB();
+  const panel=document.getElementById('priceDBPanel');
+  panel.style.display='none'; togglePriceDB();
 }
 
 // ─── QUOTE MODELLER ──────────────────────────────────────
-function renderQuoteModeller() {
-  const section = document.getElementById('quoteModellerSection');
-  if (!section || !state.gear || !state.gear.length) return;
-
-  const weeksLabel = state.weeks % 1 === 0 ? state.weeks : state.weeks.toFixed(1);
-  const roi = state.targetRoi / 100;
-
-  let initModelTotal = 0;
-  let rows = '';
-
-  state.gear.forEach((g, i) => {
-    const unitWholesale = parseFloat(g.wholesaleCost) || 0;
-    // Unit rental rate per week = wholesale cost × ROI%
-    const calcRate = unitWholesale * roi;
-    const lineTotal = calcRate * state.weeks * g.qty;
-    initModelTotal += lineTotal;
-
-    rows += `
+function renderQuoteModeller(){
+  const section=document.getElementById('quoteModellerSection');
+  if(!section||!state.gear||!state.gear.length)return;
+  const weeksLabel=state.weeks%1===0?state.weeks:state.weeks.toFixed(1);
+  const roi=state.targetRoi/100;
+  let initModelTotal=0,rows='';
+  state.gear.forEach((g,i)=>{
+    const unitWholesale=parseFloat(g.wholesaleCost)||0;
+    const calcRate=unitWholesale*roi;
+    const lineTotal=calcRate*state.weeks*g.qty;
+    initModelTotal+=lineTotal;
+    rows+=`
       <tr>
         <td style="font-family:var(--mono);color:var(--muted);font-size:12px;padding:8px 12px;">${String(i+1).padStart(2,'0')}</td>
         <td class="name" style="padding:8px 12px;">${g.name}</td>
@@ -1409,32 +1025,23 @@ function renderQuoteModeller() {
         <td class="r" style="color:var(--green);padding:8px 12px;">${fmtCAD(unitWholesale)}</td>
         <td class="r" style="color:#4da6ff;padding:8px 12px;">${fmtCAD(calcRate)}/wk</td>
         <td class="r" style="padding:8px 12px;">
-          <input type="number" min="0" step="0.01"
-            value="${calcRate.toFixed(2)}"
-            data-qm-idx="${i}"
+          <input type="number" min="0" step="0.01" value="${calcRate.toFixed(2)}" data-qm-idx="${i}"
             style="width:115px;padding:5px 8px;font-size:13px;background:var(--panel);border:1px solid var(--border);color:var(--text);text-align:right;border-radius:3px;"
             oninput="onQmEdit(${i},this.value)"
-            onfocus="this.style.borderColor='var(--accent)'"
-            onblur="this.style.borderColor='var(--border)'">
+            onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
         </td>
         <td class="r" style="color:var(--accent);font-weight:600;padding:8px 12px;" id="qm-ext-${i}">${fmtCAD(lineTotal)}</td>
       </tr>`;
   });
-
-  section.innerHTML = `
+  section.innerHTML=`
     <hr class="divider">
     <div class="slabel" style="margin-bottom:14px;">Quote Builder · Unit Prices for Rental Point</div>
-    <p class="qm-note">
-      Unit price/wk = Wholesale Cost × <span>${state.targetRoi.toFixed(2)}% ROI</span> × <span>${weeksLabel} week${state.weeks!=1?'s':''}</span>.
-      Override any price — totals update live. Enter "Your Price/Wk" into Rental Point per line.
-    </p>
+    <p class="qm-note">Unit price/wk = Wholesale Cost × <span>${state.targetRoi.toFixed(2)}% ROI</span> × <span>${weeksLabel} week${state.weeks!=1?'s':''}</span>. Override any price — totals update live.</p>
     <table>
       <thead><tr>
         <th>#</th><th>Item</th><th class="r">QTY</th>
-        <th class="r">Wholesale/Unit</th>
-        <th class="r">Calc Price/Wk</th>
-        <th class="r">Your Price/Wk</th>
-        <th class="r">Line Total (${weeksLabel}wk)</th>
+        <th class="r">Wholesale/Unit</th><th class="r">Calc Price/Wk</th>
+        <th class="r">Your Price/Wk</th><th class="r">Line Total (${weeksLabel}wk)</th>
       </tr></thead>
       <tbody>${rows}</tbody>
       <tfoot><tr>
@@ -1448,28 +1055,22 @@ function renderQuoteModeller() {
         <div class="qm-total-val" id="qmTotalBig">${fmtCAD(initModelTotal)}</div>
         <div class="qm-copy-note">Enter "Your Price/Wk" column into Rental Point line by line</div>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-function onQmEdit(idx, val) {
-  const price = parseFloat(val) || 0;
-  const qty = state.gear[idx]?.qty || 0;
-  const extCell = document.getElementById('qm-ext-' + idx);
-  if (extCell) extCell.textContent = fmtCAD(price * state.weeks * qty);
-  let total = 0;
-  document.querySelectorAll('[data-qm-idx]').forEach(inp => {
-    const i = parseInt(inp.dataset.qmIdx);
-    total += (parseFloat(inp.value)||0) * state.weeks * (state.gear[i]?.qty||0);
+function onQmEdit(idx,val){
+  const price=parseFloat(val)||0, qty=state.gear[idx]?.qty||0;
+  const extCell=document.getElementById('qm-ext-'+idx);
+  if(extCell) extCell.textContent=fmtCAD(price*state.weeks*qty);
+  let total=0;
+  document.querySelectorAll('[data-qm-idx]').forEach(inp=>{
+    const i=parseInt(inp.dataset.qmIdx);
+    total+=(parseFloat(inp.value)||0)*state.weeks*(state.gear[i]?.qty||0);
   });
-  const gt = document.getElementById('qmGrandTotal');
-  const tb = document.getElementById('qmTotalBig');
-
-  if (gt) gt.textContent = fmtCAD(total);
-  if (tb) tb.textContent = fmtCAD(total);
-
+  const gt=document.getElementById('qmGrandTotal'), tb=document.getElementById('qmTotalBig');
+  if(gt) gt.textContent=fmtCAD(total);
+  if(tb) tb.textContent=fmtCAD(total);
 }
-
 </script>
 </body>
 </html>

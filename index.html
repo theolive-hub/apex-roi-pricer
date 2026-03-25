@@ -15,6 +15,7 @@
   --accent:  #f0b429;
   --green:   #34d27b;
   --red:     #e8390e;
+  --blue:    #4da6ff;
   --text:    #e2e5ec;
   --muted:   #8b92a5;
   --mono:    'IBM Plex Mono', monospace;
@@ -56,17 +57,14 @@ header {
 /* LAYOUT */
 .app {
   position: relative; z-index: 1;
-  display: grid;
-  grid-template-columns: 320px 1fr;
+  display: grid; grid-template-columns: 320px 1fr;
   min-height: calc(100vh - 54px);
 }
 
 /* SIDEBAR */
 .sidebar {
-  background: var(--surface);
-  border-right: 1px solid var(--border);
-  padding: 24px 20px;
-  display: flex; flex-direction: column; gap: 24px;
+  background: var(--surface); border-right: 1px solid var(--border);
+  padding: 24px 20px; display: flex; flex-direction: column; gap: 24px;
 }
 .slabel {
   font-family: var(--mono); font-size: 11px; letter-spacing: 2px;
@@ -98,9 +96,7 @@ header {
 .file-chip .fn span { color: var(--muted); display:block; }
 
 /* QUOTE BOX */
-.quote-box {
-  background: var(--panel); border: 1px solid var(--border); border-radius:3px; padding: 14px 16px;
-}
+.quote-box { background: var(--panel); border: 1px solid var(--border); border-radius:3px; padding: 14px 16px; }
 .qb-label { font-family: var(--mono); font-size:11px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:4px; }
 .qb-val { font-family: var(--display); font-size:36px; letter-spacing:2px; color: var(--accent); line-height:1; }
 .qb-sub { font-family: var(--mono); font-size:12px; color:var(--muted); margin-top:4px; }
@@ -108,21 +104,20 @@ header {
 /* FIELD */
 .field { display:flex; flex-direction:column; gap:5px; }
 .field label { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
-.field input, .field select {
+.field input {
   background:var(--panel); border:1px solid var(--border);
   color:var(--text); font-family:var(--mono); font-size:13px;
   padding:8px 11px; border-radius:3px; outline:none; width:100%;
   transition:border-color .15s;
 }
-.field input:focus, .field select:focus { border-color: var(--accent); }
+.field input:focus { border-color: var(--accent); }
 
 /* BUTTONS */
 .btn-primary {
   font-family: var(--display); font-size:16px; letter-spacing:3px;
   background: var(--accent); color:#000;
   border:none; border-radius:3px; padding:12px;
-  width:100%; cursor:pointer;
-  transition: opacity .15s, transform .1s;
+  width:100%; cursor:pointer; transition: opacity .15s, transform .1s;
 }
 .btn-primary:hover:not(:disabled) { opacity:.85; }
 .btn-primary:active { transform:scale(.98); }
@@ -135,7 +130,7 @@ header {
 }
 .btn-ghost:hover { border-color:var(--text); color:var(--text); }
 
-/* MAIN CONTENT */
+/* CONTENT */
 .content { padding: 28px 32px; overflow:auto; }
 
 /* EMPTY */
@@ -148,10 +143,7 @@ header {
 .empty code { font-family:var(--mono); font-size:11px; color:var(--accent); }
 
 /* LOADING */
-.loading {
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  height:100%; gap:18px;
-}
+.loading { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:18px; }
 .spinner { width:38px; height:38px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .65s linear infinite; }
 @keyframes spin { to { transform:rotate(360deg); } }
 .loading p { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:.5px; }
@@ -164,10 +156,7 @@ header {
 }
 
 /* RESULTS */
-.results-head {
-  display:flex; align-items:flex-start; justify-content:space-between;
-  margin-bottom:22px; flex-wrap:wrap; gap:12px;
-}
+.results-head { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:22px; flex-wrap:wrap; gap:12px; }
 .rh-title { font-family:var(--display); font-size:32px; letter-spacing:2px; color:#fff; line-height:1; }
 .rh-meta { font-family:var(--mono); font-size:13px; color:var(--muted); margin-top:6px; }
 
@@ -178,9 +167,9 @@ header {
 .stat-val { font-family:var(--display); font-size:22px; letter-spacing:1px; color:#fff; line-height:1; }
 .stat-val.gold  { color:var(--accent); }
 .stat-val.green { color:var(--green); }
-.stat-val.blue  { color:#4da6ff; }
+.stat-val.blue  { color:var(--blue); }
 
-/* GEAR TABLE */
+/* TABLE */
 table { width:100%; border-collapse:collapse; font-size:14px; margin-bottom:28px; }
 thead tr { background:var(--panel); border-bottom:2px solid var(--accent); }
 th { padding:10px 14px; text-align:left; font-family:var(--mono); font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
@@ -192,13 +181,12 @@ td.r { text-align:right; font-family:var(--mono); }
 td.name { color:#fff; font-weight:500; }
 tfoot tr { background:var(--panel); border-top:2px solid var(--border); }
 tfoot td { font-family:var(--mono); font-size:12px; font-weight:500; padding:9px 12px; }
-tfoot td.r { text-align:right; }
 tfoot td.total-green { color:var(--green); font-size:14px; }
 
 /* DIVIDER */
 .divider { border:none; border-top:1px solid var(--border); margin:28px 0; }
 
-/* ROI PRICER */
+/* PRICER */
 .pricer {
   background:var(--panel); border:1px solid var(--border); border-radius:4px;
   padding:28px 28px 24px; position:relative; overflow:hidden;
@@ -216,8 +204,7 @@ tfoot td.total-green { color:var(--green); font-size:14px; }
 .slider-top label { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
 .roi-readout { font-family:var(--display); font-size:40px; letter-spacing:2px; color:var(--accent); line-height:1; }
 input[type=range] {
-  -webkit-appearance:none; appearance:none;
-  width:100%; height:4px; border-radius:2px;
+  -webkit-appearance:none; appearance:none; width:100%; height:4px; border-radius:2px;
   background: linear-gradient(to right, var(--accent) 0%, var(--accent) var(--pct, 50%), var(--border) var(--pct, 50%));
   outline:none; cursor:pointer;
 }
@@ -234,7 +221,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .weeks-wrap { display:flex; flex-direction:column; gap:8px; }
 .weeks-top { display:flex; justify-content:space-between; align-items:center; }
 .weeks-top label { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
-.weeks-readout { font-family:var(--display); font-size:40px; letter-spacing:2px; color:#4da6ff; line-height:1; }
+.weeks-readout { font-family:var(--display); font-size:40px; letter-spacing:2px; color:var(--blue); line-height:1; }
 .weeks-btns { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin-top:4px; }
 .wbtn {
   font-family:var(--mono); font-size:13px; padding:8px 4px; text-align:center;
@@ -242,7 +229,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
   border-radius:2px; cursor:pointer; transition:all .12s;
 }
 .wbtn:hover { border-color:var(--text); color:var(--text); }
-.wbtn.active { background:rgba(77,166,255,.1); border-color:#4da6ff; color:#4da6ff; }
+.wbtn.active { background:rgba(77,166,255,.1); border-color:var(--blue); color:var(--blue); }
 .weeks-custom { display:flex; align-items:center; gap:8px; margin-top:8px; }
 .weeks-custom label { font-family:var(--mono); font-size:10px; color:var(--muted); white-space:nowrap; }
 .weeks-custom input {
@@ -250,7 +237,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
   font-family:var(--mono); font-size:13px; padding:6px 10px;
   border-radius:3px; outline:none; width:80px; transition:border-color .15s;
 }
-.weeks-custom input:focus { border-color:#4da6ff; }
+.weeks-custom input:focus { border-color:var(--blue); }
 
 /* OUTPUT */
 .output-panel {
@@ -291,48 +278,83 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .price-db-del { color:var(--muted); cursor:pointer; font-size:15px; flex-shrink:0; }
 .price-db-del:hover { color:var(--red); }
 
-/* SCROLLBAR */
 ::-webkit-scrollbar { width:5px; height:5px; }
 ::-webkit-scrollbar-track { background:var(--bg); }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
 
-/* MATCH MODAL */
+/* ── MATCH MODAL ── */
 .modal-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,.75);
+  position: fixed; inset: 0; background: rgba(0,0,0,.78);
   z-index: 200; display: flex; align-items: center; justify-content: center;
   backdrop-filter: blur(3px);
 }
 .modal {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 6px; padding: 28px 28px 24px; width: 560px; max-width: 95vw;
-  box-shadow: 0 24px 64px rgba(0,0,0,.6); position: relative;
+  border-radius: 6px; padding: 26px 26px 22px; width: 600px; max-width: 96vw;
+  max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(0,0,0,.65); position: relative;
 }
 .modal::before {
   content:''; position:absolute; top:0; left:0; right:0; height:2px;
-  background: linear-gradient(90deg, var(--accent), var(--green)); border-radius: 6px 6px 0 0;
+  background: linear-gradient(90deg, var(--accent), var(--green)); border-radius:6px 6px 0 0;
 }
-.modal-title { font-family:var(--display); font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:4px; }
-.modal-sub { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
+.modal-title { font-family:var(--display); font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:3px; }
+.modal-sub { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:18px; }
 .modal-item-name {
   background: var(--panel); border:1px solid var(--border); border-radius:3px;
-  padding:10px 14px; font-size:14px; color:#fff; font-weight:500; margin-bottom:20px;
+  padding:10px 14px; font-size:14px; color:#fff; font-weight:500; margin-bottom:18px;
 }
-.modal-section-label { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px; }
+.modal-section-label {
+  font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:1.5px;
+  text-transform:uppercase; margin-bottom:8px;
+}
+
+/* match options */
 .match-option {
   display:flex; align-items:center; gap:12px;
   background: var(--panel); border:1px solid var(--border);
-  border-radius:3px; padding:10px 14px; margin-bottom:8px;
+  border-radius:3px; padding:9px 13px; margin-bottom:7px;
   cursor:pointer; transition: border-color .15s, background .15s;
 }
 .match-option:hover { border-color: var(--accent); background: rgba(240,180,41,.04); }
 .match-option.selected { border-color: var(--green); background: rgba(52,210,123,.06); }
-.match-option input[type=radio] { accent-color: var(--green); width:16px; height:16px; flex-shrink:0; }
-.match-option-body { flex:1; }
-.match-option-name { font-size:13px; color:#fff; line-height:1.4; }
-.match-option-meta { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:2px; }
-.match-option-cost { font-family:var(--display); font-size:18px; color:var(--green); letter-spacing:1px; flex-shrink:0; }
-.modal-divider { border:none; border-top:1px solid var(--border); margin:16px 0; }
-.manual-price-wrap { display:flex; align-items:center; gap:10px; }
+.match-option input[type=radio] { accent-color: var(--green); width:15px; height:15px; flex-shrink:0; }
+.match-option-body { flex:1; min-width:0; }
+.match-option-name { font-size:12px; color:#fff; line-height:1.4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.match-option-meta { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:1px; }
+.match-option-cost { font-family:var(--display); font-size:17px; color:var(--green); letter-spacing:1px; flex-shrink:0; }
+
+.modal-divider { border:none; border-top:1px solid var(--border); margin:14px 0; }
+
+/* force lookup */
+.force-lookup-wrap {
+  background: rgba(77,166,255,.05); border:1px solid rgba(77,166,255,.2);
+  border-radius:3px; padding:12px 14px; margin-bottom:14px;
+}
+.force-lookup-label { font-family:var(--mono); font-size:10px; color:var(--blue); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; }
+.force-lookup-row { display:flex; gap:8px; align-items:center; }
+.force-lookup-input {
+  background:var(--panel); border:1px solid var(--border); color:var(--text);
+  font-family:var(--mono); font-size:13px; padding:7px 11px; border-radius:3px;
+  outline:none; flex:1; transition:border-color .15s;
+}
+.force-lookup-input:focus { border-color:var(--blue); }
+.force-lookup-btn {
+  font-family:var(--mono); font-size:11px; letter-spacing:1px;
+  background: var(--blue); color:#000; border:none; border-radius:3px;
+  padding:7px 14px; cursor:pointer; white-space:nowrap; transition:opacity .15s;
+}
+.force-lookup-btn:hover { opacity:.8; }
+.force-lookup-result {
+  margin-top:8px; padding:8px 11px; border-radius:3px;
+  font-family:var(--mono); font-size:11px; line-height:1.6;
+  display:none;
+}
+.force-lookup-result.found { background:rgba(52,210,123,.08); border:1px solid rgba(52,210,123,.25); color:var(--green); }
+.force-lookup-result.notfound { background:rgba(232,57,14,.07); border:1px solid rgba(232,57,14,.2); color:var(--red); }
+
+/* manual price */
+.manual-price-wrap { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
 .manual-price-wrap label { font-family:var(--mono); font-size:11px; color:var(--muted); white-space:nowrap; }
 .manual-price-input {
   background:var(--panel); border:1px solid var(--border); color:var(--text);
@@ -340,12 +362,13 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
   outline:none; width:140px; transition:border-color .15s;
 }
 .manual-price-input:focus { border-color: var(--accent); }
-.modal-actions { display:flex; gap:10px; margin-top:20px; justify-content:flex-end; }
+
+.modal-actions { display:flex; gap:10px; margin-top:18px; justify-content:flex-end; }
 .modal-skip { font-family:var(--mono); font-size:11px; background:transparent; border:1px solid var(--border); color:var(--muted); border-radius:3px; padding:9px 16px; cursor:pointer; transition:all .15s; }
 .modal-skip:hover { border-color:var(--text); color:var(--text); }
 .modal-confirm { font-family:var(--display); font-size:16px; letter-spacing:2px; background:var(--accent); color:#000; border:none; border-radius:3px; padding:10px 24px; cursor:pointer; transition:opacity .15s; }
 .modal-confirm:hover { opacity:.85; }
-.modal-progress { font-family:var(--mono); font-size:10px; color:var(--muted); position:absolute; top:20px; right:20px; }
+.modal-progress { font-family:var(--mono); font-size:10px; color:var(--muted); position:absolute; top:18px; right:18px; }
 </style>
 </head>
 <body>
@@ -413,19 +436,19 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 
 <script>
 // ─── VERSION ─────────────────────────────────────────────
-const VERSION = '2.0.1';
+const VERSION = '2.0.2';
 const CHANGELOG = [
+  { v:'2.0.2', date:'2026-03-25', notes:'5 match candidates in modal, force-match by part number lookup' },
   { v:'2.0.1', date:'2026-03-25', notes:'Fix Sheets tab name to apex_asset_db' },
-  { v:'2.0.0', date:'2026-03-25', notes:'Spire DB fuzzy matching, match review modal, OAuth write-back, Pull Sheet support, 8k token limit' },
-  { v:'1.2.7', date:'2026-03-19', notes:'Editable wholesale costs, dynamic line recalc, font/contrast improvements' },
-  { v:'1.0.0', date:'2026-03-19', notes:'Initial release' },
+  { v:'2.0.0', date:'2026-03-25', notes:'Spire DB fuzzy matching, match review modal, OAuth write-back, 8k token limit' },
+  { v:'1.2.7', date:'2026-03-19', notes:'Editable wholesale costs, dynamic line recalc' },
 ];
 document.getElementById('versionBadge').textContent = 'v' + VERSION;
 
 // ─── CONFIG ──────────────────────────────────────────────
 const SHEETS_ID       = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';
 const SHEETS_KEY      = 'AIzaSyAiRlEx6DbYc6BAlYTcyAcoBzb5gd3fI3c';
-const SHEETS_TAB      = 'apex_asset_db';   // ← FIXED (was 'Sheet1')
+const SHEETS_TAB      = 'apex_asset_db';
 const OAUTH_CLIENT_ID = '253838190928-9igjv2fu3g8frjpsf3ef0fvjr8a593dc.apps.googleusercontent.com';
 const OAUTH_SCOPES    = 'https://www.googleapis.com/auth/spreadsheets';
 let   gAuthToken      = null;
@@ -444,7 +467,6 @@ dropZone.addEventListener('drop', e => {
   const f = e.dataTransfer.files[0];
   if (f?.type === 'application/pdf') loadFile(f);
 });
-
 function loadFile(file) {
   state.file = file;
   const chip = document.getElementById('fileChip');
@@ -453,7 +475,6 @@ function loadFile(file) {
   document.getElementById('extractBtn').disabled = false;
   setStatus('', 'PDF LOADED');
 }
-
 function onManualTotal(val) {
   const n = parseFloat(val) || 0;
   state.quoteTotal = n;
@@ -527,7 +548,7 @@ async function loadSpireDB() {
   return spireDB;
 }
 
-// ─── FUZZY MATCH ─────────────────────────────────────────
+// ─── FUZZY MATCH — returns top 5 ─────────────────────────
 function fuzzyMatch(name, db) {
   const normalize = s => s.toLowerCase().replace(/['']/g,'').replace(/[^a-z0-9.x]/g,' ').replace(/\s+/g,' ').trim();
   const needle = normalize(name);
@@ -548,11 +569,23 @@ function fuzzyMatch(name, db) {
     if (score > 0) candidates.push({...row, score});
   }
   candidates.sort((a,b) => b.score - a.score);
-  const top = candidates.slice(0,3);
+  const top = candidates.slice(0, 5); // ← 5 candidates
   if (top.length === 0) return {match:null, confidence:0, candidates:[]};
   const maxScore = techWords.reduce((s,w)=>s+w.length*3,0) + descWords.reduce((s,w)=>s+w.length,0) + 100;
   const confidence = Math.min(98, Math.round((top[0].score / Math.max(maxScore*0.35,1))*100));
   return {match:top[0], confidence, candidates:top};
+}
+
+// ─── PART NUMBER FORCE LOOKUP ────────────────────────────
+function lookupPartNo(code) {
+  if (!spireDB || !code) return null;
+  const key = code.trim().toUpperCase();
+  // Exact part_no match
+  const exact = spireDB.find(r => r.part_no.toUpperCase() === key);
+  if (exact) return exact;
+  // Partial / contains match
+  const partial = spireDB.find(r => r.part_no.toUpperCase().includes(key) || key.includes(r.part_no.toUpperCase()));
+  return partial || null;
 }
 
 async function matchGearToSpire(gear) {
@@ -562,7 +595,8 @@ async function matchGearToSpire(gear) {
   return gear.map(g => {
     if (g.code) {
       const exact = codeIndex[g.code.trim().toUpperCase()];
-      if (exact && exact.cost > 0) return {...g, wholesaleCost:exact.cost, msrp:exact.cost, matchSource:'spire', matchName:exact.description, matchPartNo:exact.part_no, confidence:100, candidates:[]};
+      if (exact && exact.cost > 0)
+        return {...g, wholesaleCost:exact.cost, msrp:exact.cost, matchSource:'spire', matchName:exact.description, matchPartNo:exact.part_no, confidence:100, candidates:[]};
     }
     const result = fuzzyMatch(g.name, db);
     if (result.match && result.confidence >= 80)
@@ -584,32 +618,46 @@ function promptMatchQueue(gearList) {
       const overlay = document.createElement('div');
       overlay.className = 'modal-overlay'; overlay.id = 'matchModal';
       const hasCandidates = item.candidates && item.candidates.length > 0;
+
       overlay.innerHTML = `
         <div class="modal">
           <div class="modal-progress">${current+1} of ${pending.length}</div>
           <div class="modal-title">MATCH REQUIRED</div>
-          <div class="modal-sub">Select a Spire record or enter a manual price</div>
+          <div class="modal-sub">Select a Spire match, force-lookup a part number, or enter a manual price</div>
           <div class="modal-item-name">📦 ${item.name} &nbsp;×&nbsp; ${item.qty}</div>
+
           ${hasCandidates ? `
-            <div class="modal-section-label">Possible Spire Matches</div>
-            ${item.candidates.map((c,ci)=>`
+            <div class="modal-section-label">Top ${item.candidates.length} Spire Matches</div>
+            ${item.candidates.map((c,ci) => `
               <label class="match-option">
                 <input type="radio" name="matchChoice" value="${ci}" ${ci===0?'checked':''}>
                 <div class="match-option-body">
-                  <div class="match-option-name">${c.description}</div>
+                  <div class="match-option-name" title="${c.description}">${c.description}</div>
                   <div class="match-option-meta">${c.part_no||'—'}</div>
                 </div>
                 <div class="match-option-cost">${fmtCAD(c.cost)}</div>
               </label>`).join('')}
             <hr class="modal-divider">
-          ` : `<div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:16px;">No Spire matches found for this item.</div>`}
+          ` : `<div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:14px;">No fuzzy matches found. Use part number lookup or manual price below.</div>`}
+
+          <!-- FORCE PART NO LOOKUP -->
+          <div class="force-lookup-wrap">
+            <div class="force-lookup-label">🔍 Force Match by Part Number</div>
+            <div class="force-lookup-row">
+              <input class="force-lookup-input" id="forceLookupInput" type="text" placeholder="e.g. SL-NITRO510C or CF2-72"
+                onkeydown="if(event.key==='Enter') doForceLookup()">
+              <button class="force-lookup-btn" onclick="doForceLookup()">LOOKUP</button>
+            </div>
+            <div class="force-lookup-result" id="forceLookupResult"></div>
+          </div>
+
           <div class="modal-section-label">Manual Price Override (CAD)</div>
           <div class="manual-price-wrap">
             <label>Wholesale Cost:</label>
             <input class="manual-price-input" id="manualMatchPrice" type="number" min="0" step="10" placeholder="0.00">
           </div>
-          <div style="margin-top:14px;">
-            <label style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;display:block;margin-bottom:6px;">Part No. (optional)</label>
+          <div style="margin-top:12px;">
+            <label style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;display:block;margin-bottom:6px;">Part No. (for Spire DB save)</label>
             <input class="manual-price-input" id="manualPartNo" type="text" placeholder="e.g. CF2-72" style="width:100%;">
           </div>
           <div style="margin-top:10px;">
@@ -623,18 +671,56 @@ function promptMatchQueue(gearList) {
             <button class="modal-confirm" id="modalConfirm">CONFIRM →</button>
           </div>
         </div>`;
+
       document.body.appendChild(overlay);
+
+      // Radio selection styling
       overlay.querySelectorAll('.match-option').forEach(el => {
-        el.addEventListener('click', () => { overlay.querySelectorAll('.match-option').forEach(e=>e.classList.remove('selected')); el.classList.add('selected'); });
+        el.addEventListener('click', () => {
+          overlay.querySelectorAll('.match-option').forEach(e=>e.classList.remove('selected'));
+          el.classList.add('selected');
+          // Clear force lookup selection when switching to fuzzy
+          overlay._forceLookupMatch = null;
+          const flr = document.getElementById('forceLookupResult');
+          if (flr) { flr.style.display='none'; flr.className='force-lookup-result'; }
+        });
       });
       if (overlay.querySelector('.match-option')) overlay.querySelector('.match-option').classList.add('selected');
+
+      // Force lookup handler — scoped to this modal via overlay ref
+      overlay._forceLookupMatch = null;
+      window.doForceLookup = () => {
+        const code = document.getElementById('forceLookupInput').value.trim();
+        const resultEl = document.getElementById('forceLookupResult');
+        if (!code) return;
+        const found = lookupPartNo(code);
+        if (found) {
+          overlay._forceLookupMatch = found;
+          resultEl.className = 'force-lookup-result found';
+          resultEl.style.display = 'block';
+          resultEl.innerHTML = `✓ MATCHED: <strong>${found.description}</strong><br>Part No: ${found.part_no} &nbsp;·&nbsp; Cost: <strong>${fmtCAD(found.cost)}</strong><br><span style="color:var(--muted);font-size:10px;">This will be used as the match. Click CONFIRM to apply.</span>`;
+          // Deselect fuzzy options
+          overlay.querySelectorAll('.match-option').forEach(e=>e.classList.remove('selected'));
+          overlay.querySelectorAll('input[name=matchChoice]').forEach(e=>e.checked=false);
+        } else {
+          overlay._forceLookupMatch = null;
+          resultEl.className = 'force-lookup-result notfound';
+          resultEl.style.display = 'block';
+          resultEl.innerHTML = `✗ No record found for "<strong>${code}</strong>" — try a different part number or use manual price.`;
+        }
+      };
 
       document.getElementById('modalConfirm').onclick = async () => {
         const manualVal    = parseFloat(document.getElementById('manualMatchPrice').value);
         const manualPartNo = document.getElementById('manualPartNo').value.trim();
         const saveToSpire  = document.getElementById('saveToSpire').checked;
         const radioEl      = overlay.querySelector('input[name=matchChoice]:checked');
-        if (manualVal > 0) {
+        const forceMatch   = overlay._forceLookupMatch;
+
+        if (forceMatch) {
+          // Force part number match wins
+          result[item._idx] = {...result[item._idx], wholesaleCost:forceMatch.cost, msrp:forceMatch.cost, matchSource:'spire', matchName:forceMatch.description, matchPartNo:forceMatch.part_no, confidence:100};
+        } else if (manualVal > 0) {
           result[item._idx] = {...result[item._idx], wholesaleCost:manualVal, msrp:manualVal, matchSource:'manual', confidence:100};
           if (saveToSpire) {
             document.getElementById('modalConfirm').textContent = 'SAVING…';
@@ -649,7 +735,10 @@ function promptMatchQueue(gearList) {
         }
         next();
       };
-      document.getElementById('modalSkip').onclick = () => { result[item._idx] = {...result[item._idx], matchSource:'estimate'}; next(); };
+
+      document.getElementById('modalSkip').onclick = () => {
+        result[item._idx] = {...result[item._idx], matchSource:'estimate'}; next();
+      };
     }
 
     function next() {
@@ -683,7 +772,7 @@ Your job: extract every line-item piece of equipment from the rental PDF, and fo
 PRICING RULE: Canadian dealer wholesale = (USD retail MSRP) x 1.39 (USD to CAD) x 0.50 (dealer discount). For example: a fixture with USD MSRP of $1000 = $1390 CAD x 0.50 = $695 CAD wholesale. Return $695 as both msrp and wholesaleCost. Do NOT return USD retail prices. Do NOT return CAD retail prices. Return only CAD wholesale dealer cost.
 
 Also extract:
-- The NET pre-tax rental total from the PDF. If there is a discount line (e.g. "Rental Discount", "Discount", "Less discount"), subtract it from the gross rental to get the net. Return the net amount after any discounts.
+- The NET pre-tax rental total from the PDF. If there is a discount line subtract it. Return net amount after discounts.
 - The order/quote code
 - The client name
 
@@ -714,10 +803,9 @@ Be thorough — include every line item. Base estimates on your knowledge of ETC
     let clean = raw.replace(/```json|```/g,'').trim();
     if (!clean.endsWith('}')) {
       const lastComma = clean.lastIndexOf('},');
-      clean = lastComma > 0 ? clean.substring(0,lastComma+1)+ '],"_truncated":true}' : clean+']}';
+      clean = lastComma > 0 ? clean.substring(0,lastComma+1)+']}' : clean+']}';
     }
     const parsed = JSON.parse(clean);
-    if (parsed._truncated) console.warn('Response was truncated — some items may be missing');
     if (!parsed.gear?.length) throw new Error('No gear items found in document. Is this a Rental Point PDF?');
 
     setStatus('working','MATCHING DB…');
@@ -782,8 +870,8 @@ function renderResults() {
   </tr></thead>`;
   const tbody = document.createElement('tbody'); tbody.id = 'gearTbody';
   buildGearRows(tbody); table.appendChild(tbody);
-  const tfoot = document.createElement('tfoot'); tfoot.id = 'gearFoot';
-  tfoot.innerHTML = `<tr><td colspan="3">TOTALS</td><td class="r total-green" id="wholesaleTotalCell" colspan="2">${fmtCAD(state.totalWholesale)}</td></tr>`;
+  const tfoot = document.createElement('tfoot');
+  tfoot.innerHTML = `<tr><td colspan="3">TOTALS</td><td class="total-green" id="wholesaleTotalCell" colspan="2" style="text-align:right;">${fmtCAD(state.totalWholesale)}</td></tr>`;
   table.appendChild(tfoot); tableWrap.appendChild(table); content.appendChild(tableWrap);
 
   const divider = document.createElement('hr'); divider.className = 'divider'; content.appendChild(divider);
@@ -796,7 +884,7 @@ function renderPricer() {
   const pricer = document.getElementById('pricerPanel');
   if (!pricer) return;
   const sliderMin = 0.1, sliderMax = 5;
-  const pct = ((state.targetRoi - sliderMin) / (sliderMax - sliderMin) * 100).toFixed(1);
+  const pct = ((state.targetRoi-sliderMin)/(sliderMax-sliderMin)*100).toFixed(1);
   pricer.innerHTML = `
     <div class="pricer-title">RENTAL RATE PRICER</div>
     <div class="pricer-grid">
@@ -859,7 +947,6 @@ function onSlider(val) {
   document.getElementById('roiManual').value = state.targetRoi.toFixed(2);
   updateOutput();
 }
-
 function onManualRoi(val) {
   const v = parseFloat(val); if (isNaN(v)||v<=0) return;
   state.targetRoi = v;
@@ -871,7 +958,6 @@ function onManualRoi(val) {
   if (readout) readout.textContent = v.toFixed(2)+'%';
   updateOutput();
 }
-
 function setWeeks(w, skipBtns) {
   state.weeks = Math.max(0.5, parseFloat(w)||0.5);
   document.getElementById('weeksReadout').textContent = (state.weeks%1===0?state.weeks:state.weeks.toFixed(1))+'w';
@@ -880,9 +966,7 @@ function setWeeks(w, skipBtns) {
   else document.querySelectorAll('.wbtn').forEach(b=>b.classList.remove('active'));
   updateOutput();
 }
-
 function recalc() { if (state.gear.length>0) updateOutput(); }
-
 function updateOutput() {
   setTimeout(()=>renderQuoteModeller(),50);
   const perWeek=state.totalWholesale*(state.targetRoi/100), netTotal=perWeek*state.weeks;
@@ -912,7 +996,7 @@ function showError(msg) {
   document.getElementById('content').innerHTML=`
     <div style="padding:40px;">
       <div class="error-box">⚠ ${msg}</div>
-      <p style="font-family:var(--mono);font-size:11px;color:var(--muted);">Check that the PDF is a text-based Rental Point export and not a scanned image, then try again.</p>
+      <p style="font-family:var(--mono);font-size:11px;color:var(--muted);">Check that the PDF is a text-based Rental Point export, then try again.</p>
     </div>`;
 }
 function resetAll() {
@@ -963,7 +1047,6 @@ function buildGearRows(tbody) {
   });
 }
 
-// ─── LIVE EDIT HANDLER ───────────────────────────────────
 function updateAfterEdit() {
   state.totalWholesale=state.gear.reduce((s,g)=>s+g.wholesaleCost*g.qty,0);
   state.currentRoi=state.totalWholesale>0?(state.quoteTotal/state.totalWholesale)*100:0;
@@ -1023,7 +1106,7 @@ function renderQuoteModeller(){
         <td class="name" style="padding:8px 12px;">${g.name}</td>
         <td class="r" style="padding:8px 12px;">${g.qty}</td>
         <td class="r" style="color:var(--green);padding:8px 12px;">${fmtCAD(unitWholesale)}</td>
-        <td class="r" style="color:#4da6ff;padding:8px 12px;">${fmtCAD(calcRate)}/wk</td>
+        <td class="r" style="color:var(--blue);padding:8px 12px;">${fmtCAD(calcRate)}/wk</td>
         <td class="r" style="padding:8px 12px;">
           <input type="number" min="0" step="0.01" value="${calcRate.toFixed(2)}" data-qm-idx="${i}"
             style="width:115px;padding:5px 8px;font-size:13px;background:var(--panel);border:1px solid var(--border);color:var(--text);text-align:right;border-radius:3px;"
@@ -1059,7 +1142,7 @@ function renderQuoteModeller(){
 }
 
 function onQmEdit(idx,val){
-  const price=parseFloat(val)||0, qty=state.gear[idx]?.qty||0;
+  const price=parseFloat(val)||0,qty=state.gear[idx]?.qty||0;
   const extCell=document.getElementById('qm-ext-'+idx);
   if(extCell) extCell.textContent=fmtCAD(price*state.weeks*qty);
   let total=0;
@@ -1067,7 +1150,7 @@ function onQmEdit(idx,val){
     const i=parseInt(inp.dataset.qmIdx);
     total+=(parseFloat(inp.value)||0)*state.weeks*(state.gear[i]?.qty||0);
   });
-  const gt=document.getElementById('qmGrandTotal'), tb=document.getElementById('qmTotalBig');
+  const gt=document.getElementById('qmGrandTotal'),tb=document.getElementById('qmTotalBig');
   if(gt) gt.textContent=fmtCAD(total);
   if(tb) tb.textContent=fmtCAD(total);
 }

@@ -328,6 +328,63 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 ::-webkit-scrollbar { width:5px; height:5px; }
 ::-webkit-scrollbar-track { background:var(--bg); }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+
+/* ── MATCH MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.75);
+  z-index: 200; display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(3px);
+}
+.modal {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 28px 28px 24px; width: 560px; max-width: 95vw;
+  box-shadow: 0 24px 64px rgba(0,0,0,.6);
+  position: relative;
+}
+.modal::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background: linear-gradient(90deg, var(--accent), var(--green));
+  border-radius: 6px 6px 0 0;
+}
+.modal-title { font-family:var(--display); font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:4px; }
+.modal-sub { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:20px; }
+.modal-item-name {
+  background: var(--panel); border:1px solid var(--border); border-radius:3px;
+  padding:10px 14px; font-size:14px; color:#fff; font-weight:500; margin-bottom:20px;
+}
+.modal-section-label {
+  font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:1.5px;
+  text-transform:uppercase; margin-bottom:10px;
+}
+.match-option {
+  display:flex; align-items:center; gap:12px;
+  background: var(--panel); border:1px solid var(--border);
+  border-radius:3px; padding:10px 14px; margin-bottom:8px;
+  cursor:pointer; transition: border-color .15s, background .15s;
+}
+.match-option:hover { border-color: var(--accent); background: rgba(240,180,41,.04); }
+.match-option.selected { border-color: var(--green); background: rgba(52,210,123,.06); }
+.match-option input[type=radio] { accent-color: var(--green); width:16px; height:16px; flex-shrink:0; }
+.match-option-body { flex:1; }
+.match-option-name { font-size:13px; color:#fff; line-height:1.4; }
+.match-option-meta { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:2px; }
+.match-option-cost { font-family:var(--display); font-size:18px; color:var(--green); letter-spacing:1px; flex-shrink:0; }
+.modal-divider { border:none; border-top:1px solid var(--border); margin:16px 0; }
+.manual-price-wrap { display:flex; align-items:center; gap:10px; }
+.manual-price-wrap label { font-family:var(--mono); font-size:11px; color:var(--muted); white-space:nowrap; }
+.manual-price-input {
+  background:var(--panel); border:1px solid var(--border); color:var(--text);
+  font-family:var(--mono); font-size:14px; padding:8px 12px; border-radius:3px;
+  outline:none; width:140px; transition:border-color .15s;
+}
+.manual-price-input:focus { border-color: var(--accent); }
+.modal-actions { display:flex; gap:10px; margin-top:20px; justify-content:flex-end; }
+.modal-skip { font-family:var(--mono); font-size:11px; background:transparent; border:1px solid var(--border); color:var(--muted); border-radius:3px; padding:9px 16px; cursor:pointer; transition:all .15s; }
+.modal-skip:hover { border-color:var(--text); color:var(--text); }
+.modal-confirm { font-family:var(--display); font-size:16px; letter-spacing:2px; background:var(--accent); color:#000; border:none; border-radius:3px; padding:10px 24px; cursor:pointer; transition:opacity .15s; }
+.modal-confirm:hover { opacity:.85; }
+.modal-progress { font-family:var(--mono); font-size:10px; color:var(--muted); position:absolute; top:20px; right:20px; }
+
 </style>
 </head>
 <body>
@@ -403,6 +460,14 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 </div>
 
 <script>
+// ─── CONFIG ──────────────────────────────────────────────
+const SHEETS_ID      = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';
+const SHEETS_KEY     = 'AIzaSyAiRlEx6DbYc6BAlYTcyAcoBzb5gd3fI3c';
+const SHEETS_TAB     = 'Sheet1';
+const OAUTH_CLIENT_ID = '253838190928-9igjv2fu3g8frjpsf3ef0fvjr8a593dc.apps.googleusercontent.com';
+const OAUTH_SCOPES    = 'https://www.googleapis.com/auth/spreadsheets';
+let   gAuthToken      = null; // set after OAuth login
+
 // ─── STATE ───────────────────────────────────────────────
 window.state = {
   file: null,
@@ -453,13 +518,349 @@ function setStatus(cls, txt) {
   p.textContent = txt;
 }
 
+// ─── GOOGLE OAUTH ────────────────────────────────────────
+function getGoogleAuthToken() {
+  return new Promise((resolve, reject) => {
+    if (gAuthToken) { resolve(gAuthToken); return; }
+    const width = 500, height = 600;
+    const left  = window.screenX + (window.outerWidth - width) / 2;
+    const top   = window.screenY + (window.outerHeight - height) / 2;
+    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
+      `client_id=${encodeURIComponent(OAUTH_CLIENT_ID)}` +
+      `&redirect_uri=${encodeURIComponent(window.location.href.split('?')[0])}` +
+      `&response_type=token` +
+      `&scope=${encodeURIComponent(OAUTH_SCOPES)}` +
+      `&prompt=select_account`;
+
+    const popup = window.open(authUrl, 'googleAuth', `width=${width},height=${height},left=${left},top=${top}`);
+
+    const timer = setInterval(() => {
+      try {
+        if (!popup || popup.closed) {
+          clearInterval(timer);
+          reject(new Error('Auth window closed'));
+          return;
+        }
+        const url = popup.location.href;
+        if (url.includes('access_token=')) {
+          clearInterval(timer);
+          popup.close();
+          const params = new URLSearchParams(url.split('#')[1]);
+          gAuthToken = params.get('access_token');
+          resolve(gAuthToken);
+        }
+      } catch(e) { /* cross-origin, still loading */ }
+    }, 300);
+  });
+}
+
+async function appendToSpireSheet(partNo, description, cost) {
+  try {
+    const token = await getGoogleAuthToken();
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEETS_ID}/values/${SHEETS_TAB}!A:C:append?valueInputOption=USER_ENTERED`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        values: [[partNo || 'MANUAL', description, cost]]
+      })
+    });
+    if (!res.ok) throw new Error('Sheet write failed');
+    // Also add to local cache
+    if (spireDB) {
+      spireDB.push({
+        part_no: partNo || 'MANUAL',
+        description: description.toLowerCase(),
+        cost: parseFloat(cost)
+      });
+    }
+    return true;
+  } catch(err) {
+    console.error('Append error:', err);
+    return false;
+  }
+}
+
+// ─── SPIRE DB LOADER ─────────────────────────────────────
+let spireDB = null; // cached after first load
+
+async function loadSpireDB() {
+  if (spireDB) return spireDB;
+  setStatus('working', 'LOADING DB…');
+  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEETS_ID}/values/${SHEETS_TAB}!A:C?key=${SHEETS_KEY}`;
+  const res = await fetch(url);
+  const data = await res.json();
+  if (!data.values) throw new Error('Could not load Spire asset database from Google Sheets.');
+  // Skip header row, build array of {part_no, description, cost}
+  spireDB = data.values.slice(1).map(r => ({
+    part_no:     (r[0] || '').toString().trim(),
+    description: (r[1] || '').toString().trim().toLowerCase(),
+    cost:         parseFloat(r[2]) || 0
+  })).filter(r => r.description && r.cost > 0);
+  return spireDB;
+}
+
+function fuzzyMatch(name, db) {
+  const normalize = s => s.toLowerCase()
+    .replace(/['']/g, '')
+    .replace(/[^a-z0-9.x]/g, ' ')
+    .replace(/\s+/g, ' ').trim();
+
+  const needle = normalize(name);
+  const words  = needle.split(' ').filter(w => w.length > 1);
+
+  // Extract technical tokens — model numbers, dimensions, specs
+  // These are short alphanumeric tokens that are highly specific
+  const isTechnical = w => /[0-9]/.test(w) || w.length <= 4;
+  const techWords   = words.filter(isTechnical);
+  const descWords   = words.filter(w => !isTechnical(w) && w.length > 3);
+
+  const candidates = [];
+
+  for (const row of db) {
+    const hay = normalize(row.description);
+    const hayWords = hay.split(' ');
+
+    let score = 0;
+
+    // Technical token matches weighted heavily (model numbers, dimensions)
+    for (const w of techWords) {
+      if (hay.includes(w)) score += w.length * 3;
+    }
+
+    // Descriptive word matches
+    for (const w of descWords) {
+      if (hay.includes(w)) score += w.length;
+    }
+
+    // Exact full match bonus
+    if (hay === needle) score += 100;
+    // Substring bonus
+    if (hay.includes(needle)) score += 40;
+    if (needle.includes(hay) && hay.length > 8) score += 20;
+
+    // Penalty if none of the technical tokens match at all
+    if (techWords.length > 0) {
+      const techMatches = techWords.filter(w => hay.includes(w)).length;
+      if (techMatches === 0) score = Math.floor(score * 0.3);
+    }
+
+    if (score > 0) candidates.push({ ...row, score });
+  }
+
+  candidates.sort((a, b) => b.score - a.score);
+  const top = candidates.slice(0, 3);
+
+  if (top.length === 0) return { match: null, confidence: 0, candidates: [] };
+
+  // Confidence: ratio of score to theoretical max
+  const maxScore = techWords.reduce((s,w) => s + w.length*3, 0)
+                 + descWords.reduce((s,w) => s + w.length, 0) + 100;
+  const confidence = Math.min(98, Math.round((top[0].score / Math.max(maxScore * 0.35, 1)) * 100));
+
+  return { match: top[0], confidence, candidates: top };
+}
+
+async function matchGearToSpire(gear) {
+  const db = await loadSpireDB();
+
+  // Build a part_no index for instant code lookup
+  const codeIndex = {};
+  for (const row of db) {
+    if (row.part_no) codeIndex[row.part_no.trim().toUpperCase()] = row;
+  }
+
+  return gear.map(g => {
+    // 1. Try exact code match first
+    if (g.code) {
+      const key = g.code.trim().toUpperCase();
+      const exact = codeIndex[key];
+      if (exact && exact.cost > 0) {
+        return {
+          ...g,
+          wholesaleCost: exact.cost,
+          msrp:          exact.cost,
+          matchSource:   'spire',
+          matchName:     exact.description,
+          matchPartNo:   exact.part_no,
+          confidence:    100,
+          candidates:    []
+        };
+      }
+    }
+
+    // 2. Fall back to fuzzy description match
+    const result = fuzzyMatch(g.name, db);
+    if (result.match && result.confidence >= 80) {
+      return {
+        ...g,
+        wholesaleCost: result.match.cost,
+        msrp:          result.match.cost,
+        matchSource:   'spire',
+        matchName:     result.match.description,
+        matchPartNo:   result.match.part_no,
+        confidence:    result.confidence,
+        candidates:    result.candidates
+      };
+    } else {
+      // Needs user review
+      return {
+        ...g,
+        matchSource: 'pending',
+        confidence:  result.confidence,
+        candidates:  result.candidates
+      };
+    }
+  });
+}
+
+// ─── MODAL MATCH SYSTEM ───────────────────────────────────
+function promptMatchQueue(gearList) {
+  return new Promise(resolve => {
+    const pending = gearList.map((g, i) => ({ ...g, _idx: i }))
+                            .filter(g => g.matchSource === 'pending');
+    if (pending.length === 0) { resolve(gearList); return; }
+
+    let current = 0;
+    const result = [...gearList];
+
+    function showModal(item) {
+      // Remove existing modal
+      document.getElementById('matchModal')?.remove();
+
+      const overlay = document.createElement('div');
+      overlay.className = 'modal-overlay';
+      overlay.id = 'matchModal';
+
+      const hasCandidates = item.candidates && item.candidates.length > 0;
+
+      overlay.innerHTML = `
+        <div class="modal">
+          <div class="modal-progress">${current + 1} of ${pending.length}</div>
+          <div class="modal-title">MATCH REQUIRED</div>
+          <div class="modal-sub">Select a Spire record or enter a manual price</div>
+          <div class="modal-item-name">📦 ${item.name} &nbsp;×&nbsp; ${item.qty}</div>
+
+          ${hasCandidates ? `
+          <div class="modal-section-label">Possible Spire Matches</div>
+          ${item.candidates.map((c, ci) => `
+            <label class="match-option" onclick="this.classList.add('selected'); this.querySelectorAll('.match-option').forEach&&null; document.querySelectorAll('.match-option').forEach(el=>el.classList.remove('selected')); this.classList.add('selected');">
+              <input type="radio" name="matchChoice" value="${ci}" ${ci===0?'checked':''}>
+              <div class="match-option-body">
+                <div class="match-option-name">${c.description}</div>
+                <div class="match-option-meta">${c.part_no || '—'}</div>
+              </div>
+              <div class="match-option-cost">${fmtCAD(c.cost)}</div>
+            </label>
+          `).join('')}
+          <hr class="modal-divider">
+          ` : `<div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:16px;">No Spire matches found for this item.</div>`}
+
+          <div class="modal-section-label">Manual Price Override (CAD)</div>
+          <div class="manual-price-wrap">
+            <label>Wholesale Cost:</label>
+            <input class="manual-price-input" id="manualMatchPrice" type="number" min="0" step="10" placeholder="0.00">
+          </div>
+
+          <div style="margin-top:14px;">
+            <label style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;display:block;margin-bottom:6px;">Part No. (optional — for Spire DB save)</label>
+            <input class="manual-price-input" id="manualPartNo" type="text" placeholder="e.g. CF2-72" style="width:100%;">
+          </div>
+          <div style="margin-top:10px;">
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:var(--mono);font-size:11px;color:var(--muted);">
+              <input type="checkbox" id="saveToSpire" style="accent-color:var(--green);width:14px;height:14px;">
+              Save this item to Spire DB (Google Sheets) for future matches
+            </label>
+          </div>
+          <div class="modal-actions">
+            <button class="modal-skip" id="modalSkip">Skip (use estimate)</button>
+            <button class="modal-confirm" id="modalConfirm">CONFIRM →</button>
+          </div>
+        </div>
+      `;
+
+      document.body.appendChild(overlay);
+
+      // Radio selection styling
+      overlay.querySelectorAll('.match-option').forEach(el => {
+        el.addEventListener('click', () => {
+          overlay.querySelectorAll('.match-option').forEach(e => e.classList.remove('selected'));
+          el.classList.add('selected');
+        });
+      });
+      if (overlay.querySelector('.match-option')) {
+        overlay.querySelector('.match-option').classList.add('selected');
+      }
+
+      document.getElementById('modalConfirm').onclick = async () => {
+        const manualVal   = parseFloat(document.getElementById('manualMatchPrice').value);
+        const manualPartNo = document.getElementById('manualPartNo').value.trim();
+        const saveToSpire  = document.getElementById('saveToSpire').checked;
+        const radioEl      = overlay.querySelector('input[name=matchChoice]:checked');
+
+        if (manualVal > 0) {
+          result[item._idx] = {
+            ...result[item._idx],
+            wholesaleCost: manualVal,
+            msrp:          manualVal,
+            matchSource:   'manual',
+            confidence:    100
+          };
+          if (saveToSpire) {
+            document.getElementById('modalConfirm').textContent = 'SAVING…';
+            const saved = await appendToSpireSheet(manualPartNo, item.name, manualVal);
+            if (saved) {
+              document.getElementById('modalConfirm').textContent = '✓ SAVED';
+              await new Promise(r => setTimeout(r, 700));
+            }
+          }
+        } else if (radioEl && hasCandidates) {
+          const chosen = item.candidates[parseInt(radioEl.value)];
+          result[item._idx] = {
+            ...result[item._idx],
+            wholesaleCost: chosen.cost,
+            msrp:          chosen.cost,
+            matchSource:   'spire',
+            matchName:     chosen.description,
+            matchPartNo:   chosen.part_no,
+            confidence:    item.confidence
+          };
+        } else {
+          result[item._idx] = { ...result[item._idx], matchSource: 'estimate' };
+        }
+        next();
+      };
+
+      document.getElementById('modalSkip').onclick = () => {
+        result[item._idx] = { ...result[item._idx], matchSource: 'estimate' };
+        next();
+      };
+    }
+
+    function next() {
+      document.getElementById('matchModal')?.remove();
+      current++;
+      if (current < pending.length) {
+        showModal(pending[current]);
+      } else {
+        resolve(result);
+      }
+    }
+
+    showModal(pending[0]);
+  });
+}
+
 // ─── EXTRACT ─────────────────────────────────────────────
 async function runExtract() {
   if (!state.file) return;
   document.getElementById('extractBtn').disabled = true;
   document.getElementById('resetBtn').style.display = 'none';
   setStatus('working', 'ANALYSING…');
-  showLoading('Claude is reading your PDF and estimating wholesale replacement values…');
+  showLoading('Claude is reading your PDF and extracting gear…');
 
   try {
     const b64 = await toB64(state.file);
@@ -516,7 +917,12 @@ Be thorough — include every line item. Base estimates on your knowledge of ETC
     console.log("Parsed gear:", JSON.stringify(parsed.gear));
     if (!parsed.gear?.length) throw new Error('No gear items found in document. Is this a Rental Point PDF?');
 
-    state.gear = await applyPriceMemory(parsed.gear);
+    setStatus('working', 'MATCHING DB…');
+    showLoading('Matching gear against Apex Spire asset database…');
+    const preMatched = await matchGearToSpire(parsed.gear);
+    // Prompt user to confirm/override any pending matches
+    setStatus('working', 'REVIEW…');
+    state.gear = await promptMatchQueue(preMatched);
     state.quoteName = `${parsed.client || ''} · ${parsed.quoteCode || ''}`.trim().replace(/^·\s*|·\s*$/g, '');
     state.totalWholesale = state.gear.reduce((s, g) => s + g.wholesaleCost * g.qty, 0);
 
@@ -583,7 +989,7 @@ function renderResults() {
   // Build gear table dynamically so IDs and events work correctly
   const table = document.createElement('table');
   table.innerHTML = `<thead><tr>
-    <th>#</th><th>Item</th><th class="r">QTY</th>
+    <th>#</th><th>Section</th><th>Item</th><th>Code</th><th class="r">QTY</th>
     <th class="r">Wholesale Cost / Unit</th>
     <th class="r">Ext. Wholesale (Unit × QTY)</th>
   </tr></thead>`;

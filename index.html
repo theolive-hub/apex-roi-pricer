@@ -187,68 +187,100 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 ::-webkit-scrollbar-track { background:var(--bg); }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
 
-/* MODAL */
+/* ── MODAL — wider, shorter, two-column body ── */
 .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.78); z-index:200; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(3px); }
-.modal { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:26px 26px 22px; width:620px; max-width:96vw; max-height:92vh; overflow-y:auto; box-shadow:0 24px 64px rgba(0,0,0,.65); position:relative; }
+
+.modal {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 22px 24px 20px;
+  width: 900px; max-width: 96vw;       /* ← wider */
+  max-height: 78vh;                     /* ← shorter */
+  overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(0,0,0,.65); position: relative;
+}
 .modal::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--accent), var(--green)); border-radius:6px 6px 0 0; }
-.modal-title { font-family:var(--display); font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:3px; }
-.modal-sub { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:18px; }
-.modal-item-name { background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:10px 14px; font-size:14px; color:#fff; font-weight:500; margin-bottom:18px; }
-.modal-section-label { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; }
 
-.subpart-callout { background: rgba(167,139,250,.07); border:1px solid rgba(167,139,250,.25); border-radius:3px; padding:12px 16px; margin-bottom:16px; font-family:var(--mono); font-size:11px; color:var(--purple); line-height:1.6; }
-.subpart-callout strong { display:block; font-size:12px; margin-bottom:4px; }
-.btn-subpart { font-family:var(--mono); font-size:11px; letter-spacing:1px; background: rgba(167,139,250,.1); border:1px solid rgba(167,139,250,.35); color:var(--purple); border-radius:3px; padding:9px 16px; cursor:pointer; transition:all .15s; white-space:nowrap; }
-.btn-subpart:hover { background: rgba(167,139,250,.2); border-color:var(--purple); }
+/* header strip */
+.modal-header { margin-bottom: 14px; }
+.modal-title { font-family:var(--display); font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:2px; }
+.modal-sub { font-family:var(--mono); font-size:11px; color:var(--muted); }
+.modal-item-name { background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:8px 14px; font-size:13px; color:#fff; font-weight:500; margin-bottom:14px; }
 
-.match-option { display:flex; align-items:flex-start; gap:10px; background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:9px 13px; margin-bottom:7px; transition:border-color .15s, background .15s; }
+/* sub-part callout — compact horizontal */
+.subpart-callout {
+  background: rgba(167,139,250,.07); border:1px solid rgba(167,139,250,.25);
+  border-radius:3px; padding:8px 14px; margin-bottom:14px;
+  font-family:var(--mono); font-size:10px; color:var(--purple); line-height:1.5;
+  display:flex; align-items:center; gap:10px;
+}
+.subpart-callout strong { font-size:11px; white-space:nowrap; }
+
+/* two-column body */
+.modal-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.modal-col { display:flex; flex-direction:column; gap:10px; }
+
+.modal-section-label { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px; }
+
+.match-option { display:flex; align-items:flex-start; gap:8px; background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:7px 11px; margin-bottom:5px; transition:border-color .15s, background .15s; cursor:pointer; }
 .match-option.selected { border-color:var(--green); background:rgba(52,210,123,.06); }
 .match-option.force-save-active { border-color:var(--accent); background:rgba(240,180,41,.06); }
-.match-radio-col { display:flex; flex-direction:column; align-items:center; gap:6px; padding-top:2px; flex-shrink:0; }
-.match-option input[type=radio] { accent-color:var(--green); width:15px; height:15px; cursor:pointer; }
-.match-option-body { flex:1; min-width:0; cursor:pointer; }
-.match-option-name { font-size:12px; color:#fff; line-height:1.4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.match-option-meta { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:1px; }
-.match-option-cost { font-family:var(--display); font-size:17px; color:var(--green); letter-spacing:1px; flex-shrink:0; padding-top:2px; }
+.match-radio-col { padding-top:2px; flex-shrink:0; }
+.match-option input[type=radio] { accent-color:var(--green); width:14px; height:14px; cursor:pointer; }
+.match-option-body { flex:1; min-width:0; }
+.match-option-name { font-size:11px; color:#fff; line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.match-option-meta { font-family:var(--mono); font-size:9px; color:var(--muted); margin-top:1px; }
+.match-option-cost { font-family:var(--display); font-size:15px; color:var(--green); letter-spacing:1px; flex-shrink:0; padding-top:1px; }
 
-.force-save-row { display:none; align-items:center; gap:7px; margin-top:6px; padding:6px 10px; border-radius:3px; background:rgba(240,180,41,.05); border:1px dashed rgba(240,180,41,.25); }
+.force-save-row { display:none; align-items:center; gap:6px; margin-top:5px; padding:5px 8px; border-radius:3px; background:rgba(240,180,41,.05); border:1px dashed rgba(240,180,41,.25); }
 .force-save-row.visible { display:flex; }
-.force-save-row input[type=checkbox] { accent-color:var(--accent); width:13px; height:13px; cursor:pointer; flex-shrink:0; }
-.force-save-row label { font-family:var(--mono); font-size:10px; color:var(--accent); cursor:pointer; line-height:1.5; }
+.force-save-row input[type=checkbox] { accent-color:var(--accent); width:12px; height:12px; cursor:pointer; flex-shrink:0; }
+.force-save-row label { font-family:var(--mono); font-size:9px; color:var(--accent); cursor:pointer; line-height:1.4; }
 
-.modal-divider { border:none; border-top:1px solid var(--border); margin:14px 0; }
+.modal-divider-v { width:1px; background:var(--border); align-self:stretch; margin:0 4px; }
 
-.force-lookup-wrap { background:rgba(77,166,255,.05); border:1px solid rgba(77,166,255,.2); border-radius:3px; padding:12px 14px; margin-bottom:14px; }
-.force-lookup-label { font-family:var(--mono); font-size:10px; color:var(--blue); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:4px; }
-.force-lookup-note { font-family:var(--mono); font-size:10px; color:var(--muted); margin-bottom:8px; }
-.force-lookup-row { display:flex; gap:8px; align-items:center; }
-.force-lookup-input { background:var(--panel); border:1px solid var(--border); color:var(--text); font-family:var(--mono); font-size:13px; padding:7px 11px; border-radius:3px; outline:none; flex:1; transition:border-color .15s; }
+/* right column sections */
+.force-lookup-wrap { background:rgba(77,166,255,.05); border:1px solid rgba(77,166,255,.2); border-radius:3px; padding:10px 12px; }
+.force-lookup-label { font-family:var(--mono); font-size:10px; color:var(--blue); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:3px; }
+.force-lookup-note { font-family:var(--mono); font-size:9px; color:var(--muted); margin-bottom:7px; }
+.force-lookup-row { display:flex; gap:7px; align-items:center; }
+.force-lookup-input { background:var(--panel); border:1px solid var(--border); color:var(--text); font-family:var(--mono); font-size:12px; padding:6px 10px; border-radius:3px; outline:none; flex:1; transition:border-color .15s; }
 .force-lookup-input:focus { border-color:var(--blue); }
-.force-lookup-btn { font-family:var(--mono); font-size:11px; letter-spacing:1px; background:var(--blue); color:#000; border:none; border-radius:3px; padding:7px 14px; cursor:pointer; white-space:nowrap; transition:opacity .15s; }
+.force-lookup-btn { font-family:var(--mono); font-size:10px; letter-spacing:1px; background:var(--blue); color:#000; border:none; border-radius:3px; padding:6px 12px; cursor:pointer; white-space:nowrap; transition:opacity .15s; }
 .force-lookup-btn:hover { opacity:.8; }
-.force-lookup-result { margin-top:8px; padding:9px 12px; border-radius:3px; font-family:var(--mono); font-size:11px; line-height:1.6; display:none; }
+.force-lookup-result { margin-top:7px; padding:7px 10px; border-radius:3px; font-family:var(--mono); font-size:10px; line-height:1.5; display:none; }
 .force-lookup-result.found { background:rgba(52,210,123,.08); border:1px solid rgba(52,210,123,.25); color:var(--green); }
 .force-lookup-result.notfound { background:rgba(232,57,14,.06); border:1px solid rgba(232,57,14,.2); color:var(--red); }
 
-.add-to-db-form { margin-top:10px; padding-top:10px; border-top:1px solid rgba(232,57,14,.2); }
-.add-to-db-row { display:flex; gap:8px; align-items:center; margin-bottom:8px; }
-.add-to-db-row label { font-family:var(--mono); font-size:10px; color:var(--muted); white-space:nowrap; min-width:90px; }
-.add-to-db-input { background:var(--bg); border:1px solid var(--border); color:var(--text); font-family:var(--mono); font-size:12px; padding:5px 9px; border-radius:3px; outline:none; flex:1; transition:border-color .15s; }
+.add-to-db-form { margin-top:8px; padding-top:8px; border-top:1px solid rgba(232,57,14,.2); }
+.add-to-db-row { display:flex; gap:6px; align-items:center; margin-bottom:6px; }
+.add-to-db-row label { font-family:var(--mono); font-size:9px; color:var(--muted); white-space:nowrap; min-width:76px; }
+.add-to-db-input { background:var(--bg); border:1px solid var(--border); color:var(--text); font-family:var(--mono); font-size:11px; padding:4px 8px; border-radius:3px; outline:none; flex:1; transition:border-color .15s; }
 .add-to-db-input:focus { border-color:var(--accent); }
-.add-to-db-btn { font-family:var(--mono); font-size:11px; letter-spacing:1px; width:100%; background:var(--accent); color:#000; border:none; border-radius:3px; padding:7px; cursor:pointer; margin-top:4px; transition:opacity .15s; }
+.add-to-db-btn { font-family:var(--mono); font-size:10px; letter-spacing:1px; width:100%; background:var(--accent); color:#000; border:none; border-radius:3px; padding:6px; cursor:pointer; margin-top:3px; transition:opacity .15s; }
 .add-to-db-btn:hover { opacity:.85; }
 
-.manual-price-wrap { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
-.manual-price-wrap label { font-family:var(--mono); font-size:11px; color:var(--muted); white-space:nowrap; }
-.manual-price-input { background:var(--panel); border:1px solid var(--border); color:var(--text); font-family:var(--mono); font-size:14px; padding:8px 12px; border-radius:3px; outline:none; width:140px; transition:border-color .15s; }
+/* manual price section */
+.manual-section { background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:10px 12px; }
+.manual-price-wrap { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.manual-price-wrap label { font-family:var(--mono); font-size:10px; color:var(--muted); white-space:nowrap; }
+.manual-price-input { background:var(--bg); border:1px solid var(--border); color:var(--text); font-family:var(--mono); font-size:13px; padding:6px 10px; border-radius:3px; outline:none; flex:1; transition:border-color .15s; }
 .manual-price-input:focus { border-color:var(--accent); }
+.manual-partno-input { background:var(--bg); border:1px solid var(--border); color:var(--text); font-family:var(--mono); font-size:11px; padding:5px 9px; border-radius:3px; outline:none; width:100%; transition:border-color .15s; margin-bottom:7px; }
+.manual-partno-input:focus { border-color:var(--accent); }
 
-.modal-actions { display:flex; gap:10px; margin-top:18px; justify-content:flex-end; flex-wrap:wrap; }
-.modal-skip { font-family:var(--mono); font-size:11px; background:transparent; border:1px solid var(--border); color:var(--muted); border-radius:3px; padding:9px 16px; cursor:pointer; transition:all .15s; }
+.modal-actions { display:flex; gap:8px; margin-top:14px; justify-content:flex-end; flex-wrap:wrap; border-top:1px solid var(--border); padding-top:14px; }
+.modal-skip { font-family:var(--mono); font-size:11px; background:transparent; border:1px solid var(--border); color:var(--muted); border-radius:3px; padding:8px 14px; cursor:pointer; transition:all .15s; }
 .modal-skip:hover { border-color:var(--text); color:var(--text); }
-.modal-confirm { font-family:var(--display); font-size:16px; letter-spacing:2px; background:var(--accent); color:#000; border:none; border-radius:3px; padding:10px 24px; cursor:pointer; transition:opacity .15s; }
+.btn-subpart { font-family:var(--mono); font-size:11px; letter-spacing:1px; background: rgba(167,139,250,.1); border:1px solid rgba(167,139,250,.35); color:var(--purple); border-radius:3px; padding:8px 14px; cursor:pointer; transition:all .15s; white-space:nowrap; }
+.btn-subpart:hover { background: rgba(167,139,250,.2); border-color:var(--purple); }
+.modal-confirm { font-family:var(--display); font-size:16px; letter-spacing:2px; background:var(--accent); color:#000; border:none; border-radius:3px; padding:9px 22px; cursor:pointer; transition:opacity .15s; }
 .modal-confirm:hover { opacity:.85; }
-.modal-progress { font-family:var(--mono); font-size:10px; color:var(--muted); position:absolute; top:18px; right:18px; }
+.modal-progress { font-family:var(--mono); font-size:10px; color:var(--muted); position:absolute; top:16px; right:16px; }
 </style>
 </head>
 <body>
@@ -306,11 +338,9 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 </div>
 
 <script>
-// ─── VERSION ─────────────────────────────────────────────
-const VERSION = '2.0.7';
+const VERSION = '2.0.8';
 document.getElementById('versionBadge').textContent = 'v' + VERSION;
 
-// ─── CONFIG ──────────────────────────────────────────────
 const SHEETS_ID  = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';
 const SHEETS_KEY = 'AIzaSyAiRlEx6DbYc6BAlYTcyAcoBzb5gd3fI3c';
 const SHEETS_TAB = 'apex_asset_db';
@@ -319,7 +349,6 @@ const SUBPART_MARKER = '__SUBPART__';
 
 window.state = { file:null, quoteTotal:0, quoteName:'', gear:[], totalWholesale:0, currentRoi:0, targetRoi:0, weeks:1 };
 
-// ─── FILE HANDLING ───────────────────────────────────────
 const dropZone = document.getElementById('dropZone');
 const pdfFile  = document.getElementById('pdfFile');
 pdfFile.onchange = e => loadFile(e.target.files[0]);
@@ -350,12 +379,10 @@ function setStatus(cls, txt) {
   p.className = 'pill ' + cls; p.textContent = txt;
 }
 
-// ─── SPIRE APPEND ────────────────────────────────────────
 async function appendToSpireSheet(partNo, description, cost) {
   try {
     const res = await fetch(`${WORKER}/spire-append`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ partNo: partNo || 'MANUAL', description, cost: parseFloat(cost) })
     });
     if (!res.ok) throw new Error('Worker append failed');
@@ -367,7 +394,6 @@ async function saveSubpartToSpire(itemName) {
   return await appendToSpireSheet('SUBPART', SUBPART_MARKER + itemName.toLowerCase(), 0);
 }
 
-// ─── SPIRE DB ────────────────────────────────────────────
 let spireDB = null;
 async function loadSpireDB() {
   if (spireDB) return spireDB;
@@ -389,7 +415,6 @@ function isKnownSubpart(name) {
 }
 function detectSubpartFromName(name) { return /^[\s\t\u00a0\u2003]+/.test(name); }
 
-// ─── FUZZY MATCH ─────────────────────────────────────────
 function fuzzyMatch(name, db) {
   const matchableDB = db.filter(r => !r.description.startsWith(SUBPART_MARKER) && r.cost > 0);
   const normalize = s => s.toLowerCase().replace(/['']/g,'').replace(/[^a-z0-9.x]/g,' ').replace(/\s+/g,' ').trim();
@@ -418,7 +443,6 @@ function fuzzyMatch(name, db) {
   return {match:top[0], confidence, candidates:top};
 }
 
-// ─── EXACT PART LOOKUP ───────────────────────────────────
 function lookupPartNoExact(code) {
   if (!spireDB || !code) return null;
   const key = code.trim().toUpperCase();
@@ -450,7 +474,7 @@ async function matchGearToSpire(gear) {
   });
 }
 
-// ─── MODAL ───────────────────────────────────────────────
+// ─── MODAL (wide, short, two-column) ─────────────────────
 function promptMatchQueue(gearList) {
   return new Promise(resolve => {
     const pending = gearList.map((g,i)=>({...g,_idx:i})).filter(g=>g.matchSource==='pending');
@@ -468,63 +492,74 @@ function promptMatchQueue(gearList) {
       overlay.innerHTML = `
         <div class="modal">
           <div class="modal-progress">${current+1} of ${pending.length}</div>
-          <div class="modal-title">MATCH REQUIRED</div>
-          <div class="modal-sub">Select a Spire match, look up an exact part number, mark as sub-part, or enter a manual price</div>
+
+          <div class="modal-header">
+            <div class="modal-title">MATCH REQUIRED</div>
+            <div class="modal-sub">Select a Spire match, look up an exact part number, mark as sub-part, or enter a manual price</div>
+          </div>
+
           <div class="modal-item-name">📦 ${item.name} &nbsp;×&nbsp; ${item.qty}</div>
 
           <div class="subpart-callout">
-            <strong>⬡ Is this a sub-part / accessory?</strong>
+            <strong>⬡ Sub-part?</strong>
             Cost expressed elsewhere — excluded from totals. Can be overridden per-quote in the gear table.
           </div>
 
-          ${hasCandidates ? `
-            <div class="modal-section-label">Top ${item.candidates.length} Spire Matches — tick to save association to Spire DB</div>
-            <div id="candidateList">
-            ${item.candidates.map((c,ci) => `
-              <div class="match-option" id="mo-${ci}">
-                <div class="match-radio-col"><input type="radio" name="matchChoice" value="${ci}" ${ci===0?'checked':''} id="radio-${ci}"></div>
-                <div class="match-option-body" onclick="selectCandidate(${ci})">
-                  <div class="match-option-name" title="${c.description}">${c.description}</div>
-                  <div class="match-option-meta">${c.part_no||'—'}</div>
-                  <div class="force-save-row" id="fsr-${ci}">
-                    <input type="checkbox" id="fscb-${ci}" onchange="onForceSaveCheck(${ci}, this.checked)">
-                    <label for="fscb-${ci}">This IS this item — save "<strong>${item.name}</strong>" → <strong>${c.part_no||'MANUAL'}</strong> in Spire DB</label>
-                  </div>
+          <div class="modal-body">
+
+            <!-- LEFT: fuzzy candidates -->
+            <div class="modal-col">
+              ${hasCandidates ? `
+                <div class="modal-section-label">Top ${item.candidates.length} Spire Matches — tick to save to Spire DB</div>
+                ${item.candidates.map((c,ci) => `
+                  <div class="match-option" id="mo-${ci}">
+                    <div class="match-radio-col"><input type="radio" name="matchChoice" value="${ci}" ${ci===0?'checked':''} id="radio-${ci}"></div>
+                    <div class="match-option-body" onclick="selectCandidate(${ci})">
+                      <div class="match-option-name" title="${c.description}">${c.description}</div>
+                      <div class="match-option-meta">${c.part_no||'—'}</div>
+                      <div class="force-save-row" id="fsr-${ci}">
+                        <input type="checkbox" id="fscb-${ci}" onchange="onForceSaveCheck(${ci}, this.checked)">
+                        <label for="fscb-${ci}">This IS this item — save "${item.name}" → ${c.part_no||'MANUAL'}</label>
+                      </div>
+                    </div>
+                    <div class="match-option-cost">${fmtCAD(c.cost)}</div>
+                  </div>`).join('')}
+              ` : `<div style="font-family:var(--mono);font-size:11px;color:var(--muted);">No fuzzy matches found.</div>`}
+            </div>
+
+            <!-- RIGHT: lookup + manual -->
+            <div class="modal-col">
+
+              <div class="force-lookup-wrap">
+                <div class="force-lookup-label">🔍 Exact Part Number Lookup</div>
+                <div class="force-lookup-note">Exact match only. Confirming saves the association for future auto-matching.</div>
+                <div class="force-lookup-row">
+                  <input class="force-lookup-input" id="forceLookupInput" type="text" placeholder="e.g. D-CAT6A/SFTP-100-BSX6" onkeydown="if(event.key==='Enter') doForceLookup()">
+                  <button class="force-lookup-btn" onclick="doForceLookup()">LOOKUP</button>
                 </div>
-                <div class="match-option-cost">${fmtCAD(c.cost)}</div>
-              </div>`).join('')}
-            </div>
-            <hr class="modal-divider">
-          ` : `<div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:14px;">No fuzzy matches found.</div>`}
+                <div class="force-lookup-result" id="forceLookupResult"></div>
+              </div>
 
-          <div class="force-lookup-wrap">
-            <div class="force-lookup-label">🔍 Exact Part Number Lookup</div>
-            <div class="force-lookup-note">Exact match only — must match a Spire part number precisely. Confirming saves the association for future auto-matching.</div>
-            <div class="force-lookup-row">
-              <input class="force-lookup-input" id="forceLookupInput" type="text" placeholder="e.g. D-CAT6A/SFTP-100-BSX6" onkeydown="if(event.key==='Enter') doForceLookup()">
-              <button class="force-lookup-btn" onclick="doForceLookup()">LOOKUP</button>
+              <div class="manual-section">
+                <div class="modal-section-label">Manual Price (CAD)</div>
+                <div class="manual-price-wrap">
+                  <label>Wholesale Cost:</label>
+                  <input class="manual-price-input" id="manualMatchPrice" type="number" min="0" step="10" placeholder="0.00">
+                </div>
+                <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-bottom:4px;letter-spacing:.8px;text-transform:uppercase;">Part No. (optional)</div>
+                <input class="manual-partno-input" id="manualPartNo" type="text" placeholder="e.g. CF2-72">
+                <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-family:var(--mono);font-size:10px;color:var(--muted);">
+                  <input type="checkbox" id="saveToSpire" style="accent-color:var(--green);width:12px;height:12px;">
+                  Save manual price to Spire DB
+                </label>
+              </div>
+
             </div>
-            <div class="force-lookup-result" id="forceLookupResult"></div>
           </div>
 
-          <div class="modal-section-label">Manual Price Override (CAD)</div>
-          <div class="manual-price-wrap">
-            <label>Wholesale Cost:</label>
-            <input class="manual-price-input" id="manualMatchPrice" type="number" min="0" step="10" placeholder="0.00">
-          </div>
-          <div style="margin-top:10px;">
-            <label style="font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;display:block;margin-bottom:6px;">Part No. (for Spire DB save)</label>
-            <input class="manual-price-input" id="manualPartNo" type="text" placeholder="e.g. CF2-72" style="width:100%;">
-          </div>
-          <div style="margin-top:10px;">
-            <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-family:var(--mono);font-size:11px;color:var(--muted);">
-              <input type="checkbox" id="saveToSpire" style="accent-color:var(--green);width:14px;height:14px;">
-              Save manual price to Spire DB
-            </label>
-          </div>
           <div class="modal-actions">
-            <button class="modal-skip" id="modalSkip">Skip (use estimate)</button>
-            <button class="btn-subpart" id="modalSubpart">⬡ Mark as Sub-Part</button>
+            <button class="modal-skip" id="modalSkip">Skip</button>
+            <button class="btn-subpart" id="modalSubpart">⬡ Sub-Part</button>
             <button class="modal-confirm" id="modalConfirm">CONFIRM →</button>
           </div>
         </div>`;
@@ -545,7 +580,9 @@ function promptMatchQueue(gearList) {
 
       window.onForceSaveCheck = (ci, checked) => {
         document.getElementById(`mo-${ci}`)?.classList.toggle('force-save-active', checked);
-        if (checked) item.candidates.forEach((_,i) => { if(i!==ci){const cb=document.getElementById(`fscb-${i}`);if(cb){cb.checked=false;document.getElementById(`mo-${i}`)?.classList.remove('force-save-active');}} });
+        if (checked) item.candidates.forEach((_,i) => {
+          if(i!==ci){const cb=document.getElementById(`fscb-${i}`);if(cb){cb.checked=false;document.getElementById(`mo-${i}`)?.classList.remove('force-save-active');}}
+        });
       };
 
       window.doForceLookup = () => {
@@ -557,15 +594,15 @@ function promptMatchQueue(gearList) {
         if (found) {
           overlay._exactMatch = found;
           resultEl.className = 'force-lookup-result found';
-          resultEl.innerHTML = `✓ EXACT MATCH: <strong>${found.description}</strong><br>Part# <strong>${found.part_no}</strong> · <strong>${fmtCAD(found.cost)}</strong><br><span style="color:var(--muted);font-size:10px;">Confirming will save this association to Spire DB for future auto-matching.</span>`;
+          resultEl.innerHTML = `✓ <strong>${found.description}</strong><br>Part# ${found.part_no} · <strong>${fmtCAD(found.cost)}</strong><br><span style="color:var(--muted);font-size:9px;">Confirming saves this association.</span>`;
           overlay.querySelectorAll('.match-option').forEach(e=>e.classList.remove('selected'));
           overlay.querySelectorAll('input[name=matchChoice]').forEach(e=>e.checked=false);
         } else {
           overlay._exactMatch = null;
           resultEl.className = 'force-lookup-result notfound';
-          resultEl.innerHTML = `✗ No exact match for "<strong>${code}</strong>" in Spire DB.
+          resultEl.innerHTML = `✗ No exact match for "<strong>${code}</strong>".
             <div class="add-to-db-form">
-              <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:1px;margin-bottom:8px;">ADD THIS CODE TO SPIRE DB</div>
+              <div style="font-family:var(--mono);font-size:9px;color:var(--accent);letter-spacing:1px;margin-bottom:6px;text-transform:uppercase;">Add to Spire DB</div>
               <div class="add-to-db-row"><label>Part No:</label><input class="add-to-db-input" id="newPartNo" type="text" value="${code}"></div>
               <div class="add-to-db-row"><label>Description:</label><input class="add-to-db-input" id="newDesc" type="text" value="${item.name}"></div>
               <div class="add-to-db-row"><label>Cost (CAD):</label><input class="add-to-db-input" id="newCost" type="number" min="0" step="10" placeholder="0.00"></div>
@@ -579,7 +616,7 @@ function promptMatchQueue(gearList) {
         if(!cost||cost<=0){alert('Please enter a valid wholesale cost.');return;}
         const btn=document.querySelector('.add-to-db-btn'); btn.textContent='SAVING…'; btn.disabled=true;
         const saved=await appendToSpireSheet(partNo,desc,cost);
-        if(saved){result[item._idx]={...result[item._idx],wholesaleCost:cost,msrp:cost,matchSource:'spire',matchName:desc,matchPartNo:partNo,confidence:100,isSubpart:false,subpartOverridden:false};btn.textContent='✓ SAVED — advancing…';await new Promise(r=>setTimeout(r,700));next();}
+        if(saved){result[item._idx]={...result[item._idx],wholesaleCost:cost,msrp:cost,matchSource:'spire',matchName:desc,matchPartNo:partNo,confidence:100,isSubpart:false,subpartOverridden:false};btn.textContent='✓ SAVED';await new Promise(r=>setTimeout(r,700));next();}
         else{btn.textContent='✗ SAVE FAILED';btn.disabled=false;}
       };
 
@@ -587,7 +624,7 @@ function promptMatchQueue(gearList) {
         const btn=document.getElementById('modalSubpart'); btn.textContent='SAVING…'; btn.disabled=true;
         await saveSubpartToSpire(item.name);
         result[item._idx]={...result[item._idx],wholesaleCost:0,msrp:0,matchSource:'subpart',isSubpart:true,subpartOverridden:false,confidence:100};
-        btn.textContent='✓ MARKED'; await new Promise(r=>setTimeout(r,500)); next();
+        btn.textContent='✓'; await new Promise(r=>setTimeout(r,400)); next();
       };
 
       document.getElementById('modalConfirm').onclick = async () => {
@@ -598,37 +635,29 @@ function promptMatchQueue(gearList) {
         const exactMatch=overlay._exactMatch;
         const confirmBtn=document.getElementById('modalConfirm');
 
-        // ── Priority 1: exact part lookup ──────────────────
-        // ← v2.0.7 FIX: now saves item name → part_no to Spire DB
-        // so future PDFs with this item auto-match without needing lookup
         if (exactMatch) {
-          result[item._idx] = {...result[item._idx], wholesaleCost:exactMatch.cost, msrp:exactMatch.cost, matchSource:'spire', matchName:exactMatch.description, matchPartNo:exactMatch.part_no, confidence:100, isSubpart:false, subpartOverridden:false};
-          // Fire-and-forget save — don't block the UI
+          result[item._idx]={...result[item._idx],wholesaleCost:exactMatch.cost,msrp:exactMatch.cost,matchSource:'spire',matchName:exactMatch.description,matchPartNo:exactMatch.part_no,confidence:100,isSubpart:false,subpartOverridden:false};
           appendToSpireSheet(exactMatch.part_no, item.name, exactMatch.cost);
           next(); return;
         }
-
-        // ── Priority 2: fuzzy candidate ────────────────────
         if (radioEl && hasCandidates) {
-          const ci=parseInt(radioEl.value), chosen=item.candidates[ci], forceSaveCb=document.getElementById(`fscb-${ci}`);
+          const ci=parseInt(radioEl.value),chosen=item.candidates[ci],forceSaveCb=document.getElementById(`fscb-${ci}`);
           result[item._idx]={...result[item._idx],wholesaleCost:chosen.cost,msrp:chosen.cost,matchSource:'spire',matchName:chosen.description,matchPartNo:chosen.part_no,confidence:item.confidence,isSubpart:false,subpartOverridden:false};
-          if(forceSaveCb?.checked){confirmBtn.textContent='SAVING…';await appendToSpireSheet(chosen.part_no,item.name,chosen.cost);confirmBtn.textContent='✓ SAVED';await new Promise(r=>setTimeout(r,600));}
+          if(forceSaveCb?.checked){confirmBtn.textContent='SAVING…';await appendToSpireSheet(chosen.part_no,item.name,chosen.cost);confirmBtn.textContent='✓';await new Promise(r=>setTimeout(r,500));}
           next(); return;
         }
-
-        // ── Priority 3: manual price ───────────────────────
         if (manualVal > 0) {
           result[item._idx]={...result[item._idx],wholesaleCost:manualVal,msrp:manualVal,matchSource:'manual',confidence:100,isSubpart:false,subpartOverridden:false};
-          if(saveToSpire){confirmBtn.textContent='SAVING…';await appendToSpireSheet(manualPartNo,item.name,manualVal);confirmBtn.textContent='✓ SAVED';await new Promise(r=>setTimeout(r,700));}
+          if(saveToSpire){confirmBtn.textContent='SAVING…';await appendToSpireSheet(manualPartNo,item.name,manualVal);confirmBtn.textContent='✓';await new Promise(r=>setTimeout(r,600));}
           next(); return;
         }
-
-        // ── Fallback ───────────────────────────────────────
         result[item._idx]={...result[item._idx],matchSource:'estimate',isSubpart:false,subpartOverridden:false};
         next();
       };
 
-      document.getElementById('modalSkip').onclick = () => { result[item._idx]={...result[item._idx],matchSource:'estimate',isSubpart:false,subpartOverridden:false}; next(); };
+      document.getElementById('modalSkip').onclick = () => {
+        result[item._idx]={...result[item._idx],matchSource:'estimate',isSubpart:false,subpartOverridden:false}; next();
+      };
     }
 
     function next() {
@@ -653,17 +682,12 @@ async function runExtract() {
       body: JSON.stringify({
         model:'claude-sonnet-4-20250514', max_tokens:8000,
         system:`You are an expert AV/lighting/staging equipment specialist with deep knowledge of professional gear pricing in Canada.
-
 Extract every line-item piece of equipment from the rental PDF. For each item return Canadian dealer WHOLESALE cost in CAD as both "msrp" and "wholesaleCost".
-
 PRICING RULE: Canadian dealer wholesale = (USD retail MSRP) x 1.39 (USD to CAD) x 0.50 (dealer discount). Return only CAD wholesale dealer cost.
-
-IMPORTANT: If a line item is visually indented in the document (a sub-item, accessory, or component whose cost is included in a parent line), prefix its name with two spaces to indicate it is a sub-part.
-
-Also extract the NET pre-tax rental total (after any discounts), the order/quote code, and client name.
-
+IMPORTANT: If a line item is visually indented (sub-item whose cost is in a parent line), prefix its name with two spaces.
+Also extract the NET pre-tax rental total (after discounts), order/quote code, and client name.
 Return ONLY valid JSON, no markdown:
-{"quoteCode":"string or null","client":"string or null","quotedRentalTotal":number or null,"gear":[{"name":"Full product name (indent 2 spaces if sub-part)","qty":number,"msrp":number,"wholesaleCost":number}]}`,
+{"quoteCode":"string or null","client":"string or null","quotedRentalTotal":number or null,"gear":[{"name":"Full product name (2-space indent if sub-part)","qty":number,"msrp":number,"wholesaleCost":number}]}`,
         messages:[{role:'user',content:[{type:'document',source:{type:'base64',media_type:'application/pdf',data:b64}},{type:'text',text:'Extract the gear list and wholesale cost estimates from this rental document.'}]}]
       })
     });
@@ -699,7 +723,6 @@ Return ONLY valid JSON, no markdown:
   } catch(err) { setStatus('err','ERROR'); showError(err.message); document.getElementById('extractBtn').disabled=false; }
 }
 
-// ─── RENDER ──────────────────────────────────────────────
 function renderResults() {
   const content = document.getElementById('content');
   content.innerHTML = '';
@@ -777,200 +800,34 @@ function renderPricer() {
   updateOutput();
 }
 
-function onSlider(val) {
-  state.targetRoi=parseFloat(val);
-  const pct=((state.targetRoi-0.1)/(5-0.1)*100).toFixed(1);
-  document.getElementById('roiSlider').style.setProperty('--pct',pct+'%');
-  document.getElementById('roiReadout').textContent=state.targetRoi.toFixed(2)+'%';
-  document.getElementById('roiManual').value=state.targetRoi.toFixed(2);
-  updateOutput();
-}
-function onManualRoi(val) {
-  const v=parseFloat(val); if(isNaN(v)||v<=0)return;
-  state.targetRoi=v;
-  const clamped=Math.min(Math.max(v,0.1),5),pct=((clamped-0.1)/(5-0.1)*100).toFixed(1);
-  const slider=document.getElementById('roiSlider');
-  if(slider){slider.value=clamped;slider.style.setProperty('--pct',pct+'%');}
-  const readout=document.getElementById('roiReadout');
-  if(readout)readout.textContent=v.toFixed(2)+'%';
-  updateOutput();
-}
-function setWeeks(w,skipBtns) {
-  state.weeks=Math.max(0.5,parseFloat(w)||0.5);
-  document.getElementById('weeksReadout').textContent=(state.weeks%1===0?state.weeks:state.weeks.toFixed(1))+'w';
-  document.getElementById('weeksInput').value=state.weeks;
-  if(!skipBtns)document.querySelectorAll('.wbtn').forEach((b,i)=>b.classList.toggle('active',[0.5,1,2,3,4][i]===state.weeks));
-  else document.querySelectorAll('.wbtn').forEach(b=>b.classList.remove('active'));
-  updateOutput();
-}
+function onSlider(val){state.targetRoi=parseFloat(val);const pct=((state.targetRoi-0.1)/(5-0.1)*100).toFixed(1);document.getElementById('roiSlider').style.setProperty('--pct',pct+'%');document.getElementById('roiReadout').textContent=state.targetRoi.toFixed(2)+'%';document.getElementById('roiManual').value=state.targetRoi.toFixed(2);updateOutput();}
+function onManualRoi(val){const v=parseFloat(val);if(isNaN(v)||v<=0)return;state.targetRoi=v;const clamped=Math.min(Math.max(v,0.1),5),pct=((clamped-0.1)/(5-0.1)*100).toFixed(1);const slider=document.getElementById('roiSlider');if(slider){slider.value=clamped;slider.style.setProperty('--pct',pct+'%');}const readout=document.getElementById('roiReadout');if(readout)readout.textContent=v.toFixed(2)+'%';updateOutput();}
+function setWeeks(w,skipBtns){state.weeks=Math.max(0.5,parseFloat(w)||0.5);document.getElementById('weeksReadout').textContent=(state.weeks%1===0?state.weeks:state.weeks.toFixed(1))+'w';document.getElementById('weeksInput').value=state.weeks;if(!skipBtns)document.querySelectorAll('.wbtn').forEach((b,i)=>b.classList.toggle('active',[0.5,1,2,3,4][i]===state.weeks));else document.querySelectorAll('.wbtn').forEach(b=>b.classList.remove('active'));updateOutput();}
 function recalc(){if(state.gear.length>0)updateOutput();}
-function updateOutput(){
-  setTimeout(()=>renderQuoteModeller(),50);
-  const perWeek=state.totalWholesale*(state.targetRoi/100),netTotal=perWeek*state.weeks;
-  const elNet=document.getElementById('outNetPrice'),elWeek=document.getElementById('outPerWeek'),elWL=document.getElementById('outWeeksLabel');
-  if(!elNet)return;
-  elNet.textContent=fmtCAD(netTotal);elWeek.textContent=fmtCAD(perWeek);
-  elWL.textContent=`${state.weeks%1===0?state.weeks:state.weeks.toFixed(1)} week${state.weeks!==1?'s':''}`;
-}
+function updateOutput(){setTimeout(()=>renderQuoteModeller(),50);const perWeek=state.totalWholesale*(state.targetRoi/100),netTotal=perWeek*state.weeks;const elNet=document.getElementById('outNetPrice'),elWeek=document.getElementById('outPerWeek'),elWL=document.getElementById('outWeeksLabel');if(!elNet)return;elNet.textContent=fmtCAD(netTotal);elWeek.textContent=fmtCAD(perWeek);elWL.textContent=`${state.weeks%1===0?state.weeks:state.weeks.toFixed(1)} week${state.weeks!==1?'s':''}`;}
 
 function toB64(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=()=>rej(new Error('File read failed'));r.readAsDataURL(file);});}
 function fmtCAD(n){const abs=Math.abs(n),sign=n<0?'-':'';return sign+'$'+abs.toLocaleString('en-CA',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function showLoading(msg){document.getElementById('content').innerHTML=`<div class="loading"><div class="spinner"></div><p>${msg}</p></div>`;}
 function showError(msg){document.getElementById('content').innerHTML=`<div style="padding:40px;"><div class="error-box">⚠ ${msg}</div><p style="font-family:var(--mono);font-size:11px;color:var(--muted);">Check that the PDF is a text-based Rental Point export, then try again.</p></div>`;}
-function resetAll(){
-  window.state={file:null,quoteTotal:0,quoteName:'',gear:[],totalWholesale:0,currentRoi:0,targetRoi:0,weeks:1};
-  ['fileChip','pdfFile','manualTotal'].forEach(id=>{const el=document.getElementById(id);if(el){if(id==='fileChip')el.style.display='none';else el.value='';}});
-  document.getElementById('quoteTotalDisplay').textContent='—';
-  document.getElementById('quoteMeta').textContent='Upload a PDF to populate';
-  document.getElementById('extractBtn').disabled=true;
-  document.getElementById('resetBtn').style.display='none';
-  setStatus('','READY');
-  document.getElementById('content').innerHTML=`<div class="empty"><div class="empty-glyph">%</div><p>Upload a Rental Point PDF. Claude will extract your gear list, match it against the <code>Apex Spire DB</code>, and calculate live ROI-based pricing.</p></div>`;
-}
+function resetAll(){window.state={file:null,quoteTotal:0,quoteName:'',gear:[],totalWholesale:0,currentRoi:0,targetRoi:0,weeks:1};['fileChip','pdfFile','manualTotal'].forEach(id=>{const el=document.getElementById(id);if(el){if(id==='fileChip')el.style.display='none';else el.value='';}});document.getElementById('quoteTotalDisplay').textContent='—';document.getElementById('quoteMeta').textContent='Upload a PDF to populate';document.getElementById('extractBtn').disabled=true;document.getElementById('resetBtn').style.display='none';setStatus('','READY');document.getElementById('content').innerHTML=`<div class="empty"><div class="empty-glyph">%</div><p>Upload a Rental Point PDF. Claude will extract your gear list, match it against the <code>Apex Spire DB</code>, and calculate live ROI-based pricing.</p></div>`;}
 
-// ─── BUILD GEAR ROWS ─────────────────────────────────────
-function buildGearRows(tbody) {
-  tbody.innerHTML='';
-  state.gear.forEach((g,i)=>{
-    const isSubpart=!!g.isSubpart, isOverridden=isSubpart&&!!g.subpartOverridden;
-    const costVal=isSubpart&&!isOverridden?0:(parseFloat(g.wholesaleCost)||parseFloat(g.msrp)||0);
-    state.gear[i].wholesaleCost=costVal; state.gear[i].msrp=costVal;
+function buildGearRows(tbody){tbody.innerHTML='';state.gear.forEach((g,i)=>{const isSubpart=!!g.isSubpart,isOverridden=isSubpart&&!!g.subpartOverridden;const costVal=isSubpart&&!isOverridden?0:(parseFloat(g.wholesaleCost)||parseFloat(g.msrp)||0);state.gear[i].wholesaleCost=costVal;state.gear[i].msrp=costVal;const tr=document.createElement('tr');if(isSubpart&&!isOverridden)tr.classList.add('subpart-row');if(isOverridden)tr.classList.add('subpart-overridden');let nameClass=isOverridden?'name subpart-overridden-name':isSubpart?'name subpart':'name';let nameBadge=isOverridden?'<span class="overridden-badge">OVERRIDDEN</span>':isSubpart?'<span class="subpart-badge">SUB-PART</span>':'';let prefix=isSubpart?'↳ ':'';let revertBtn=isOverridden?`<button class="btn-revert" style="margin-left:6px;" onclick="revertSubpart(${i})">Revert</button>`:'';let costCell='';if(isSubpart&&!isOverridden){costCell=`<div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;"><span style="font-family:var(--mono);font-size:11px;color:var(--purple);">cost elsewhere</span><button class="btn-override" onclick="overrideSubpart(${i})">Override</button></div>`;}else{costCell=`<input type="number" min="0" step="10" value="${costVal.toFixed(2)}" data-idx="${i}" data-qty="${g.qty}" style="width:130px;padding:6px 10px;font-size:14px;background:var(--panel);border:1px solid var(--border);color:#34d27b;text-align:right;border-radius:3px;">`;}let extCell=isSubpart&&!isOverridden?`<span style="color:var(--purple)">—</span>`:fmtCAD(costVal*g.qty);tr.innerHTML=`<td style="font-family:var(--mono);color:var(--muted);font-size:13px;">${String(i+1).padStart(2,'0')}</td><td class="${nameClass}">${prefix}${g.name}${nameBadge}${revertBtn}</td><td class="r">${g.qty}</td><td class="r">${costCell}</td><td class="r" style="color:${isSubpart&&!isOverridden?'var(--purple)':'#34d27b'};" id="ext-${i}">${extCell}</td>`;if(!isSubpart||isOverridden){const inp=tr.querySelector('input[type=number]');if(inp){inp.addEventListener('input',()=>{const idx=parseInt(inp.dataset.idx),qty=parseInt(inp.dataset.qty),val=parseFloat(inp.value)||0;state.gear[idx].wholesaleCost=val;state.gear[idx].msrp=val;savePrice(state.gear[idx].name,val);const ec=document.getElementById('ext-'+idx);if(ec)ec.textContent=fmtCAD(val*qty);updateAfterEdit();});inp.addEventListener('focus',()=>inp.style.borderColor='#f0b429');inp.addEventListener('blur',()=>inp.style.borderColor='var(--border)');}}tbody.appendChild(tr);});}
 
-    const tr=document.createElement('tr');
-    if(isSubpart&&!isOverridden)tr.classList.add('subpart-row');
-    if(isOverridden)tr.classList.add('subpart-overridden');
-
-    let nameClass=isOverridden?'name subpart-overridden-name':isSubpart?'name subpart':'name';
-    let nameBadge=isOverridden?'<span class="overridden-badge">OVERRIDDEN</span>':isSubpart?'<span class="subpart-badge">SUB-PART</span>':'';
-    let prefix=isSubpart?'↳ ':'';
-    let revertBtn=isOverridden?`<button class="btn-revert" style="margin-left:6px;" onclick="revertSubpart(${i})">Revert</button>`:'';
-
-    let costCell='';
-    if(isSubpart&&!isOverridden){
-      costCell=`<div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;">
-        <span style="font-family:var(--mono);font-size:11px;color:var(--purple);">cost elsewhere</span>
-        <button class="btn-override" onclick="overrideSubpart(${i})">Override</button>
-      </div>`;
-    } else {
-      costCell=`<input type="number" min="0" step="10" value="${costVal.toFixed(2)}" data-idx="${i}" data-qty="${g.qty}"
-        style="width:130px;padding:6px 10px;font-size:14px;background:var(--panel);border:1px solid var(--border);color:#34d27b;text-align:right;border-radius:3px;">`;
-    }
-
-    let extCell=isSubpart&&!isOverridden?`<span style="color:var(--purple)">—</span>`:fmtCAD(costVal*g.qty);
-
-    tr.innerHTML=`
-      <td style="font-family:var(--mono);color:var(--muted);font-size:13px;">${String(i+1).padStart(2,'00')}</td>
-      <td class="${nameClass}">${prefix}${g.name}${nameBadge}${revertBtn}</td>
-      <td class="r">${g.qty}</td>
-      <td class="r">${costCell}</td>
-      <td class="r" style="color:${isSubpart&&!isOverridden?'var(--purple)':'#34d27b'};" id="ext-${i}">${extCell}</td>`;
-
-    if(!isSubpart||isOverridden){
-      const inp=tr.querySelector('input[type=number]');
-      if(inp){
-        inp.addEventListener('input',()=>{
-          const idx=parseInt(inp.dataset.idx),qty=parseInt(inp.dataset.qty),val=parseFloat(inp.value)||0;
-          state.gear[idx].wholesaleCost=val;state.gear[idx].msrp=val;
-          savePrice(state.gear[idx].name,val);
-          const ec=document.getElementById('ext-'+idx);if(ec)ec.textContent=fmtCAD(val*qty);
-          updateAfterEdit();
-        });
-        inp.addEventListener('focus',()=>inp.style.borderColor='#f0b429');
-        inp.addEventListener('blur', ()=>inp.style.borderColor='var(--border)');
-      }
-    }
-    tbody.appendChild(tr);
-  });
-}
-
-window.overrideSubpart=function(idx){
-  state.gear[idx].subpartOverridden=true; state.gear[idx].wholesaleCost=0; state.gear[idx].msrp=0;
-  rebuildGearTable();
-  setTimeout(()=>{const inp=document.querySelector(`input[data-idx="${idx}"]`);if(inp){inp.focus();inp.select();}},50);
-};
-window.revertSubpart=function(idx){
-  state.gear[idx].subpartOverridden=false; state.gear[idx].wholesaleCost=0; state.gear[idx].msrp=0;
-  rebuildGearTable(); updateAfterEdit();
-};
+window.overrideSubpart=function(idx){state.gear[idx].subpartOverridden=true;state.gear[idx].wholesaleCost=0;state.gear[idx].msrp=0;rebuildGearTable();setTimeout(()=>{const inp=document.querySelector(`input[data-idx="${idx}"]`);if(inp){inp.focus();inp.select();}},50);};
+window.revertSubpart=function(idx){state.gear[idx].subpartOverridden=false;state.gear[idx].wholesaleCost=0;state.gear[idx].msrp=0;rebuildGearTable();updateAfterEdit();};
 function rebuildGearTable(){const tbody=document.getElementById('gearTbody');if(tbody)buildGearRows(tbody);updateAfterEdit();}
 
-function updateAfterEdit(){
-  state.totalWholesale=state.gear.filter(g=>!g.isSubpart||g.subpartOverridden).reduce((s,g)=>s+g.wholesaleCost*g.qty,0);
-  state.currentRoi=state.totalWholesale>0?(state.quoteTotal/state.totalWholesale)*100:0;
-  const tc=document.getElementById('wholesaleTotalCell');if(tc)tc.textContent=fmtCAD(state.totalWholesale);
-  const wc=document.getElementById('wholesaleStatCard');if(wc)wc.textContent=fmtCAD(state.totalWholesale);
-  const rc=document.getElementById('currentRoiStat');if(rc)rc.textContent=state.currentRoi.toFixed(2)+'%';
-  updateOutput();
-}
+function updateAfterEdit(){state.totalWholesale=state.gear.filter(g=>!g.isSubpart||g.subpartOverridden).reduce((s,g)=>s+g.wholesaleCost*g.qty,0);state.currentRoi=state.totalWholesale>0?(state.quoteTotal/state.totalWholesale)*100:0;const tc=document.getElementById('wholesaleTotalCell');if(tc)tc.textContent=fmtCAD(state.totalWholesale);const wc=document.getElementById('wholesaleStatCard');if(wc)wc.textContent=fmtCAD(state.totalWholesale);const rc=document.getElementById('currentRoiStat');if(rc)rc.textContent=state.currentRoi.toFixed(2)+'%';updateOutput();}
 
 async function loadPriceDB(){try{const r=await fetch(WORKER+'/prices');if(!r.ok)return{};return await r.json();}catch(e){return{};}}
-async function savePrice(name,cost){
-  if(!name||!cost||cost<=0)return;
-  const key=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').trim().replace(/^-|-$/g,'');
-  try{await fetch(WORKER+'/prices',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key,name,cost:parseFloat(cost)})});}catch(e){}
-}
+async function savePrice(name,cost){if(!name||!cost||cost<=0)return;const key=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').trim().replace(/^-|-$/g,'');try{await fetch(WORKER+'/prices',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key,name,cost:parseFloat(cost)})});}catch(e){}}
 async function deletePriceRemote(key){try{await fetch(WORKER+'/prices/delete',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key})});}catch(e){}}
-async function togglePriceDB(){
-  const panel=document.getElementById('priceDBPanel');
-  if(panel.style.display==='block'){panel.style.display='none';return;}
-  panel.style.display='block';
-  panel.innerHTML='<div style="padding:10px 12px;font-family:var(--mono);font-size:10px;color:var(--muted);">Loading...</div>';
-  const db=await loadPriceDB();
-  const items=Object.entries(db).sort((a,b)=>a[1].name.localeCompare(b[1].name));
-  if(!items.length){panel.innerHTML='<div style="padding:10px 12px;font-family:var(--mono);font-size:10px;color:var(--muted);">No saved prices yet.</div>';return;}
-  panel.innerHTML=items.map(([key,p])=>`<div class="price-db-row"><span class="price-db-name" title="${p.name}">${p.name}</span><span class="price-db-cost">${fmtCAD(p.cost)}</span><span class="price-db-del" onclick="deleteAndRefresh('${key}')">×</span></div>`).join('');
-}
+async function togglePriceDB(){const panel=document.getElementById('priceDBPanel');if(panel.style.display==='block'){panel.style.display='none';return;}panel.style.display='block';panel.innerHTML='<div style="padding:10px 12px;font-family:var(--mono);font-size:10px;color:var(--muted);">Loading...</div>';const db=await loadPriceDB();const items=Object.entries(db).sort((a,b)=>a[1].name.localeCompare(b[1].name));if(!items.length){panel.innerHTML='<div style="padding:10px 12px;font-family:var(--mono);font-size:10px;color:var(--muted);">No saved prices yet.</div>';return;}panel.innerHTML=items.map(([key,p])=>`<div class="price-db-row"><span class="price-db-name" title="${p.name}">${p.name}</span><span class="price-db-cost">${fmtCAD(p.cost)}</span><span class="price-db-del" onclick="deleteAndRefresh('${key}')">×</span></div>`).join('');}
 async function deleteAndRefresh(key){await deletePriceRemote(key);const p=document.getElementById('priceDBPanel');p.style.display='none';togglePriceDB();}
 
-function renderQuoteModeller(){
-  const section=document.getElementById('quoteModellerSection');
-  if(!section||!state.gear||!state.gear.length)return;
-  const wl=state.weeks%1===0?state.weeks:state.weeks.toFixed(1);
-  const roi=state.targetRoi/100;
-  let total=0,rows='';
-  state.gear.forEach((g,i)=>{
-    const isExcluded=g.isSubpart&&!g.subpartOverridden;
-    if(isExcluded){
-      rows+=`<tr style="opacity:.4;">
-        <td style="font-family:var(--mono);color:var(--muted);font-size:12px;padding:8px 12px;">${String(i+1).padStart(2,'00')}</td>
-        <td class="name" style="padding:8px 12px;color:var(--purple);font-style:italic;">↳ ${g.name} <span class="subpart-badge">SUB-PART</span></td>
-        <td class="r" style="padding:8px 12px;">${g.qty}</td>
-        <td colspan="4" style="padding:8px 12px;font-family:var(--mono);font-size:11px;color:var(--purple);">cost expressed elsewhere — excluded</td>
-      </tr>`;
-      return;
-    }
-    const uw=parseFloat(g.wholesaleCost)||0,cr=uw*roi,lt=cr*state.weeks*g.qty;
-    total+=lt;
-    const nameDisplay=g.isSubpart?`↳ ${g.name} <span class="overridden-badge">OVERRIDDEN</span>`:g.name;
-    rows+=`<tr${g.isSubpart?' class="subpart-overridden"':''}>
-      <td style="font-family:var(--mono);color:var(--muted);font-size:12px;padding:8px 12px;">${String(i+1).padStart(2,'00')}</td>
-      <td class="name" style="padding:8px 12px;">${nameDisplay}</td>
-      <td class="r" style="padding:8px 12px;">${g.qty}</td>
-      <td class="r" style="color:var(--green);padding:8px 12px;">${fmtCAD(uw)}</td>
-      <td class="r" style="color:var(--blue);padding:8px 12px;">${fmtCAD(cr)}/wk</td>
-      <td class="r" style="padding:8px 12px;"><input type="number" min="0" step="0.01" value="${cr.toFixed(2)}" data-qm-idx="${i}" style="width:115px;padding:5px 8px;font-size:13px;background:var(--panel);border:1px solid var(--border);color:var(--text);text-align:right;border-radius:3px;" oninput="onQmEdit(${i},this.value)" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"></td>
-      <td class="r" style="color:var(--accent);font-weight:600;padding:8px 12px;" id="qm-ext-${i}">${fmtCAD(lt)}</td>
-    </tr>`;
-  });
-  section.innerHTML=`
-    <hr class="divider">
-    <div class="slabel" style="margin-bottom:14px;">Quote Builder · Unit Prices for Rental Point</div>
-    <p class="qm-note">Unit price/wk = Wholesale × <span>${state.targetRoi.toFixed(2)}% ROI</span> × <span>${wl} week${state.weeks!=1?'s':''}</span>. Override any price — totals update live.</p>
-    <table>
-      <thead><tr><th>#</th><th>Item</th><th class="r">QTY</th><th class="r">Wholesale/Unit</th><th class="r">Calc Price/Wk</th><th class="r">Your Price/Wk</th><th class="r">Line Total (${wl}wk)</th></tr></thead>
-      <tbody>${rows}</tbody>
-      <tfoot><tr><td colspan="6" style="padding:10px 14px;">TOTAL · ${wl}wk · Pre-Tax</td><td class="r" style="color:var(--accent);font-size:15px;font-family:var(--mono);font-weight:600;padding:10px 14px;" id="qmGrandTotal">${fmtCAD(total)}</td></tr></tfoot>
-    </table>
-    <div class="qm-total-bar"><div><div class="qm-total-label">Quote Total · Pre-Tax</div><div class="qm-total-val" id="qmTotalBig">${fmtCAD(total)}</div><div class="qm-copy-note">Enter "Your Price/Wk" column into Rental Point line by line</div></div></div>`;
-}
-function onQmEdit(idx,val){
-  const price=parseFloat(val)||0,qty=state.gear[idx]?.qty||0;
-  const ec=document.getElementById('qm-ext-'+idx);if(ec)ec.textContent=fmtCAD(price*state.weeks*qty);
-  let t=0;
-  document.querySelectorAll('[data-qm-idx]').forEach(inp=>{const i=parseInt(inp.dataset.qmIdx);const g=state.gear[i];if(g&&(!g.isSubpart||g.subpartOverridden))t+=(parseFloat(inp.value)||0)*state.weeks*(g.qty||0);});
-  const gt=document.getElementById('qmGrandTotal'),tb=document.getElementById('qmTotalBig');
-  if(gt)gt.textContent=fmtCAD(t);if(tb)tb.textContent=fmtCAD(t);
-}
+function renderQuoteModeller(){const section=document.getElementById('quoteModellerSection');if(!section||!state.gear||!state.gear.length)return;const wl=state.weeks%1===0?state.weeks:state.weeks.toFixed(1);const roi=state.targetRoi/100;let total=0,rows='';state.gear.forEach((g,i)=>{const isExcluded=g.isSubpart&&!g.subpartOverridden;if(isExcluded){rows+=`<tr style="opacity:.4;"><td style="font-family:var(--mono);color:var(--muted);font-size:12px;padding:8px 12px;">${String(i+1).padStart(2,'0')}</td><td class="name" style="padding:8px 12px;color:var(--purple);font-style:italic;">↳ ${g.name} <span class="subpart-badge">SUB-PART</span></td><td class="r" style="padding:8px 12px;">${g.qty}</td><td colspan="4" style="padding:8px 12px;font-family:var(--mono);font-size:11px;color:var(--purple);">cost expressed elsewhere</td></tr>`;return;}const uw=parseFloat(g.wholesaleCost)||0,cr=uw*roi,lt=cr*state.weeks*g.qty;total+=lt;const nameDisplay=g.isSubpart?`↳ ${g.name} <span class="overridden-badge">OVERRIDDEN</span>`:g.name;rows+=`<tr${g.isSubpart?' class="subpart-overridden"':''}><td style="font-family:var(--mono);color:var(--muted);font-size:12px;padding:8px 12px;">${String(i+1).padStart(2,'0')}</td><td class="name" style="padding:8px 12px;">${nameDisplay}</td><td class="r" style="padding:8px 12px;">${g.qty}</td><td class="r" style="color:var(--green);padding:8px 12px;">${fmtCAD(uw)}</td><td class="r" style="color:var(--blue);padding:8px 12px;">${fmtCAD(cr)}/wk</td><td class="r" style="padding:8px 12px;"><input type="number" min="0" step="0.01" value="${cr.toFixed(2)}" data-qm-idx="${i}" style="width:115px;padding:5px 8px;font-size:13px;background:var(--panel);border:1px solid var(--border);color:var(--text);text-align:right;border-radius:3px;" oninput="onQmEdit(${i},this.value)" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'"></td><td class="r" style="color:var(--accent);font-weight:600;padding:8px 12px;" id="qm-ext-${i}">${fmtCAD(lt)}</td></tr>`;});section.innerHTML=`<hr class="divider"><div class="slabel" style="margin-bottom:14px;">Quote Builder · Unit Prices for Rental Point</div><p class="qm-note">Unit price/wk = Wholesale × <span>${state.targetRoi.toFixed(2)}% ROI</span> × <span>${wl} week${state.weeks!=1?'s':''}</span>. Override any price — totals update live.</p><table><thead><tr><th>#</th><th>Item</th><th class="r">QTY</th><th class="r">Wholesale/Unit</th><th class="r">Calc Price/Wk</th><th class="r">Your Price/Wk</th><th class="r">Line Total (${wl}wk)</th></tr></thead><tbody>${rows}</tbody><tfoot><tr><td colspan="6" style="padding:10px 14px;">TOTAL · ${wl}wk · Pre-Tax</td><td class="r" style="color:var(--accent);font-size:15px;font-family:var(--mono);font-weight:600;padding:10px 14px;" id="qmGrandTotal">${fmtCAD(total)}</td></tr></tfoot></table><div class="qm-total-bar"><div><div class="qm-total-label">Quote Total · Pre-Tax</div><div class="qm-total-val" id="qmTotalBig">${fmtCAD(total)}</div><div class="qm-copy-note">Enter "Your Price/Wk" column into Rental Point line by line</div></div></div>`;}
+function onQmEdit(idx,val){const price=parseFloat(val)||0,qty=state.gear[idx]?.qty||0;const ec=document.getElementById('qm-ext-'+idx);if(ec)ec.textContent=fmtCAD(price*state.weeks*qty);let t=0;document.querySelectorAll('[data-qm-idx]').forEach(inp=>{const i=parseInt(inp.dataset.qmIdx);const g=state.gear[i];if(g&&(!g.isSubpart||g.subpartOverridden))t+=(parseFloat(inp.value)||0)*state.weeks*(g.qty||0);});const gt=document.getElementById('qmGrandTotal'),tb=document.getElementById('qmTotalBig');if(gt)gt.textContent=fmtCAD(t);if(tb)tb.textContent=fmtCAD(t);}
 </script>
 </body>
 </html>

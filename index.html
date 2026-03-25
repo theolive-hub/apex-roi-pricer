@@ -869,7 +869,7 @@ async function runExtract() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 4000,
+        max_tokens: 8000,
         system: `You are an expert AV/lighting/staging equipment specialist with deep knowledge of professional gear pricing in Canada.
 
 Your job: extract every line-item piece of equipment from the rental PDF, and for each item return the Canadian dealer WHOLESALE cost in CAD as both "msrp" and "wholesaleCost".
@@ -911,8 +911,22 @@ Be thorough — include every line item. Base estimates on your knowledge of ETC
     if (data.error) throw new Error(data.error.message);
 
     const raw = data.content.find(b => b.type === 'text')?.text || '{}';
-    const clean = raw.replace(/```json|```/g, '').trim();
+    let clean = raw.replace(/```json|```/g, '').trim();
+    // If JSON was truncated, try to repair it
+    if (!clean.endsWith('}')) {
+      // Find last complete gear item and close the JSON
+      const lastComma = clean.lastIndexOf('},');
+      const lastClose = clean.lastIndexOf('}');
+      if (lastComma > 0) {
+        clean = clean.substring(0, lastComma + 1) + '],"_truncated":true}';
+      } else {
+        clean = clean + ']}';
+      }
+    }
     const parsed = JSON.parse(clean);
+    if (parsed._truncated) {
+      console.warn('Response was truncated — some items may be missing');
+    }
 
     console.log("Parsed gear:", JSON.stringify(parsed.gear));
     if (!parsed.gear?.length) throw new Error('No gear items found in document. Is this a Rental Point PDF?');

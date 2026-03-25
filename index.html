@@ -120,7 +120,6 @@ tfoot tr { background:var(--panel); border-top:2px solid var(--border); }
 tfoot td { font-family:var(--mono); font-size:12px; font-weight:500; padding:9px 12px; }
 tfoot td.total-green { color:var(--green); font-size:14px; }
 
-/* sub-part badge */
 .subpart-badge { display:inline-block; font-family:var(--mono); font-size:9px; letter-spacing:.8px; padding:1px 6px; border-radius:2px; margin-left:6px; vertical-align:middle; background:rgba(167,139,250,.12); border:1px solid rgba(167,139,250,.3); color:var(--purple); }
 
 .divider { border:none; border-top:1px solid var(--border); margin:28px 0; }
@@ -189,19 +188,10 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .modal-item-name { background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:10px 14px; font-size:14px; color:#fff; font-weight:500; margin-bottom:18px; }
 .modal-section-label { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; }
 
-/* sub-part callout box */
-.subpart-callout {
-  background: rgba(167,139,250,.07); border:1px solid rgba(167,139,250,.25);
-  border-radius:3px; padding:12px 16px; margin-bottom:16px;
-  font-family:var(--mono); font-size:11px; color:var(--purple); line-height:1.6;
-}
+.subpart-callout { background: rgba(167,139,250,.07); border:1px solid rgba(167,139,250,.25); border-radius:3px; padding:12px 16px; margin-bottom:16px; font-family:var(--mono); font-size:11px; color:var(--purple); line-height:1.6; }
 .subpart-callout strong { display:block; font-size:12px; margin-bottom:4px; letter-spacing:.5px; }
 
-.btn-subpart {
-  font-family:var(--mono); font-size:11px; letter-spacing:1px;
-  background: rgba(167,139,250,.1); border:1px solid rgba(167,139,250,.35); color:var(--purple);
-  border-radius:3px; padding:9px 16px; cursor:pointer; transition:all .15s; white-space:nowrap;
-}
+.btn-subpart { font-family:var(--mono); font-size:11px; letter-spacing:1px; background: rgba(167,139,250,.1); border:1px solid rgba(167,139,250,.35); color:var(--purple); border-radius:3px; padding:9px 16px; cursor:pointer; transition:all .15s; white-space:nowrap; }
 .btn-subpart:hover { background: rgba(167,139,250,.2); border-color:var(--purple); }
 
 .match-option { display:flex; align-items:flex-start; gap:10px; background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:9px 13px; margin-bottom:7px; transition:border-color .15s, background .15s; }
@@ -223,11 +213,13 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 
 .force-lookup-wrap { background:rgba(77,166,255,.05); border:1px solid rgba(77,166,255,.2); border-radius:3px; padding:12px 14px; margin-bottom:14px; }
 .force-lookup-label { font-family:var(--mono); font-size:10px; color:var(--blue); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; }
+.force-lookup-note { font-family:var(--mono); font-size:10px; color:var(--muted); margin-bottom:8px; }
 .force-lookup-row { display:flex; gap:8px; align-items:center; }
 .force-lookup-input { background:var(--panel); border:1px solid var(--border); color:var(--text); font-family:var(--mono); font-size:13px; padding:7px 11px; border-radius:3px; outline:none; flex:1; transition:border-color .15s; }
 .force-lookup-input:focus { border-color:var(--blue); }
 .force-lookup-btn { font-family:var(--mono); font-size:11px; letter-spacing:1px; background:var(--blue); color:#000; border:none; border-radius:3px; padding:7px 14px; cursor:pointer; white-space:nowrap; transition:opacity .15s; }
 .force-lookup-btn:hover { opacity:.8; }
+
 .force-lookup-result { margin-top:8px; padding:9px 12px; border-radius:3px; font-family:var(--mono); font-size:11px; line-height:1.6; display:none; }
 .force-lookup-result.found { background:rgba(52,210,123,.08); border:1px solid rgba(52,210,123,.25); color:var(--green); }
 .force-lookup-result.notfound { background:rgba(232,57,14,.06); border:1px solid rgba(232,57,14,.2); color:var(--red); }
@@ -309,7 +301,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 
 <script>
 // ─── VERSION ─────────────────────────────────────────────
-const VERSION = '2.0.4';
+const VERSION = '2.0.5';
 document.getElementById('versionBadge').textContent = 'v' + VERSION;
 
 // ─── CONFIG ──────────────────────────────────────────────
@@ -317,8 +309,6 @@ const SHEETS_ID  = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';
 const SHEETS_KEY = 'AIzaSyAiRlEx6DbYc6BAlYTcyAcoBzb5gd3fI3c';
 const SHEETS_TAB = 'apex_asset_db';
 const WORKER     = 'https://apex-api-proxy.theonlyalexoliveira.workers.dev';
-
-// ─── SUBPART SENTINEL — stored in Spire DB with cost = 0 and this prefix ─────
 const SUBPART_MARKER = '__SUBPART__';
 
 // ─── STATE ───────────────────────────────────────────────
@@ -355,7 +345,7 @@ function setStatus(cls, txt) {
   p.className = 'pill ' + cls; p.textContent = txt;
 }
 
-// ─── SPIRE APPEND — via Worker, no OAuth ─────────────────
+// ─── SPIRE APPEND ────────────────────────────────────────
 async function appendToSpireSheet(partNo, description, cost) {
   try {
     const res = await fetch(`${WORKER}/spire-append`, {
@@ -369,7 +359,6 @@ async function appendToSpireSheet(partNo, description, cost) {
   } catch(err) { console.error('Spire append error:', err); return false; }
 }
 
-// Save item as sub-part: cost=0, description prefixed with SUBPART_MARKER
 async function saveSubpartToSpire(itemName) {
   return await appendToSpireSheet('SUBPART', SUBPART_MARKER + itemName.toLowerCase(), 0);
 }
@@ -391,16 +380,13 @@ async function loadSpireDB() {
   return spireDB;
 }
 
-// Check if an item name is a known sub-part in the DB
 function isKnownSubpart(name) {
   if (!spireDB) return false;
-  const key = SUBPART_MARKER + name.toLowerCase().trim();
-  return spireDB.some(r => r.description === key);
+  return spireDB.some(r => r.description === SUBPART_MARKER + name.toLowerCase().trim());
 }
 
-// ─── FUZZY MATCH (top 5) ─────────────────────────────────
+// ─── FUZZY MATCH (top 5) — used for auto-matching only ───
 function fuzzyMatch(name, db) {
-  // Filter out subpart sentinel rows from matching
   const matchableDB = db.filter(r => !r.description.startsWith(SUBPART_MARKER) && r.cost > 0);
   const normalize = s => s.toLowerCase().replace(/['']/g,'').replace(/[^a-z0-9.x]/g,' ').replace(/\s+/g,' ').trim();
   const needle = normalize(name);
@@ -428,19 +414,16 @@ function fuzzyMatch(name, db) {
   return {match:top[0], confidence, candidates:top};
 }
 
-function lookupPartNo(code) {
+// ─── EXACT PART NUMBER LOOKUP — no fuzzy, no partial ─────
+// Only returns a result if part_no matches exactly (case-insensitive)
+function lookupPartNoExact(code) {
   if (!spireDB || !code) return null;
   const key = code.trim().toUpperCase();
-  const matchable = spireDB.filter(r => !r.description.startsWith(SUBPART_MARKER) && r.cost > 0);
-  return matchable.find(r => r.part_no.toUpperCase() === key)
-      || matchable.find(r => r.part_no.toUpperCase().includes(key) || key.includes(r.part_no.toUpperCase()))
-      || null;
-}
-
-// ─── DETECT INDENTED / SUB-PART ITEMS ────────────────────
-// Items whose name starts with whitespace or indent characters are sub-parts
-function detectSubpartFromName(name) {
-  return /^[\s\t\u00a0\u2003]+/.test(name);
+  return spireDB.find(r =>
+    !r.description.startsWith(SUBPART_MARKER) &&
+    r.cost > 0 &&
+    r.part_no.trim().toUpperCase() === key
+  ) || null;
 }
 
 async function matchGearToSpire(gear) {
@@ -450,37 +433,29 @@ async function matchGearToSpire(gear) {
 
   return gear.map(g => {
     const cleanName = g.name.trim();
-
-    // 1. Auto-detect sub-part from indentation
-    if (detectSubpartFromName(g.name)) {
-      return {...g, name: cleanName, matchSource:'subpart', wholesaleCost:0, msrp:0, confidence:100, candidates:[], isSubpart:true};
-    }
-
-    // 2. Check if already known as sub-part in Spire DB
-    if (isKnownSubpart(cleanName)) {
-      return {...g, name: cleanName, matchSource:'subpart', wholesaleCost:0, msrp:0, confidence:100, candidates:[], isSubpart:true};
-    }
-
-    // 3. Exact part number match
+    if (detectSubpartFromName(g.name))
+      return {...g, name:cleanName, matchSource:'subpart', wholesaleCost:0, msrp:0, confidence:100, candidates:[], isSubpart:true};
+    if (isKnownSubpart(cleanName))
+      return {...g, name:cleanName, matchSource:'subpart', wholesaleCost:0, msrp:0, confidence:100, candidates:[], isSubpart:true};
     if (g.code) {
       const exact = codeIndex[g.code.trim().toUpperCase()];
       if (exact && exact.cost > 0)
-        return {...g, name: cleanName, wholesaleCost:exact.cost, msrp:exact.cost, matchSource:'spire', matchName:exact.description, matchPartNo:exact.part_no, confidence:100, candidates:[], isSubpart:false};
+        return {...g, name:cleanName, wholesaleCost:exact.cost, msrp:exact.cost, matchSource:'spire', matchName:exact.description, matchPartNo:exact.part_no, confidence:100, candidates:[], isSubpart:false};
     }
-
-    // 4. Fuzzy match
     const result = fuzzyMatch(cleanName, db);
     if (result.match && result.confidence >= 80)
-      return {...g, name: cleanName, wholesaleCost:result.match.cost, msrp:result.match.cost, matchSource:'spire', matchName:result.match.description, matchPartNo:result.match.part_no, confidence:result.confidence, candidates:result.candidates, isSubpart:false};
-
-    return {...g, name: cleanName, matchSource:'pending', confidence:result.confidence, candidates:result.candidates, isSubpart:false};
+      return {...g, name:cleanName, wholesaleCost:result.match.cost, msrp:result.match.cost, matchSource:'spire', matchName:result.match.description, matchPartNo:result.match.part_no, confidence:result.confidence, candidates:result.candidates, isSubpart:false};
+    return {...g, name:cleanName, matchSource:'pending', confidence:result.confidence, candidates:result.candidates, isSubpart:false};
   });
+}
+
+function detectSubpartFromName(name) {
+  return /^[\s\t\u00a0\u2003]+/.test(name);
 }
 
 // ─── MODAL ───────────────────────────────────────────────
 function promptMatchQueue(gearList) {
   return new Promise(resolve => {
-    // Only show modal for pending items — subparts are already resolved
     const pending = gearList.map((g,i)=>({...g,_idx:i})).filter(g=>g.matchSource==='pending');
     if (pending.length === 0) { resolve(gearList); return; }
     let current = 0;
@@ -490,20 +465,18 @@ function promptMatchQueue(gearList) {
       document.getElementById('matchModal')?.remove();
       const overlay = document.createElement('div');
       overlay.className = 'modal-overlay'; overlay.id = 'matchModal';
-      overlay._forceLookupMatch = null;
       const hasCandidates = item.candidates && item.candidates.length > 0;
 
       overlay.innerHTML = `
         <div class="modal">
           <div class="modal-progress">${current+1} of ${pending.length}</div>
           <div class="modal-title">MATCH REQUIRED</div>
-          <div class="modal-sub">Select a Spire match, force-lookup a part number, mark as sub-part, or enter a manual price</div>
+          <div class="modal-sub">Select a Spire match, look up an exact part number, mark as sub-part, or enter a manual price</div>
           <div class="modal-item-name">📦 ${item.name} &nbsp;×&nbsp; ${item.qty}</div>
 
-          <!-- SUB-PART OPTION -->
           <div class="subpart-callout">
             <strong>⬡ Is this a sub-part / accessory?</strong>
-            If cost is expressed elsewhere (e.g. cabling, hardware, accessories included in a parent item), mark it as a sub-part. It will be excluded from totals and remembered for future PDFs.
+            If cost is expressed elsewhere, mark it as a sub-part. Excluded from totals and remembered for future PDFs.
           </div>
 
           ${hasCandidates ? `
@@ -529,9 +502,10 @@ function promptMatchQueue(gearList) {
           ` : `<div style="font-family:var(--mono);font-size:12px;color:var(--muted);margin-bottom:14px;">No fuzzy matches found. Use part number lookup, sub-part, or manual price below.</div>`}
 
           <div class="force-lookup-wrap">
-            <div class="force-lookup-label">🔍 Force Match by Part Number</div>
+            <div class="force-lookup-label">🔍 Exact Part Number Lookup</div>
+            <div class="force-lookup-note">Exact match only — must match a Spire part number precisely.</div>
             <div class="force-lookup-row">
-              <input class="force-lookup-input" id="forceLookupInput" type="text" placeholder="e.g. SL-NITRO510C" onkeydown="if(event.key==='Enter') doForceLookup()">
+              <input class="force-lookup-input" id="forceLookupInput" type="text" placeholder="e.g. D-CAT6A/SFTP-100-BSX6" onkeydown="if(event.key==='Enter') doForceLookup()">
               <button class="force-lookup-btn" onclick="doForceLookup()">LOOKUP</button>
             </div>
             <div class="force-lookup-result" id="forceLookupResult"></div>
@@ -565,9 +539,6 @@ function promptMatchQueue(gearList) {
         overlay.querySelectorAll('.match-option').forEach((el,i) => el.classList.toggle('selected', i===ci));
         document.getElementById(`radio-${ci}`).checked = true;
         overlay.querySelectorAll('.force-save-row').forEach((r,i) => r.classList.toggle('visible', i===ci));
-        overlay._forceLookupMatch = null;
-        const flr = document.getElementById('forceLookupResult');
-        if (flr) flr.style.display = 'none';
       };
       if (hasCandidates) {
         document.getElementById('mo-0')?.classList.add('selected');
@@ -586,23 +557,31 @@ function promptMatchQueue(gearList) {
         }
       };
 
+      // ── EXACT PART LOOKUP — no fuzzy, hard match only ──
       window.doForceLookup = () => {
         const code = document.getElementById('forceLookupInput').value.trim();
         const resultEl = document.getElementById('forceLookupResult');
         if (!code) return;
-        const found = lookupPartNo(code);
+
+        // Exact match only — same string, case-insensitive
+        const found = lookupPartNoExact(code);
         resultEl.style.display = 'block';
+
         if (found) {
-          overlay._forceLookupMatch = found;
+          // Show match and wait for CONFIRM — user still verifies
           resultEl.className = 'force-lookup-result found';
-          resultEl.innerHTML = `✓ MATCHED: <strong>${found.description}</strong><br>Part# ${found.part_no} · <strong>${fmtCAD(found.cost)}</strong><br><span style="color:var(--muted);font-size:10px;">Click CONFIRM to apply.</span>`;
+          resultEl.innerHTML = `✓ EXACT MATCH: <strong>${found.description}</strong><br>Part# <strong>${found.part_no}</strong> · <strong>${fmtCAD(found.cost)}</strong>`;
+          // Store on overlay for CONFIRM to pick up
+          overlay._exactMatch = found;
+          // Deselect fuzzy candidates
           overlay.querySelectorAll('.match-option').forEach(e=>e.classList.remove('selected'));
           overlay.querySelectorAll('input[name=matchChoice]').forEach(e=>e.checked=false);
         } else {
-          overlay._forceLookupMatch = null;
+          // Not found — show add-to-DB form
+          overlay._exactMatch = null;
           resultEl.className = 'force-lookup-result notfound';
           resultEl.innerHTML = `
-            ✗ "<strong>${code}</strong>" not found in Spire DB.
+            ✗ No exact match for "<strong>${code}</strong>" in Spire DB.
             <div class="add-to-db-form">
               <div style="font-family:var(--mono);font-size:10px;color:var(--accent);letter-spacing:1px;margin-bottom:8px;">ADD THIS CODE TO SPIRE DB</div>
               <div class="add-to-db-row"><label>Part No:</label><input class="add-to-db-input" id="newPartNo" type="text" value="${code}"></div>
@@ -635,7 +614,6 @@ function promptMatchQueue(gearList) {
       document.getElementById('modalSubpart').onclick = async () => {
         const btn = document.getElementById('modalSubpart');
         btn.textContent = 'SAVING…'; btn.disabled = true;
-        // Save to Spire DB so future PDFs auto-skip this item
         await saveSubpartToSpire(item.name);
         result[item._idx] = {...result[item._idx], wholesaleCost:0, msrp:0, matchSource:'subpart', isSubpart:true, confidence:100};
         btn.textContent = '✓ MARKED';
@@ -649,13 +627,15 @@ function promptMatchQueue(gearList) {
         const manualPartNo = document.getElementById('manualPartNo').value.trim();
         const saveToSpire  = document.getElementById('saveToSpire').checked;
         const radioEl      = overlay.querySelector('input[name=matchChoice]:checked');
-        const forceMatch   = overlay._forceLookupMatch;
+        const exactMatch   = overlay._exactMatch;
         const confirmBtn   = document.getElementById('modalConfirm');
 
-        if (forceMatch) {
-          result[item._idx] = {...result[item._idx], wholesaleCost:forceMatch.cost, msrp:forceMatch.cost, matchSource:'spire', matchName:forceMatch.description, matchPartNo:forceMatch.part_no, confidence:100, isSubpart:false};
+        // Priority 1: exact part lookup confirmed
+        if (exactMatch) {
+          result[item._idx] = {...result[item._idx], wholesaleCost:exactMatch.cost, msrp:exactMatch.cost, matchSource:'spire', matchName:exactMatch.description, matchPartNo:exactMatch.part_no, confidence:100, isSubpart:false};
           next(); return;
         }
+        // Priority 2: fuzzy candidate with optional force-save
         if (radioEl && hasCandidates) {
           const ci = parseInt(radioEl.value);
           const chosen = item.candidates[ci];
@@ -669,6 +649,7 @@ function promptMatchQueue(gearList) {
           }
           next(); return;
         }
+        // Priority 3: manual price
         if (manualVal > 0) {
           result[item._idx] = {...result[item._idx], wholesaleCost:manualVal, msrp:manualVal, matchSource:'manual', confidence:100, isSubpart:false};
           if (saveToSpire) {
@@ -679,6 +660,7 @@ function promptMatchQueue(gearList) {
           }
           next(); return;
         }
+        // Fallback
         result[item._idx] = {...result[item._idx], matchSource:'estimate', isSubpart:false};
         next();
       };
@@ -756,8 +738,6 @@ Be thorough. Base estimates on ETC, Astera, ROBE, Martin, GLP, L-Acoustics, d&b,
     setStatus('working','REVIEW…');
     state.gear = await promptMatchQueue(preMatched);
     state.quoteName = `${parsed.client||''} · ${parsed.quoteCode||''}`.trim().replace(/^·\s*|·\s*$/g,'');
-
-    // Only count non-subpart items in totals
     state.totalWholesale = state.gear.filter(g=>!g.isSubpart).reduce((s,g)=>s+g.wholesaleCost*g.qty,0);
 
     if (parsed.quotedRentalTotal && parsed.quotedRentalTotal > 0) {
@@ -791,7 +771,7 @@ function renderResults() {
   stats.innerHTML = `
     <div class="results-head">
       <div><div class="rh-title">EXTRACTION COMPLETE</div>
-      <div class="rh-meta">${state.quoteName||'Rental Quote'} · ${state.gear.length} line items${subpartCount ? ` · <span style="color:var(--purple)">${subpartCount} sub-part${subpartCount>1?'s':''} excluded from totals</span>` : ''}</div></div>
+      <div class="rh-meta">${state.quoteName||'Rental Quote'} · ${state.gear.length} line items${subpartCount ? ` · <span style="color:var(--purple)">${subpartCount} sub-part${subpartCount>1?'s':''} excluded</span>` : ''}</div></div>
     </div>
     <div class="stat-row">
       <div class="stat"><div class="stat-lbl">Quote Total (1 wk)</div><div class="stat-val gold">${fmtCAD(state.quoteTotal)}</div></div>
@@ -803,7 +783,7 @@ function renderResults() {
   const tableWrap = document.createElement('div');
   tableWrap.innerHTML = `
     <div class="slabel" style="margin-bottom:10px;">Gear List · Wholesale Cost Breakdown</div>
-    <p style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:12px;">Click any <span style="color:var(--accent)">Wholesale Cost/Unit</span> to edit — totals update live. <span style="color:var(--purple)">Sub-parts</span> are excluded from totals.</p>`;
+    <p style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:12px;">Click any <span style="color:var(--accent)">Wholesale Cost/Unit</span> to edit — totals update live. <span style="color:var(--purple)">Sub-parts</span> excluded from totals.</p>`;
   content.appendChild(tableWrap);
 
   const table = document.createElement('table');
@@ -925,10 +905,8 @@ function buildGearRows(tbody) {
     const costVal = isSubpart ? 0 : (parseFloat(g.wholesaleCost)||parseFloat(g.msrp)||0);
     state.gear[i].wholesaleCost = costVal;
     state.gear[i].msrp = costVal;
-
     const tr = document.createElement('tr');
     if (isSubpart) tr.classList.add('subpart-row');
-
     tr.innerHTML = `
       <td style="font-family:var(--mono);color:var(--muted);font-size:13px;">${String(i+1).padStart(2,'0')}</td>
       <td class="name${isSubpart?' subpart':''}">
@@ -939,14 +917,12 @@ function buildGearRows(tbody) {
       <td class="r">
         ${isSubpart
           ? `<span style="font-family:var(--mono);font-size:12px;color:var(--purple);">cost elsewhere</span>`
-          : `<input type="number" min="0" step="10" value="${costVal.toFixed(2)}" data-idx="${i}" data-qty="${g.qty}"
-              style="width:130px;padding:6px 10px;font-size:14px;background:var(--panel);border:1px solid var(--border);color:#34d27b;text-align:right;border-radius:3px;">`
+          : `<input type="number" min="0" step="10" value="${costVal.toFixed(2)}" data-idx="${i}" data-qty="${g.qty}" style="width:130px;padding:6px 10px;font-size:14px;background:var(--panel);border:1px solid var(--border);color:#34d27b;text-align:right;border-radius:3px;">`
         }
       </td>
       <td class="r" style="color:${isSubpart?'var(--purple)':'#34d27b'};" id="ext-${i}">
         ${isSubpart ? '—' : fmtCAD(costVal*g.qty)}
       </td>`;
-
     if (!isSubpart) {
       const inp = tr.querySelector('input');
       inp.addEventListener('input',()=>{
@@ -1005,7 +981,7 @@ function renderQuoteModeller(){
         <td style="font-family:var(--mono);color:var(--muted);font-size:12px;padding:8px 12px;">${String(i+1).padStart(2,'0')}</td>
         <td class="name" style="padding:8px 12px;color:var(--purple);font-style:italic;">↳ ${g.name} <span class="subpart-badge">SUB-PART</span></td>
         <td class="r" style="padding:8px 12px;">${g.qty}</td>
-        <td class="r" style="color:var(--purple);padding:8px 12px;" colspan="4">cost expressed elsewhere — excluded</td>
+        <td colspan="4" style="padding:8px 12px;font-family:var(--mono);font-size:11px;color:var(--purple);">cost expressed elsewhere — excluded</td>
       </tr>`;
       return;
     }

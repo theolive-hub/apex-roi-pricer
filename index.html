@@ -43,7 +43,7 @@ header { position: sticky; top: 0; z-index: 50; background: var(--surface); bord
 .pill.err     { border-color: var(--red); color: var(--red); }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.25} }
 
-.app { position: relative; z-index: 1; display: grid; grid-template-columns: 320px 1fr; min-height: calc(100vh - 54px); }
+.app { position: relative; z-index: 1; display: grid; grid-template-columns: 280px 1fr; min-height: calc(100vh - 54px); }
 
 .sidebar { background: var(--surface); border-right: 1px solid var(--border); padding: 24px 20px; display: flex; flex-direction: column; gap: 24px; }
 .slabel { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
@@ -61,10 +61,27 @@ header { position: sticky; top: 0; z-index: 50; background: var(--surface); bord
 .file-chip .fn { font-family: var(--mono); font-size:10px; line-height:1.5; word-break:break-all; }
 .file-chip .fn span { color: var(--muted); display:block; }
 
-.quote-box { background: var(--panel); border: 1px solid var(--border); border-radius:3px; padding: 14px 16px; }
-.qb-label { font-family: var(--mono); font-size:11px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:4px; }
-.qb-val { font-family: var(--display); font-size:36px; letter-spacing:2px; color: var(--accent); line-height:1; }
-.qb-sub { font-family: var(--mono); font-size:12px; color:var(--muted); margin-top:4px; }
+/* CLIENT PRICE INPUT — replaces the old quote total box */
+.client-price-box {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 3px; padding: 14px 16px;
+}
+.cp-label { font-family: var(--mono); font-size:11px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; }
+.cp-input-wrap { position: relative; }
+.cp-input-wrap span {
+  position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
+  font-family: var(--mono); font-size: 15px; color: var(--accent); pointer-events: none;
+}
+.cp-input {
+  background: var(--bg); border: 1px solid var(--border); color: var(--accent);
+  font-family: var(--mono); font-size: 20px; font-weight: 500;
+  padding: 10px 11px 10px 24px; border-radius: 3px; outline: none; width: 100%;
+  transition: border-color .15s;
+}
+.cp-input:focus { border-color: var(--accent); }
+.cp-roi-live {
+  font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.6;
+}
+.cp-roi-live strong { color: var(--blue); font-size: 14px; }
 
 .field { display:flex; flex-direction:column; gap:5px; }
 .field label { font-family:var(--mono); font-size:12px; color:var(--muted); letter-spacing:.8px; text-transform:uppercase; }
@@ -96,11 +113,11 @@ header { position: sticky; top: 0; z-index: 50; background: var(--surface); bord
 .rh-title { font-family:var(--display); font-size:32px; letter-spacing:2px; color:#fff; line-height:1; }
 .rh-meta { font-family:var(--mono); font-size:13px; color:var(--muted); margin-top:6px; }
 
-.stat-row { display:grid; grid-template-columns:repeat(auto-fill, minmax(155px,1fr)); gap:10px; margin-bottom:28px; }
+/* STAT ROW — only 2 cards now */
+.stat-row { display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:28px; }
 .stat { background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:12px 14px; }
 .stat-lbl { font-family:var(--mono); font-size:9px; color:var(--muted); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:5px; }
-.stat-val { font-family:var(--display); font-size:22px; letter-spacing:1px; color:#fff; line-height:1; }
-.stat-val.gold  { color:var(--accent); }
+.stat-val { font-family:var(--display); font-size:28px; letter-spacing:1px; color:#fff; line-height:1; }
 .stat-val.green { color:var(--green); }
 .stat-val.blue  { color:var(--blue); }
 
@@ -111,7 +128,6 @@ th.r { text-align:right; }
 tbody tr { border-bottom:1px solid var(--border); transition:background .1s; }
 tbody tr:hover { background:rgba(255,255,255,.02); }
 tbody tr.subpart-row { opacity:.6; background: rgba(167,139,250,.03); }
-tbody tr.subpart-row:hover { background: rgba(167,139,250,.06); }
 tbody tr.subpart-overridden { opacity:1; background: rgba(240,180,41,.03); border-left: 2px solid var(--accent); }
 td { padding:10px 14px; vertical-align:middle; }
 td.r { text-align:right; font-family:var(--mono); }
@@ -124,7 +140,6 @@ tfoot td.total-green { color:var(--green); font-size:14px; }
 
 .subpart-badge { display:inline-block; font-family:var(--mono); font-size:9px; letter-spacing:.8px; padding:1px 6px; border-radius:2px; margin-left:6px; vertical-align:middle; background:rgba(167,139,250,.12); border:1px solid rgba(167,139,250,.3); color:var(--purple); }
 .overridden-badge { display:inline-block; font-family:var(--mono); font-size:9px; letter-spacing:.8px; padding:1px 6px; border-radius:2px; margin-left:6px; vertical-align:middle; background:rgba(240,180,41,.12); border:1px solid rgba(240,180,41,.3); color:var(--accent); }
-
 .btn-override { font-family:var(--mono); font-size:9px; letter-spacing:.8px; text-transform:uppercase; background:rgba(167,139,250,.1); border:1px solid rgba(167,139,250,.3); color:var(--purple); border-radius:2px; padding:3px 8px; cursor:pointer; transition:all .15s; white-space:nowrap; }
 .btn-override:hover { background:rgba(167,139,250,.2); border-color:var(--purple); color:#fff; }
 .btn-revert { font-family:var(--mono); font-size:9px; letter-spacing:.8px; text-transform:uppercase; background:rgba(240,180,41,.1); border:1px solid rgba(240,180,41,.3); color:var(--accent); border-radius:2px; padding:3px 8px; cursor:pointer; transition:all .15s; white-space:nowrap; }
@@ -187,45 +202,19 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 ::-webkit-scrollbar-track { background:var(--bg); }
 ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
 
-/* ── MODAL — wider, shorter, two-column body ── */
+/* MODAL */
 .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.78); z-index:200; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(3px); }
-
-.modal {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 6px; padding: 22px 24px 20px;
-  width: 900px; max-width: 96vw;       /* ← wider */
-  max-height: 78vh;                     /* ← shorter */
-  overflow-y: auto;
-  box-shadow: 0 24px 64px rgba(0,0,0,.65); position: relative;
-}
+.modal { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:22px 24px 20px; width:900px; max-width:96vw; max-height:78vh; overflow-y:auto; box-shadow:0 24px 64px rgba(0,0,0,.65); position:relative; }
 .modal::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--accent), var(--green)); border-radius:6px 6px 0 0; }
-
-/* header strip */
-.modal-header { margin-bottom: 14px; }
+.modal-header { margin-bottom:14px; }
 .modal-title { font-family:var(--display); font-size:20px; letter-spacing:2px; color:#fff; margin-bottom:2px; }
 .modal-sub { font-family:var(--mono); font-size:11px; color:var(--muted); }
 .modal-item-name { background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:8px 14px; font-size:13px; color:#fff; font-weight:500; margin-bottom:14px; }
-
-/* sub-part callout — compact horizontal */
-.subpart-callout {
-  background: rgba(167,139,250,.07); border:1px solid rgba(167,139,250,.25);
-  border-radius:3px; padding:8px 14px; margin-bottom:14px;
-  font-family:var(--mono); font-size:10px; color:var(--purple); line-height:1.5;
-  display:flex; align-items:center; gap:10px;
-}
-.subpart-callout strong { font-size:11px; white-space:nowrap; }
-
-/* two-column body */
-.modal-body {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  align-items: start;
-}
-.modal-col { display:flex; flex-direction:column; gap:10px; }
-
 .modal-section-label { font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px; }
-
+.subpart-callout { background:rgba(167,139,250,.07); border:1px solid rgba(167,139,250,.25); border-radius:3px; padding:8px 14px; margin-bottom:14px; font-family:var(--mono); font-size:10px; color:var(--purple); line-height:1.5; display:flex; align-items:center; gap:10px; }
+.subpart-callout strong { font-size:11px; white-space:nowrap; }
+.modal-body { display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start; }
+.modal-col { display:flex; flex-direction:column; gap:10px; }
 .match-option { display:flex; align-items:flex-start; gap:8px; background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:7px 11px; margin-bottom:5px; transition:border-color .15s, background .15s; cursor:pointer; }
 .match-option.selected { border-color:var(--green); background:rgba(52,210,123,.06); }
 .match-option.force-save-active { border-color:var(--accent); background:rgba(240,180,41,.06); }
@@ -235,15 +224,10 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .match-option-name { font-size:11px; color:#fff; line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .match-option-meta { font-family:var(--mono); font-size:9px; color:var(--muted); margin-top:1px; }
 .match-option-cost { font-family:var(--display); font-size:15px; color:var(--green); letter-spacing:1px; flex-shrink:0; padding-top:1px; }
-
 .force-save-row { display:none; align-items:center; gap:6px; margin-top:5px; padding:5px 8px; border-radius:3px; background:rgba(240,180,41,.05); border:1px dashed rgba(240,180,41,.25); }
 .force-save-row.visible { display:flex; }
 .force-save-row input[type=checkbox] { accent-color:var(--accent); width:12px; height:12px; cursor:pointer; flex-shrink:0; }
 .force-save-row label { font-family:var(--mono); font-size:9px; color:var(--accent); cursor:pointer; line-height:1.4; }
-
-.modal-divider-v { width:1px; background:var(--border); align-self:stretch; margin:0 4px; }
-
-/* right column sections */
 .force-lookup-wrap { background:rgba(77,166,255,.05); border:1px solid rgba(77,166,255,.2); border-radius:3px; padding:10px 12px; }
 .force-lookup-label { font-family:var(--mono); font-size:10px; color:var(--blue); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:3px; }
 .force-lookup-note { font-family:var(--mono); font-size:9px; color:var(--muted); margin-bottom:7px; }
@@ -255,7 +239,6 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .force-lookup-result { margin-top:7px; padding:7px 10px; border-radius:3px; font-family:var(--mono); font-size:10px; line-height:1.5; display:none; }
 .force-lookup-result.found { background:rgba(52,210,123,.08); border:1px solid rgba(52,210,123,.25); color:var(--green); }
 .force-lookup-result.notfound { background:rgba(232,57,14,.06); border:1px solid rgba(232,57,14,.2); color:var(--red); }
-
 .add-to-db-form { margin-top:8px; padding-top:8px; border-top:1px solid rgba(232,57,14,.2); }
 .add-to-db-row { display:flex; gap:6px; align-items:center; margin-bottom:6px; }
 .add-to-db-row label { font-family:var(--mono); font-size:9px; color:var(--muted); white-space:nowrap; min-width:76px; }
@@ -263,8 +246,6 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .add-to-db-input:focus { border-color:var(--accent); }
 .add-to-db-btn { font-family:var(--mono); font-size:10px; letter-spacing:1px; width:100%; background:var(--accent); color:#000; border:none; border-radius:3px; padding:6px; cursor:pointer; margin-top:3px; transition:opacity .15s; }
 .add-to-db-btn:hover { opacity:.85; }
-
-/* manual price section */
 .manual-section { background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:10px 12px; }
 .manual-price-wrap { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
 .manual-price-wrap label { font-family:var(--mono); font-size:10px; color:var(--muted); white-space:nowrap; }
@@ -272,12 +253,11 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .manual-price-input:focus { border-color:var(--accent); }
 .manual-partno-input { background:var(--bg); border:1px solid var(--border); color:var(--text); font-family:var(--mono); font-size:11px; padding:5px 9px; border-radius:3px; outline:none; width:100%; transition:border-color .15s; margin-bottom:7px; }
 .manual-partno-input:focus { border-color:var(--accent); }
-
 .modal-actions { display:flex; gap:8px; margin-top:14px; justify-content:flex-end; flex-wrap:wrap; border-top:1px solid var(--border); padding-top:14px; }
 .modal-skip { font-family:var(--mono); font-size:11px; background:transparent; border:1px solid var(--border); color:var(--muted); border-radius:3px; padding:8px 14px; cursor:pointer; transition:all .15s; }
 .modal-skip:hover { border-color:var(--text); color:var(--text); }
-.btn-subpart { font-family:var(--mono); font-size:11px; letter-spacing:1px; background: rgba(167,139,250,.1); border:1px solid rgba(167,139,250,.35); color:var(--purple); border-radius:3px; padding:8px 14px; cursor:pointer; transition:all .15s; white-space:nowrap; }
-.btn-subpart:hover { background: rgba(167,139,250,.2); border-color:var(--purple); }
+.btn-subpart { font-family:var(--mono); font-size:11px; letter-spacing:1px; background:rgba(167,139,250,.1); border:1px solid rgba(167,139,250,.35); color:var(--purple); border-radius:3px; padding:8px 14px; cursor:pointer; transition:all .15s; white-space:nowrap; }
+.btn-subpart:hover { background:rgba(167,139,250,.2); border-color:var(--purple); }
 .modal-confirm { font-family:var(--display); font-size:16px; letter-spacing:2px; background:var(--accent); color:#000; border:none; border-radius:3px; padding:9px 22px; cursor:pointer; transition:opacity .15s; }
 .modal-confirm:hover { opacity:.85; }
 .modal-progress { font-family:var(--mono); font-size:10px; color:var(--muted); position:absolute; top:16px; right:16px; }
@@ -303,26 +283,27 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
       </div>
       <div id="fileChip" style="display:none"></div>
     </div>
+
+    <!-- CLIENT PRICE — replaces old quote total box -->
     <div>
-      <div class="slabel">Quote Total (Pre-Tax)</div>
-      <div class="quote-box">
-        <div class="qb-label">PDF Rental Total · 1 Week Rate</div>
-        <div class="qb-val" id="quoteTotalDisplay">—</div>
-        <div class="qb-sub" id="quoteMeta">Upload a PDF to populate</div>
-      </div>
-      <div style="margin-top:10px;">
-        <div class="field">
-          <label>Or enter manually (CAD)</label>
-          <input type="number" id="manualTotal" placeholder="e.g. 132438" min="0" step="100" oninput="onManualTotal(this.value)">
+      <div class="slabel">Client Price (Pre-Tax)</div>
+      <div class="client-price-box">
+        <div class="cp-label">Your 1-Week Net Rate · CAD</div>
+        <div class="cp-input-wrap">
+          <span>$</span>
+          <input class="cp-input" type="number" id="clientPriceInput" placeholder="0.00" min="0" step="100" oninput="onClientPrice(this.value)">
         </div>
+        <div class="cp-roi-live" id="cpRoiLive">Enter your price to see ROI</div>
       </div>
     </div>
+
     <div>
       <div class="slabel">Price Memory</div>
       <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:8px;line-height:1.6;">Shared across all Apex users.<br>Auto-saved when you edit costs.</div>
       <button class="btn-ghost" style="width:100%;margin-top:10px;" onclick="togglePriceDB()">View Saved Prices</button>
       <div class="price-db-panel" id="priceDBPanel"></div>
     </div>
+
     <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
       <button class="btn-primary" id="extractBtn" disabled onclick="runExtract()">ANALYSE PDF</button>
       <button class="btn-ghost" id="resetBtn" style="display:none" onclick="resetAll()">Reset / New Quote</button>
@@ -338,7 +319,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 </div>
 
 <script>
-const VERSION = '2.0.8';
+const VERSION = '2.0.9';
 document.getElementById('versionBadge').textContent = 'v' + VERSION;
 
 const SHEETS_ID  = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';
@@ -349,6 +330,38 @@ const SUBPART_MARKER = '__SUBPART__';
 
 window.state = { file:null, quoteTotal:0, quoteName:'', gear:[], totalWholesale:0, currentRoi:0, targetRoi:0, weeks:1 };
 
+// ─── CLIENT PRICE INPUT ───────────────────────────────────
+function onClientPrice(val) {
+  const n = parseFloat(val) || 0;
+  state.quoteTotal = n;
+  updateRoiLive();
+  if (state.gear.length > 0) updateAfterEdit();
+}
+
+function updateRoiLive() {
+  const el = document.getElementById('cpRoiLive');
+  if (!el) return;
+  const price = state.quoteTotal;
+  const assetVal = state.totalWholesale;
+  if (!price || price <= 0) {
+    el.innerHTML = 'Enter your price to see ROI';
+    return;
+  }
+  if (!assetVal || assetVal <= 0) {
+    el.innerHTML = `<strong>${fmtCAD(price)}</strong> entered — analyse PDF first for ROI`;
+    return;
+  }
+  const roi = (price / assetVal) * 100;
+  const color = roi >= 3 ? 'var(--green)' : roi >= 1.5 ? 'var(--accent)' : 'var(--red)';
+  el.innerHTML = `ROI: <strong style="color:${color};font-size:16px;">${roi.toFixed(2)}%</strong> of asset value`;
+  // Also update the stat card if visible
+  const roiCard = document.getElementById('currentRoiStat');
+  if (roiCard) roiCard.textContent = roi.toFixed(2) + '%';
+  // Update slider/pricer state
+  state.currentRoi = roi;
+}
+
+// ─── FILE HANDLING ───────────────────────────────────────
 const dropZone = document.getElementById('dropZone');
 const pdfFile  = document.getElementById('pdfFile');
 pdfFile.onchange = e => loadFile(e.target.files[0]);
@@ -367,26 +380,20 @@ function loadFile(file) {
   document.getElementById('extractBtn').disabled = false;
   setStatus('', 'PDF LOADED');
 }
-function onManualTotal(val) {
-  const n = parseFloat(val) || 0;
-  state.quoteTotal = n;
-  document.getElementById('quoteTotalDisplay').textContent = n > 0 ? fmtCAD(n) : '—';
-  document.getElementById('quoteMeta').textContent = n > 0 ? 'Manually entered · 1-week base rate' : 'Upload a PDF to populate';
-  if (n > 0 && state.gear.length > 0) recalc();
-}
 function setStatus(cls, txt) {
   const p = document.getElementById('statusPill');
   p.className = 'pill ' + cls; p.textContent = txt;
 }
 
+// ─── SPIRE ───────────────────────────────────────────────
 async function appendToSpireSheet(partNo, description, cost) {
   try {
     const res = await fetch(`${WORKER}/spire-append`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ partNo: partNo || 'MANUAL', description, cost: parseFloat(cost) })
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ partNo: partNo||'MANUAL', description, cost: parseFloat(cost) })
     });
     if (!res.ok) throw new Error('Worker append failed');
-    if (spireDB) spireDB.push({ part_no: partNo||'MANUAL', description: description.toLowerCase(), cost: parseFloat(cost) });
+    if (spireDB) spireDB.push({ part_no:partNo||'MANUAL', description:description.toLowerCase(), cost:parseFloat(cost) });
     return true;
   } catch(err) { console.error('Spire append error:', err); return false; }
 }
@@ -474,7 +481,7 @@ async function matchGearToSpire(gear) {
   });
 }
 
-// ─── MODAL (wide, short, two-column) ─────────────────────
+// ─── MODAL ───────────────────────────────────────────────
 function promptMatchQueue(gearList) {
   return new Promise(resolve => {
     const pending = gearList.map((g,i)=>({...g,_idx:i})).filter(g=>g.matchSource==='pending');
@@ -492,22 +499,16 @@ function promptMatchQueue(gearList) {
       overlay.innerHTML = `
         <div class="modal">
           <div class="modal-progress">${current+1} of ${pending.length}</div>
-
           <div class="modal-header">
             <div class="modal-title">MATCH REQUIRED</div>
             <div class="modal-sub">Select a Spire match, look up an exact part number, mark as sub-part, or enter a manual price</div>
           </div>
-
           <div class="modal-item-name">📦 ${item.name} &nbsp;×&nbsp; ${item.qty}</div>
-
           <div class="subpart-callout">
             <strong>⬡ Sub-part?</strong>
-            Cost expressed elsewhere — excluded from totals. Can be overridden per-quote in the gear table.
+            Cost expressed elsewhere — excluded from totals. Can be overridden in the gear table.
           </div>
-
           <div class="modal-body">
-
-            <!-- LEFT: fuzzy candidates -->
             <div class="modal-col">
               ${hasCandidates ? `
                 <div class="modal-section-label">Top ${item.candidates.length} Spire Matches — tick to save to Spire DB</div>
@@ -526,20 +527,16 @@ function promptMatchQueue(gearList) {
                   </div>`).join('')}
               ` : `<div style="font-family:var(--mono);font-size:11px;color:var(--muted);">No fuzzy matches found.</div>`}
             </div>
-
-            <!-- RIGHT: lookup + manual -->
             <div class="modal-col">
-
               <div class="force-lookup-wrap">
                 <div class="force-lookup-label">🔍 Exact Part Number Lookup</div>
-                <div class="force-lookup-note">Exact match only. Confirming saves the association for future auto-matching.</div>
+                <div class="force-lookup-note">Exact match only. Confirming saves for future auto-matching.</div>
                 <div class="force-lookup-row">
                   <input class="force-lookup-input" id="forceLookupInput" type="text" placeholder="e.g. D-CAT6A/SFTP-100-BSX6" onkeydown="if(event.key==='Enter') doForceLookup()">
                   <button class="force-lookup-btn" onclick="doForceLookup()">LOOKUP</button>
                 </div>
                 <div class="force-lookup-result" id="forceLookupResult"></div>
               </div>
-
               <div class="manual-section">
                 <div class="modal-section-label">Manual Price (CAD)</div>
                 <div class="manual-price-wrap">
@@ -553,10 +550,8 @@ function promptMatchQueue(gearList) {
                   Save manual price to Spire DB
                 </label>
               </div>
-
             </div>
           </div>
-
           <div class="modal-actions">
             <button class="modal-skip" id="modalSkip">Skip</button>
             <button class="btn-subpart" id="modalSubpart">⬡ Sub-Part</button>
@@ -573,16 +568,11 @@ function promptMatchQueue(gearList) {
         overlay._exactMatch = null;
         document.getElementById('forceLookupResult').style.display = 'none';
       };
-      if (hasCandidates) {
-        document.getElementById('mo-0')?.classList.add('selected');
-        document.getElementById('fsr-0')?.classList.add('visible');
-      }
+      if (hasCandidates) { document.getElementById('mo-0')?.classList.add('selected'); document.getElementById('fsr-0')?.classList.add('visible'); }
 
       window.onForceSaveCheck = (ci, checked) => {
         document.getElementById(`mo-${ci}`)?.classList.toggle('force-save-active', checked);
-        if (checked) item.candidates.forEach((_,i) => {
-          if(i!==ci){const cb=document.getElementById(`fscb-${i}`);if(cb){cb.checked=false;document.getElementById(`mo-${i}`)?.classList.remove('force-save-active');}}
-        });
+        if (checked) item.candidates.forEach((_,i) => { if(i!==ci){const cb=document.getElementById(`fscb-${i}`);if(cb){cb.checked=false;document.getElementById(`mo-${i}`)?.classList.remove('force-save-active');}} });
       };
 
       window.doForceLookup = () => {
@@ -651,8 +641,7 @@ function promptMatchQueue(gearList) {
           if(saveToSpire){confirmBtn.textContent='SAVING…';await appendToSpireSheet(manualPartNo,item.name,manualVal);confirmBtn.textContent='✓';await new Promise(r=>setTimeout(r,600));}
           next(); return;
         }
-        result[item._idx]={...result[item._idx],matchSource:'estimate',isSubpart:false,subpartOverridden:false};
-        next();
+        result[item._idx]={...result[item._idx],matchSource:'estimate',isSubpart:false,subpartOverridden:false}; next();
       };
 
       document.getElementById('modalSkip').onclick = () => {
@@ -685,9 +674,9 @@ async function runExtract() {
 Extract every line-item piece of equipment from the rental PDF. For each item return Canadian dealer WHOLESALE cost in CAD as both "msrp" and "wholesaleCost".
 PRICING RULE: Canadian dealer wholesale = (USD retail MSRP) x 1.39 (USD to CAD) x 0.50 (dealer discount). Return only CAD wholesale dealer cost.
 IMPORTANT: If a line item is visually indented (sub-item whose cost is in a parent line), prefix its name with two spaces.
-Also extract the NET pre-tax rental total (after discounts), order/quote code, and client name.
+Also extract the order/quote code and client name. Do NOT extract a quote total — that is irrelevant.
 Return ONLY valid JSON, no markdown:
-{"quoteCode":"string or null","client":"string or null","quotedRentalTotal":number or null,"gear":[{"name":"Full product name (2-space indent if sub-part)","qty":number,"msrp":number,"wholesaleCost":number}]}`,
+{"quoteCode":"string or null","client":"string or null","gear":[{"name":"Full product name (2-space indent if sub-part)","qty":number,"msrp":number,"wholesaleCost":number}]}`,
         messages:[{role:'user',content:[{type:'document',source:{type:'base64',media_type:'application/pdf',data:b64}},{type:'text',text:'Extract the gear list and wholesale cost estimates from this rental document.'}]}]
       })
     });
@@ -707,26 +696,30 @@ Return ONLY valid JSON, no markdown:
     state.quoteName = `${parsed.client||''} · ${parsed.quoteCode||''}`.trim().replace(/^·\s*|·\s*$/g,'');
     state.totalWholesale = state.gear.filter(g=>!g.isSubpart||g.subpartOverridden).reduce((s,g)=>s+g.wholesaleCost*g.qty,0);
 
-    if (parsed.quotedRentalTotal&&parsed.quotedRentalTotal>0) state.quoteTotal=parsed.quotedRentalTotal;
-    else if (state.quoteTotal===0) state.quoteTotal=parsed.gear.filter(g=>!g.isSubpart).reduce((s,g)=>s+g.msrp*g.qty,0)*0.15;
-
-    state.currentRoi = state.totalWholesale>0?(state.quoteTotal/state.totalWholesale)*100:0;
-    state.targetRoi  = parseFloat(Math.min(state.currentRoi,5).toFixed(2));
+    // ROI from whatever client price they've entered
+    state.currentRoi = state.totalWholesale>0&&state.quoteTotal>0 ? (state.quoteTotal/state.totalWholesale)*100 : 0;
+    state.targetRoi  = state.currentRoi > 0 ? parseFloat(Math.min(state.currentRoi,5).toFixed(2)) : 2;
     state.weeks = 1;
 
     const subpartCount = state.gear.filter(g=>g.isSubpart&&!g.subpartOverridden).length;
-    document.getElementById('quoteTotalDisplay').textContent = fmtCAD(state.quoteTotal);
-    document.getElementById('quoteMeta').textContent = `${state.quoteName||'Quote'} · 1-week base rate · pre-tax${subpartCount?` · ${subpartCount} sub-part${subpartCount>1?'s':''} excluded`:''}`;
     setStatus('live',`${state.gear.length} ITEMS`);
     document.getElementById('resetBtn').style.display = 'block';
+
+    // Update ROI live display now that asset value is known
+    updateRoiLive();
     renderResults();
   } catch(err) { setStatus('err','ERROR'); showError(err.message); document.getElementById('extractBtn').disabled=false; }
 }
 
+// ─── RENDER ──────────────────────────────────────────────
 function renderResults() {
   const content = document.getElementById('content');
   content.innerHTML = '';
   const subpartCount = state.gear.filter(g=>g.isSubpart&&!g.subpartOverridden).length;
+
+  // ROI for display
+  const roi = state.totalWholesale>0&&state.quoteTotal>0 ? (state.quoteTotal/state.totalWholesale)*100 : 0;
+
   const stats = document.createElement('div');
   stats.innerHTML = `
     <div class="results-head">
@@ -734,9 +727,8 @@ function renderResults() {
       <div class="rh-meta">${state.quoteName||'Rental Quote'} · ${state.gear.length} line items${subpartCount?` · <span style="color:var(--purple)">${subpartCount} sub-part${subpartCount>1?'s':''} excluded</span>`:''}</div></div>
     </div>
     <div class="stat-row">
-      <div class="stat"><div class="stat-lbl">Quote Total (1 wk)</div><div class="stat-val gold">${fmtCAD(state.quoteTotal)}</div></div>
-      <div class="stat"><div class="stat-lbl">Asset Value</div><div class="stat-val green" id="wholesaleStatCard">${fmtCAD(state.totalWholesale)}</div></div>
-      <div class="stat"><div class="stat-lbl">Current ROI (1 wk)</div><div class="stat-val blue" id="currentRoiStat">${state.currentRoi.toFixed(2)}%</div></div>
+      <div class="stat"><div class="stat-lbl">Asset Value (Wholesale)</div><div class="stat-val green" id="wholesaleStatCard">${fmtCAD(state.totalWholesale)}</div></div>
+      <div class="stat"><div class="stat-lbl">Current ROI (1 wk)</div><div class="stat-val blue" id="currentRoiStat">${roi>0?roi.toFixed(2)+'%':'— enter price'}</div></div>
     </div>`;
   content.appendChild(stats);
 
@@ -810,7 +802,17 @@ function toB64(file){return new Promise((res,rej)=>{const r=new FileReader();r.o
 function fmtCAD(n){const abs=Math.abs(n),sign=n<0?'-':'';return sign+'$'+abs.toLocaleString('en-CA',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function showLoading(msg){document.getElementById('content').innerHTML=`<div class="loading"><div class="spinner"></div><p>${msg}</p></div>`;}
 function showError(msg){document.getElementById('content').innerHTML=`<div style="padding:40px;"><div class="error-box">⚠ ${msg}</div><p style="font-family:var(--mono);font-size:11px;color:var(--muted);">Check that the PDF is a text-based Rental Point export, then try again.</p></div>`;}
-function resetAll(){window.state={file:null,quoteTotal:0,quoteName:'',gear:[],totalWholesale:0,currentRoi:0,targetRoi:0,weeks:1};['fileChip','pdfFile','manualTotal'].forEach(id=>{const el=document.getElementById(id);if(el){if(id==='fileChip')el.style.display='none';else el.value='';}});document.getElementById('quoteTotalDisplay').textContent='—';document.getElementById('quoteMeta').textContent='Upload a PDF to populate';document.getElementById('extractBtn').disabled=true;document.getElementById('resetBtn').style.display='none';setStatus('','READY');document.getElementById('content').innerHTML=`<div class="empty"><div class="empty-glyph">%</div><p>Upload a Rental Point PDF. Claude will extract your gear list, match it against the <code>Apex Spire DB</code>, and calculate live ROI-based pricing.</p></div>`;}
+function resetAll(){
+  window.state={file:null,quoteTotal:0,quoteName:'',gear:[],totalWholesale:0,currentRoi:0,targetRoi:0,weeks:1};
+  document.getElementById('fileChip').style.display='none';
+  document.getElementById('pdfFile').value='';
+  document.getElementById('clientPriceInput').value='';
+  document.getElementById('cpRoiLive').innerHTML='Enter your price to see ROI';
+  document.getElementById('extractBtn').disabled=true;
+  document.getElementById('resetBtn').style.display='none';
+  setStatus('','READY');
+  document.getElementById('content').innerHTML=`<div class="empty"><div class="empty-glyph">%</div><p>Upload a Rental Point PDF. Claude will extract your gear list, match it against the <code>Apex Spire DB</code>, and calculate live ROI-based pricing.</p></div>`;
+}
 
 function buildGearRows(tbody){tbody.innerHTML='';state.gear.forEach((g,i)=>{const isSubpart=!!g.isSubpart,isOverridden=isSubpart&&!!g.subpartOverridden;const costVal=isSubpart&&!isOverridden?0:(parseFloat(g.wholesaleCost)||parseFloat(g.msrp)||0);state.gear[i].wholesaleCost=costVal;state.gear[i].msrp=costVal;const tr=document.createElement('tr');if(isSubpart&&!isOverridden)tr.classList.add('subpart-row');if(isOverridden)tr.classList.add('subpart-overridden');let nameClass=isOverridden?'name subpart-overridden-name':isSubpart?'name subpart':'name';let nameBadge=isOverridden?'<span class="overridden-badge">OVERRIDDEN</span>':isSubpart?'<span class="subpart-badge">SUB-PART</span>':'';let prefix=isSubpart?'↳ ':'';let revertBtn=isOverridden?`<button class="btn-revert" style="margin-left:6px;" onclick="revertSubpart(${i})">Revert</button>`:'';let costCell='';if(isSubpart&&!isOverridden){costCell=`<div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;"><span style="font-family:var(--mono);font-size:11px;color:var(--purple);">cost elsewhere</span><button class="btn-override" onclick="overrideSubpart(${i})">Override</button></div>`;}else{costCell=`<input type="number" min="0" step="10" value="${costVal.toFixed(2)}" data-idx="${i}" data-qty="${g.qty}" style="width:130px;padding:6px 10px;font-size:14px;background:var(--panel);border:1px solid var(--border);color:#34d27b;text-align:right;border-radius:3px;">`;}let extCell=isSubpart&&!isOverridden?`<span style="color:var(--purple)">—</span>`:fmtCAD(costVal*g.qty);tr.innerHTML=`<td style="font-family:var(--mono);color:var(--muted);font-size:13px;">${String(i+1).padStart(2,'0')}</td><td class="${nameClass}">${prefix}${g.name}${nameBadge}${revertBtn}</td><td class="r">${g.qty}</td><td class="r">${costCell}</td><td class="r" style="color:${isSubpart&&!isOverridden?'var(--purple)':'#34d27b'};" id="ext-${i}">${extCell}</td>`;if(!isSubpart||isOverridden){const inp=tr.querySelector('input[type=number]');if(inp){inp.addEventListener('input',()=>{const idx=parseInt(inp.dataset.idx),qty=parseInt(inp.dataset.qty),val=parseFloat(inp.value)||0;state.gear[idx].wholesaleCost=val;state.gear[idx].msrp=val;savePrice(state.gear[idx].name,val);const ec=document.getElementById('ext-'+idx);if(ec)ec.textContent=fmtCAD(val*qty);updateAfterEdit();});inp.addEventListener('focus',()=>inp.style.borderColor='#f0b429');inp.addEventListener('blur',()=>inp.style.borderColor='var(--border)');}}tbody.appendChild(tr);});}
 
@@ -818,7 +820,17 @@ window.overrideSubpart=function(idx){state.gear[idx].subpartOverridden=true;stat
 window.revertSubpart=function(idx){state.gear[idx].subpartOverridden=false;state.gear[idx].wholesaleCost=0;state.gear[idx].msrp=0;rebuildGearTable();updateAfterEdit();};
 function rebuildGearTable(){const tbody=document.getElementById('gearTbody');if(tbody)buildGearRows(tbody);updateAfterEdit();}
 
-function updateAfterEdit(){state.totalWholesale=state.gear.filter(g=>!g.isSubpart||g.subpartOverridden).reduce((s,g)=>s+g.wholesaleCost*g.qty,0);state.currentRoi=state.totalWholesale>0?(state.quoteTotal/state.totalWholesale)*100:0;const tc=document.getElementById('wholesaleTotalCell');if(tc)tc.textContent=fmtCAD(state.totalWholesale);const wc=document.getElementById('wholesaleStatCard');if(wc)wc.textContent=fmtCAD(state.totalWholesale);const rc=document.getElementById('currentRoiStat');if(rc)rc.textContent=state.currentRoi.toFixed(2)+'%';updateOutput();}
+function updateAfterEdit(){
+  state.totalWholesale=state.gear.filter(g=>!g.isSubpart||g.subpartOverridden).reduce((s,g)=>s+g.wholesaleCost*g.qty,0);
+  const tc=document.getElementById('wholesaleTotalCell');if(tc)tc.textContent=fmtCAD(state.totalWholesale);
+  const wc=document.getElementById('wholesaleStatCard');if(wc)wc.textContent=fmtCAD(state.totalWholesale);
+  // Recalc ROI from client price
+  const roi=state.totalWholesale>0&&state.quoteTotal>0?(state.quoteTotal/state.totalWholesale)*100:0;
+  state.currentRoi=roi;
+  const rc=document.getElementById('currentRoiStat');if(rc)rc.textContent=roi>0?roi.toFixed(2)+'%':'— enter price';
+  updateRoiLive();
+  updateOutput();
+}
 
 async function loadPriceDB(){try{const r=await fetch(WORKER+'/prices');if(!r.ok)return{};return await r.json();}catch(e){return{};}}
 async function savePrice(name,cost){if(!name||!cost||cost<=0)return;const key=name.toLowerCase().replace(/[^a-z0-9]+/g,'-').trim().replace(/^-|-$/g,'');try{await fetch(WORKER+'/prices',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key,name,cost:parseFloat(cost)})});}catch(e){}}

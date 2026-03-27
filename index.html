@@ -103,8 +103,9 @@ header { position: sticky; top: 0; z-index: 50; background: var(--surface); bord
 .empty code { font-family:var(--mono); font-size:11px; color:var(--accent); }
 
 .loading { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:18px; }
-.spinner { width:64px; height:64px; border-radius:50%; animation:spin .9s linear infinite; background:none; border:none; overflow:hidden; display:flex; align-items:center; justify-content:center; } .spinner img { width:64px; height:64px; border-radius:50%; object-fit:cover; display:block; }
+.spinner { width:64px; height:64px; border-radius:50%; background:none; border:none; overflow:hidden; display:flex; align-items:center; justify-content:center; } .spinner img { width:64px; height:64px; border-radius:50%; object-fit:cover; display:block; animation:pulse .9s ease-in-out infinite; }
 @keyframes spin { to { transform:rotate(360deg); } }
+@keyframes pulse { 0%,100%{transform:scale(1);opacity:1;} 50%{transform:scale(1.18);opacity:.75;} }
 .loading p { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:.5px; }
 
 .error-box { background:rgba(232,57,14,.07); border:1px solid rgba(232,57,14,.25); border-radius:3px; padding:14px 16px; margin-bottom:20px; font-family:var(--mono); font-size:11px; color:var(--red); line-height:1.6; }
@@ -313,7 +314,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 </div>
 
 <script>
-const VERSION = '2.1.9';
+const VERSION = '2.2.0';
 document.getElementById('versionBadge').textContent = 'v' + VERSION;
 
 const SHEETS_ID  = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';

@@ -787,7 +787,7 @@ function renderPricer() {
       <div class="out-item">
         <div class="out-lbl">Per-Week Rate</div>
         <div class="out-val green" id="outPerWeek">${fmtCAD(state.totalWholesale*state.targetRoi/100)}</div>
-        <div class="out-sub">at ${state.targetRoi.toFixed(2)}% ROI</div>
+        <div class="out-sub" id="outRoiSub">at ${state.targetRoi.toFixed(2)}% ROI</div>
       </div>
     </div>`;
   updateOutput();
@@ -797,7 +797,7 @@ function onSlider(val){state.targetRoi=parseFloat(val);const pct=((state.targetR
 function onManualRoi(val){const v=parseFloat(val);if(isNaN(v)||v<=0)return;state.targetRoi=v;const clamped=Math.min(Math.max(v,0.1),5),pct=((clamped-0.1)/(5-0.1)*100).toFixed(1);const slider=document.getElementById('roiSlider');if(slider){slider.value=clamped;slider.style.setProperty('--pct',pct+'%');}const readout=document.getElementById('roiReadout');if(readout)readout.textContent=v.toFixed(2)+'%';updateOutput();}
 function setWeeks(w,skipBtns){state.weeks=Math.max(0.5,parseFloat(w)||0.5);document.getElementById('weeksReadout').textContent=(state.weeks%1===0?state.weeks:state.weeks.toFixed(1))+'w';document.getElementById('weeksInput').value=state.weeks;if(!skipBtns)document.querySelectorAll('.wbtn').forEach((b,i)=>b.classList.toggle('active',[0.5,1,2,3,4][i]===state.weeks));else document.querySelectorAll('.wbtn').forEach(b=>b.classList.remove('active'));updateOutput();}
 function recalc(){if(state.gear.length>0)updateOutput();}
-function updateOutput(){setTimeout(()=>renderQuoteModeller(),50);const perWeek=state.totalWholesale*(state.targetRoi/100),netTotal=perWeek*state.weeks;const elNet=document.getElementById('outNetPrice'),elWeek=document.getElementById('outPerWeek'),elWL=document.getElementById('outWeeksLabel');if(!elNet)return;elNet.textContent=fmtCAD(netTotal);elWeek.textContent=fmtCAD(perWeek);elWL.textContent=`${state.weeks%1===0?state.weeks:state.weeks.toFixed(1)} week${state.weeks!==1?'s':''}`;}
+function updateOutput(){setTimeout(()=>renderQuoteModeller(),50);const perWeek=state.totalWholesale*(state.targetRoi/100),netTotal=perWeek*state.weeks;const elNet=document.getElementById('outNetPrice'),elWeek=document.getElementById('outPerWeek'),elWL=document.getElementById('outWeeksLabel');if(!elNet)return;elNet.textContent=fmtCAD(netTotal);elWeek.textContent=fmtCAD(perWeek);elWL.textContent=`${state.weeks%1===0?state.weeks:state.weeks.toFixed(1)} week${state.weeks!==1?'s':''}`;const elRoiSub=document.getElementById('outRoiSub');if(elRoiSub)elRoiSub.textContent=`at ${state.targetRoi.toFixed(2)}% ROI`;}
 
 function toB64(file){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=()=>rej(new Error('File read failed'));r.readAsDataURL(file);});}
 function fmtCAD(n){const abs=Math.abs(n),sign=n<0?'-':'';return sign+'$'+abs.toLocaleString('en-CA',{minimumFractionDigits:2,maximumFractionDigits:2});}

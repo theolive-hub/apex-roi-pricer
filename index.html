@@ -8,17 +8,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
 
 :root {
-  --bg:      #080909;
-  --surface: #101214;
-  --panel:   #181b1f;
-  --border:  #252830;
+  --bg:      #d5d7db;
+  --surface: #c2c5ca;
+  --panel:   #b4b8be;
+  --border:  #9a9ea6;
   --accent:  #f0b429;
-  --green:   #34d27b;
-  --red:     #e8390e;
-  --blue:    #4da6ff;
-  --purple:  #a78bfa;
-  --text:    #e2e5ec;
-  --muted:   #8b92a5;
+  --green:   #1a8a4a;
+  --red:     #c0300a;
+  --blue:    #2a7acc;
+  --purple:  #7c5cc7;
+  --text:    #1a1c20;
+  --muted:   #4a4f5a;
   --mono:    'IBM Plex Mono', monospace;
   --sans:    'IBM Plex Sans', sans-serif;
   --display: 'Bebas Neue', sans-serif;
@@ -117,14 +117,14 @@ header { position: sticky; top: 0; z-index: 50; background: var(--surface); bord
 .error-box { background:rgba(232,57,14,.07); border:1px solid rgba(232,57,14,.25); border-radius:3px; padding:14px 16px; margin-bottom:20px; font-family:var(--mono); font-size:11px; color:var(--red); line-height:1.6; }
 
 .results-head { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:22px; flex-wrap:wrap; gap:12px; }
-.rh-title { font-family:var(--display); font-size:32px; letter-spacing:2px; color:#fff; line-height:1; }
+.rh-title { font-family:var(--display); font-size:32px; letter-spacing:2px; color:var(--text); line-height:1; }
 .rh-meta { font-family:var(--mono); font-size:13px; color:var(--muted); margin-top:6px; }
 
 /* STAT ROW — only 2 cards now */
 .stat-row { display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:28px; }
 .stat { background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:12px 14px; }
 .stat-lbl { font-family:var(--mono); font-size:9px; color:var(--muted); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:5px; }
-.stat-val { font-family:var(--display); font-size:28px; letter-spacing:1px; color:#fff; line-height:1; }
+.stat-val { font-family:var(--display); font-size:28px; letter-spacing:1px; color:var(--text); line-height:1; }
 .stat-val.green { color:var(--green); }
 .stat-val.blue  { color:var(--blue); }
 
@@ -138,7 +138,7 @@ tbody tr.subpart-row { opacity:.6; background: rgba(167,139,250,.03); }
 tbody tr.subpart-overridden { opacity:1; background: rgba(240,180,41,.03); border-left: 2px solid var(--accent); }
 td { padding:10px 14px; vertical-align:middle; }
 td.r { text-align:right; font-family:var(--mono); }
-td.name { color:#fff; font-weight:500; }
+td.name { color:var(--text); font-weight:500; }
 td.name.subpart { color:var(--muted); font-weight:400; padding-left:28px; font-style:italic; }
 td.name.subpart-overridden-name { color:var(--accent); font-weight:500; padding-left:28px; }
 tfoot tr { background:var(--panel); border-top:2px solid var(--border); }
@@ -148,7 +148,7 @@ tfoot td.total-green { color:var(--green); font-size:14px; }
 .subpart-badge { display:inline-block; font-family:var(--mono); font-size:9px; letter-spacing:.8px; padding:1px 6px; border-radius:2px; margin-left:6px; vertical-align:middle; background:rgba(167,139,250,.12); border:1px solid rgba(167,139,250,.3); color:var(--purple); }
 .overridden-badge { display:inline-block; font-family:var(--mono); font-size:9px; letter-spacing:.8px; padding:1px 6px; border-radius:2px; margin-left:6px; vertical-align:middle; background:rgba(240,180,41,.12); border:1px solid rgba(240,180,41,.3); color:var(--accent); }
 .btn-override { font-family:var(--mono); font-size:9px; letter-spacing:.8px; text-transform:uppercase; background:rgba(167,139,250,.1); border:1px solid rgba(167,139,250,.3); color:var(--purple); border-radius:2px; padding:3px 8px; cursor:pointer; transition:all .15s; white-space:nowrap; }
-.btn-override:hover { background:rgba(167,139,250,.2); border-color:var(--purple); color:#fff; }
+.btn-override:hover { background:rgba(167,139,250,.2); border-color:var(--purple); color:var(--text); }
 .btn-revert { font-family:var(--mono); font-size:9px; letter-spacing:.8px; text-transform:uppercase; background:rgba(240,180,41,.1); border:1px solid rgba(240,180,41,.3); color:var(--accent); border-radius:2px; padding:3px 8px; cursor:pointer; transition:all .15s; white-space:nowrap; }
 .btn-revert:hover { background:rgba(240,180,41,.2); border-color:var(--accent); }
 
@@ -156,7 +156,7 @@ tfoot td.total-green { color:var(--green); font-size:14px; }
 
 .pricer { background:var(--panel); border:1px solid var(--border); border-radius:4px; padding:28px 28px 24px; position:relative; overflow:hidden; }
 .pricer::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--accent), var(--green)); }
-.pricer-title { font-family:var(--display); font-size:26px; letter-spacing:2px; color:#fff; margin-bottom:20px; }
+.pricer-title { font-family:var(--display); font-size:26px; letter-spacing:2px; color:var(--text); margin-bottom:20px; }
 .pricer-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:28px; }
 
 .slider-wrap { display:flex; flex-direction:column; gap:8px; }
@@ -214,9 +214,9 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .modal { background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:28px 32px 26px; width:1060px; max-width:96vw; max-height:88vh; overflow-y:auto; box-shadow:0 24px 64px rgba(0,0,0,.65); position:relative; }
 .modal::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg, var(--accent), var(--green)); border-radius:6px 6px 0 0; }
 .modal-header { margin-bottom:14px; }
-.modal-title { font-family:var(--display); font-size:26px; letter-spacing:2px; color:#fff; margin-bottom:4px; }
+.modal-title { font-family:var(--display); font-size:26px; letter-spacing:2px; color:var(--text); margin-bottom:4px; }
 .modal-sub { font-family:var(--mono); font-size:13px; color:var(--muted); }
-.modal-item-name { background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:12px 18px; font-size:16px; color:#fff; font-weight:500; margin-bottom:16px; }
+.modal-item-name { background:var(--panel); border:1px solid var(--border); border-radius:3px; padding:12px 18px; font-size:16px; color:var(--text); font-weight:500; margin-bottom:16px; }
 .modal-section-label { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:8px; }
 .subpart-callout { background:rgba(167,139,250,.07); border:1px solid rgba(167,139,250,.25); border-radius:3px; padding:10px 16px; margin-bottom:16px; font-family:var(--mono); font-size:12px; color:var(--purple); line-height:1.5; display:flex; align-items:center; gap:10px; }
 .subpart-callout strong { font-size:11px; white-space:nowrap; }
@@ -228,7 +228,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 .match-radio-col { padding-top:2px; flex-shrink:0; }
 .match-option input[type=radio] { accent-color:var(--green); width:14px; height:14px; cursor:pointer; }
 .match-option-body { flex:1; min-width:0; }
-.match-option-name { font-size:13px; color:#fff; line-height:1.4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.match-option-name { font-size:13px; color:var(--text); line-height:1.4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .match-option-meta { font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:3px; }
 .match-option-cost { font-family:var(--display); font-size:20px; color:var(--green); letter-spacing:1px; flex-shrink:0; padding-top:1px; }
 .force-save-row { display:none; align-items:center; gap:6px; margin-top:5px; padding:5px 8px; border-radius:3px; background:rgba(240,180,41,.05); border:1px dashed rgba(240,180,41,.25); }
@@ -364,7 +364,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 </div>
 
 <script>
-const VERSION = '2.2.9';
+const VERSION = '2.3.0';
 document.getElementById('versionBadge').textContent = 'v' + VERSION;
 
 const SHEETS_ID  = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';
@@ -869,7 +869,7 @@ function resetAll(){
   document.getElementById('content').innerHTML=`<div class="empty"><div class="empty-glyph">%</div><h2>ROI-BASED RENTAL PRICING</h2><p>Drop a Rental Point <strong style="color:var(--text)">Booking Hardcopy</strong> PDF and Olive AI will extract your gear, match it against the <code>Apex Spire DB</code>, and price it live.</p><div class="empty-drop" id="emptyDropZone" style="margin:12px 0 8px;"><div class="drop-zone" style="max-width:360px; margin:0 auto;"><input type="file" accept=".pdf" onchange="loadFile(this.files[0]);"><div class="drop-icon">📄</div><div class="drop-text"><strong>Drop PDF Here</strong></div></div></div><div class="empty-steps"><div class="empty-step"><span class="step-num">1</span><span class="step-label">Upload PDF</span></div><div class="empty-step"><span class="step-num">2</span><span class="step-label">AI Extracts</span></div><div class="empty-step"><span class="step-num">3</span><span class="step-label">DB Match</span></div><div class="empty-step"><span class="step-num">4</span><span class="step-label">Set ROI %</span></div></div></div>`;
 }
 
-function buildGearRows(tbody){tbody.innerHTML='';state.gear.forEach((g,i)=>{const isSubpart=!!g.isSubpart,isOverridden=isSubpart&&!!g.subpartOverridden;const costVal=isSubpart&&!isOverridden?0:(parseFloat(g.wholesaleCost)||parseFloat(g.msrp)||0);state.gear[i].wholesaleCost=costVal;state.gear[i].msrp=costVal;const tr=document.createElement('tr');if(isSubpart&&!isOverridden)tr.classList.add('subpart-row');if(isOverridden)tr.classList.add('subpart-overridden');let nameClass=isOverridden?'name subpart-overridden-name':isSubpart?'name subpart':'name';let nameBadge=isOverridden?'<span class="overridden-badge">OVERRIDDEN</span>':isSubpart?'<span class="subpart-badge">SUB-PART</span>':'';let prefix=isSubpart?'↳ ':'';let revertBtn=isOverridden?`<button class="btn-revert" style="margin-left:6px;" onclick="revertSubpart(${i})">Revert</button>`:'';let costCell='';if(isSubpart&&!isOverridden){costCell=`<div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;"><span style="font-family:var(--mono);font-size:11px;color:var(--purple);">cost elsewhere</span><button class="btn-override" onclick="overrideSubpart(${i})">Override</button></div>`;}else{costCell=`<input type="number" min="0" step="10" value="${costVal.toFixed(2)}" data-idx="${i}" data-qty="${g.qty}" style="width:130px;padding:6px 10px;font-size:14px;background:var(--panel);border:1px solid var(--border);color:#34d27b;text-align:right;border-radius:3px;">`;}let extCell=isSubpart&&!isOverridden?`<span style="color:var(--purple)">—</span>`:fmtCAD(costVal*g.qty);tr.innerHTML=`<td style="font-family:var(--mono);color:var(--muted);font-size:13px;">${String(i+1).padStart(2,'0')}</td><td class="${nameClass}">${prefix}${g.name}${nameBadge}${revertBtn}</td><td class="r">${g.qty}</td><td class="r">${costCell}</td><td class="r" style="color:${isSubpart&&!isOverridden?'var(--purple)':'#34d27b'};" id="ext-${i}">${extCell}</td>`;if(!isSubpart||isOverridden){const inp=tr.querySelector('input[type=number]');if(inp){inp.addEventListener('input',()=>{const idx=parseInt(inp.dataset.idx),qty=parseInt(inp.dataset.qty),val=parseFloat(inp.value)||0;state.gear[idx].wholesaleCost=val;state.gear[idx].msrp=val;savePrice(state.gear[idx].name,val);const ec=document.getElementById('ext-'+idx);if(ec)ec.textContent=fmtCAD(val*qty);updateAfterEdit();});inp.addEventListener('focus',()=>inp.style.borderColor='#f0b429');inp.addEventListener('blur',()=>inp.style.borderColor='var(--border)');}}tbody.appendChild(tr);});}
+function buildGearRows(tbody){tbody.innerHTML='';state.gear.forEach((g,i)=>{const isSubpart=!!g.isSubpart,isOverridden=isSubpart&&!!g.subpartOverridden;const costVal=isSubpart&&!isOverridden?0:(parseFloat(g.wholesaleCost)||parseFloat(g.msrp)||0);state.gear[i].wholesaleCost=costVal;state.gear[i].msrp=costVal;const tr=document.createElement('tr');if(isSubpart&&!isOverridden)tr.classList.add('subpart-row');if(isOverridden)tr.classList.add('subpart-overridden');let nameClass=isOverridden?'name subpart-overridden-name':isSubpart?'name subpart':'name';let nameBadge=isOverridden?'<span class="overridden-badge">OVERRIDDEN</span>':isSubpart?'<span class="subpart-badge">SUB-PART</span>':'';let prefix=isSubpart?'↳ ':'';let revertBtn=isOverridden?`<button class="btn-revert" style="margin-left:6px;" onclick="revertSubpart(${i})">Revert</button>`:'';let costCell='';if(isSubpart&&!isOverridden){costCell=`<div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;"><span style="font-family:var(--mono);font-size:11px;color:var(--purple);">cost elsewhere</span><button class="btn-override" onclick="overrideSubpart(${i})">Override</button></div>`;}else{costCell=`<input type="number" min="0" step="10" value="${costVal.toFixed(2)}" data-idx="${i}" data-qty="${g.qty}" style="width:130px;padding:6px 10px;font-size:14px;background:var(--panel);border:1px solid var(--border);color:var(--green);text-align:right;border-radius:3px;">`;}let extCell=isSubpart&&!isOverridden?`<span style="color:var(--purple)">—</span>`:fmtCAD(costVal*g.qty);tr.innerHTML=`<td style="font-family:var(--mono);color:var(--muted);font-size:13px;">${String(i+1).padStart(2,'0')}</td><td class="${nameClass}">${prefix}${g.name}${nameBadge}${revertBtn}</td><td class="r">${g.qty}</td><td class="r">${costCell}</td><td class="r" style="color:${isSubpart&&!isOverridden?'var(--purple)':'#34d27b'};" id="ext-${i}">${extCell}</td>`;if(!isSubpart||isOverridden){const inp=tr.querySelector('input[type=number]');if(inp){inp.addEventListener('input',()=>{const idx=parseInt(inp.dataset.idx),qty=parseInt(inp.dataset.qty),val=parseFloat(inp.value)||0;state.gear[idx].wholesaleCost=val;state.gear[idx].msrp=val;savePrice(state.gear[idx].name,val);const ec=document.getElementById('ext-'+idx);if(ec)ec.textContent=fmtCAD(val*qty);updateAfterEdit();});inp.addEventListener('focus',()=>inp.style.borderColor='#f0b429');inp.addEventListener('blur',()=>inp.style.borderColor='var(--border)');}}tbody.appendChild(tr);});}
 
 window.overrideSubpart=function(idx){state.gear[idx].subpartOverridden=true;state.gear[idx].wholesaleCost=0;state.gear[idx].msrp=0;rebuildGearTable();setTimeout(()=>{const inp=document.querySelector(`input[data-idx="${idx}"]`);if(inp){inp.focus();inp.select();}},50);};
 window.revertSubpart=function(idx){state.gear[idx].subpartOverridden=false;state.gear[idx].wholesaleCost=0;state.gear[idx].msrp=0;rebuildGearTable();updateAfterEdit();};

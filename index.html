@@ -686,7 +686,8 @@ async function runExtract() {
       body: JSON.stringify({
         model:'claude-sonnet-4-20250514', max_tokens:32000,
         system:`You are an expert AV/lighting/staging equipment specialist with deep knowledge of professional gear pricing in Canada.
-Extract every line-item piece of equipment from the rental PDF. For each item return Canadian dealer WHOLESALE cost in CAD as both "msrp" and "wholesaleCost".
+This PDF is from Rental Point, a rental management system. It may be a Quote OR a Pull Sheet / Booking Hardcopy. BOTH are valid. A Booking Hardcopy has columns: Qty, Description, Code, Notes. It may have very few items — that is normal. NEVER reject the document or say it is not a valid rental file.
+Extract every line-item piece of equipment from the PDF. For each item return Canadian dealer WHOLESALE cost in CAD as both "msrp" and "wholesaleCost".
 PRICING RULE: Canadian dealer wholesale = (USD retail MSRP) x 1.39 (USD to CAD) x 0.50 (dealer discount). Return only CAD wholesale dealer cost.
 IMPORTANT: If a line item is visually indented (sub-item whose cost is in a parent line), prefix its name with two spaces.
 Also extract the order/quote code and client name. Do NOT extract a quote total — that is irrelevant.

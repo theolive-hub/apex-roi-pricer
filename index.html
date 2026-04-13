@@ -336,6 +336,13 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
       <div class="empty-glyph">%</div>
       <h2>ROI-BASED RENTAL PRICING</h2>
       <p>Drop a Rental Point <strong style="color:var(--text)">Booking Hardcopy</strong> PDF and Olive AI will extract your gear, match it against the <code>Apex Spire DB</code>, and price it live.</p>
+      <div class="empty-drop" id="emptyDropZone" style="margin:12px 0 8px;">
+        <div class="drop-zone" style="max-width:360px; margin:0 auto;">
+          <input type="file" accept=".pdf" onchange="document.getElementById('pdfFile').files=this.files; document.getElementById('pdfFile').dispatchEvent(new Event('change'));">
+          <div class="drop-icon">📄</div>
+          <div class="drop-text"><strong>Drop PDF Here</strong></div>
+        </div>
+      </div>
       <div class="empty-steps">
         <div class="empty-step"><span class="step-num">1</span><span class="step-label">Upload PDF</span></div>
         <div class="empty-step"><span class="step-num">2</span><span class="step-label">AI Extracts</span></div>
@@ -347,7 +354,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 </div>
 
 <script>
-const VERSION = '2.2.6';
+const VERSION = '2.2.8';
 document.getElementById('versionBadge').textContent = 'v' + VERSION;
 
 const SHEETS_ID  = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';
@@ -846,7 +853,7 @@ function resetAll(){
   document.getElementById('extractBtn').disabled=true;
   document.getElementById('resetBtn').style.display='none';
   setStatus('','READY');
-  document.getElementById('content').innerHTML=`<div class="empty"><div class="empty-glyph">%</div><h2>ROI-BASED RENTAL PRICING</h2><p>Drop a Rental Point <strong style="color:var(--text)">Booking Hardcopy</strong> PDF and Olive AI will extract your gear, match it against the <code>Apex Spire DB</code>, and price it live.</p><div class="empty-steps"><div class="empty-step"><span class="step-num">1</span><span class="step-label">Upload PDF</span></div><div class="empty-step"><span class="step-num">2</span><span class="step-label">AI Extracts</span></div><div class="empty-step"><span class="step-num">3</span><span class="step-label">DB Match</span></div><div class="empty-step"><span class="step-num">4</span><span class="step-label">Set ROI %</span></div></div></div>`;
+  document.getElementById('content').innerHTML=`<div class="empty"><div class="empty-glyph">%</div><h2>ROI-BASED RENTAL PRICING</h2><p>Drop a Rental Point <strong style="color:var(--text)">Booking Hardcopy</strong> PDF and Olive AI will extract your gear, match it against the <code>Apex Spire DB</code>, and price it live.</p><div class="empty-drop" id="emptyDropZone" style="margin:12px 0 8px;"><div class="drop-zone" style="max-width:360px; margin:0 auto;"><input type="file" accept=".pdf" onchange="document.getElementById('pdfFile').files=this.files; document.getElementById('pdfFile').dispatchEvent(new Event('change'));"><div class="drop-icon">📄</div><div class="drop-text"><strong>Drop PDF Here</strong></div></div></div><div class="empty-steps"><div class="empty-step"><span class="step-num">1</span><span class="step-label">Upload PDF</span></div><div class="empty-step"><span class="step-num">2</span><span class="step-label">AI Extracts</span></div><div class="empty-step"><span class="step-num">3</span><span class="step-label">DB Match</span></div><div class="empty-step"><span class="step-num">4</span><span class="step-label">Set ROI %</span></div></div></div>`;
 }
 
 function buildGearRows(tbody){tbody.innerHTML='';state.gear.forEach((g,i)=>{const isSubpart=!!g.isSubpart,isOverridden=isSubpart&&!!g.subpartOverridden;const costVal=isSubpart&&!isOverridden?0:(parseFloat(g.wholesaleCost)||parseFloat(g.msrp)||0);state.gear[i].wholesaleCost=costVal;state.gear[i].msrp=costVal;const tr=document.createElement('tr');if(isSubpart&&!isOverridden)tr.classList.add('subpart-row');if(isOverridden)tr.classList.add('subpart-overridden');let nameClass=isOverridden?'name subpart-overridden-name':isSubpart?'name subpart':'name';let nameBadge=isOverridden?'<span class="overridden-badge">OVERRIDDEN</span>':isSubpart?'<span class="subpart-badge">SUB-PART</span>':'';let prefix=isSubpart?'↳ ':'';let revertBtn=isOverridden?`<button class="btn-revert" style="margin-left:6px;" onclick="revertSubpart(${i})">Revert</button>`:'';let costCell='';if(isSubpart&&!isOverridden){costCell=`<div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;"><span style="font-family:var(--mono);font-size:11px;color:var(--purple);">cost elsewhere</span><button class="btn-override" onclick="overrideSubpart(${i})">Override</button></div>`;}else{costCell=`<input type="number" min="0" step="10" value="${costVal.toFixed(2)}" data-idx="${i}" data-qty="${g.qty}" style="width:130px;padding:6px 10px;font-size:14px;background:var(--panel);border:1px solid var(--border);color:#34d27b;text-align:right;border-radius:3px;">`;}let extCell=isSubpart&&!isOverridden?`<span style="color:var(--purple)">—</span>`:fmtCAD(costVal*g.qty);tr.innerHTML=`<td style="font-family:var(--mono);color:var(--muted);font-size:13px;">${String(i+1).padStart(2,'0')}</td><td class="${nameClass}">${prefix}${g.name}${nameBadge}${revertBtn}</td><td class="r">${g.qty}</td><td class="r">${costCell}</td><td class="r" style="color:${isSubpart&&!isOverridden?'var(--purple)':'#34d27b'};" id="ext-${i}">${extCell}</td>`;if(!isSubpart||isOverridden){const inp=tr.querySelector('input[type=number]');if(inp){inp.addEventListener('input',()=>{const idx=parseInt(inp.dataset.idx),qty=parseInt(inp.dataset.qty),val=parseFloat(inp.value)||0;state.gear[idx].wholesaleCost=val;state.gear[idx].msrp=val;savePrice(state.gear[idx].name,val);const ec=document.getElementById('ext-'+idx);if(ec)ec.textContent=fmtCAD(val*qty);updateAfterEdit();});inp.addEventListener('focus',()=>inp.style.borderColor='#f0b429');inp.addEventListener('blur',()=>inp.style.borderColor='var(--border)');}}tbody.appendChild(tr);});}

@@ -301,16 +301,17 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 
 <div class="app">
   <aside class="sidebar">
-    <div>
-      <div class="drop-zone" id="dropZone">
-        <input type="file" id="pdfFile" accept=".pdf">
-        <div class="drop-icon">📄</div>
-        <div class="drop-text"><strong>Drop in a Rental Point &ldquo;Booking Hardcopy&rdquo;</strong></div>
-      </div>
-      <div id="fileChip" style="display:none"></div>
+    <!-- Hidden file input — triggered by the main content drop zone -->
+    <input type="file" id="pdfFile" accept=".pdf" style="display:none">
+    <div id="fileChip" style="display:none"></div>
+
+    <!-- LOADED FILE STATUS -->
+    <div id="sidebarFileStatus">
+      <div class="slabel">Document</div>
+      <div style="font-size:13px;color:var(--muted);" id="sidebarFileName">No PDF loaded</div>
     </div>
 
-    <!-- CLIENT PRICE — replaces old quote total box -->
+    <!-- CLIENT PRICE -->
     <div>
       <div class="slabel">Client Price (Pre-Tax)</div>
       <div class="client-price-box">
@@ -323,7 +324,16 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
       </div>
     </div>
 
-
+    <!-- HELP -->
+    <div>
+      <div class="slabel">How It Works</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.7;">
+        <div style="margin-bottom:6px;"><span style="color:var(--accent);">①</span> Upload a Rental Point Booking Hardcopy PDF</div>
+        <div style="margin-bottom:6px;"><span style="color:var(--accent);">②</span> Olive AI extracts gear &amp; matches to Spire DB</div>
+        <div style="margin-bottom:6px;"><span style="color:var(--accent);">③</span> Review matches, edit costs if needed</div>
+        <div><span style="color:var(--accent);">④</span> Set ROI % and weeks to get your price</div>
+      </div>
+    </div>
 
     <div style="margin-top:auto; display:flex; flex-direction:column; gap:10px;">
       <button class="btn-primary" id="extractBtn" disabled onclick="runExtract()">ANALYSE PDF</button>
@@ -338,7 +348,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
       <p>Drop a Rental Point <strong style="color:var(--text)">Booking Hardcopy</strong> PDF and Olive AI will extract your gear, match it against the <code>Apex Spire DB</code>, and price it live.</p>
       <div class="empty-drop" id="emptyDropZone" style="margin:12px 0 8px;">
         <div class="drop-zone" style="max-width:360px; margin:0 auto;">
-          <input type="file" accept=".pdf" onchange="document.getElementById('pdfFile').files=this.files; document.getElementById('pdfFile').dispatchEvent(new Event('change'));">
+          <input type="file" accept=".pdf" onchange="loadFile(this.files[0]);">
           <div class="drop-icon">📄</div>
           <div class="drop-text"><strong>Drop PDF Here</strong></div>
         </div>
@@ -354,7 +364,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 </div>
 
 <script>
-const VERSION = '2.2.8';
+const VERSION = '2.2.9';
 document.getElementById('versionBadge').textContent = 'v' + VERSION;
 
 const SHEETS_ID  = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';
@@ -397,13 +407,14 @@ function updateRoiLive() {
 }
 
 // ─── FILE HANDLING ───────────────────────────────────────
-const dropZone = document.getElementById('dropZone');
 const pdfFile  = document.getElementById('pdfFile');
-pdfFile.onchange = e => loadFile(e.target.files[0]);
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragging'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragging'));
-dropZone.addEventListener('drop', e => {
-  e.preventDefault(); dropZone.classList.remove('dragging');
+const contentArea = document.getElementById('content');
+pdfFile.onchange = e => { if(e.target.files[0]) loadFile(e.target.files[0]); };
+// Make entire content area a drop target
+contentArea.addEventListener('dragover', e => { e.preventDefault(); const dz=contentArea.querySelector('.drop-zone'); if(dz)dz.classList.add('dragging'); });
+contentArea.addEventListener('dragleave', e => { const dz=contentArea.querySelector('.drop-zone'); if(dz)dz.classList.remove('dragging'); });
+contentArea.addEventListener('drop', e => {
+  e.preventDefault(); const dz=contentArea.querySelector('.drop-zone'); if(dz)dz.classList.remove('dragging');
   const f = e.dataTransfer.files[0];
   if (f?.type === 'application/pdf') loadFile(f);
 });
@@ -413,6 +424,7 @@ function loadFile(file) {
   chip.style.display = 'flex'; chip.className = 'file-chip';
   chip.innerHTML = `<span class="fi">📄</span><div class="fn">${file.name}<span>${(file.size/1024).toFixed(1)} KB</span></div>`;
   document.getElementById('extractBtn').disabled = false;
+  document.getElementById('sidebarFileName').innerHTML = `<span style="color:var(--text);">📄 ${file.name}</span><br><span style="font-size:11px;">${(file.size/1024).toFixed(1)} KB</span>`;
   setStatus('', 'PDF LOADED');
 }
 function setStatus(cls, txt) {
@@ -848,12 +860,13 @@ function resetAll(){
   window.state={file:null,quoteTotal:0,quoteName:'',gear:[],totalWholesale:0,currentRoi:0,targetRoi:0,weeks:1};
   document.getElementById('fileChip').style.display='none';
   document.getElementById('pdfFile').value='';
+  document.getElementById('sidebarFileName').innerHTML='No PDF loaded';
   document.getElementById('clientPriceInput').value='';
   document.getElementById('cpRoiLive').innerHTML='Enter your price to see ROI';
   document.getElementById('extractBtn').disabled=true;
   document.getElementById('resetBtn').style.display='none';
   setStatus('','READY');
-  document.getElementById('content').innerHTML=`<div class="empty"><div class="empty-glyph">%</div><h2>ROI-BASED RENTAL PRICING</h2><p>Drop a Rental Point <strong style="color:var(--text)">Booking Hardcopy</strong> PDF and Olive AI will extract your gear, match it against the <code>Apex Spire DB</code>, and price it live.</p><div class="empty-drop" id="emptyDropZone" style="margin:12px 0 8px;"><div class="drop-zone" style="max-width:360px; margin:0 auto;"><input type="file" accept=".pdf" onchange="document.getElementById('pdfFile').files=this.files; document.getElementById('pdfFile').dispatchEvent(new Event('change'));"><div class="drop-icon">📄</div><div class="drop-text"><strong>Drop PDF Here</strong></div></div></div><div class="empty-steps"><div class="empty-step"><span class="step-num">1</span><span class="step-label">Upload PDF</span></div><div class="empty-step"><span class="step-num">2</span><span class="step-label">AI Extracts</span></div><div class="empty-step"><span class="step-num">3</span><span class="step-label">DB Match</span></div><div class="empty-step"><span class="step-num">4</span><span class="step-label">Set ROI %</span></div></div></div>`;
+  document.getElementById('content').innerHTML=`<div class="empty"><div class="empty-glyph">%</div><h2>ROI-BASED RENTAL PRICING</h2><p>Drop a Rental Point <strong style="color:var(--text)">Booking Hardcopy</strong> PDF and Olive AI will extract your gear, match it against the <code>Apex Spire DB</code>, and price it live.</p><div class="empty-drop" id="emptyDropZone" style="margin:12px 0 8px;"><div class="drop-zone" style="max-width:360px; margin:0 auto;"><input type="file" accept=".pdf" onchange="loadFile(this.files[0]);"><div class="drop-icon">📄</div><div class="drop-text"><strong>Drop PDF Here</strong></div></div></div><div class="empty-steps"><div class="empty-step"><span class="step-num">1</span><span class="step-label">Upload PDF</span></div><div class="empty-step"><span class="step-num">2</span><span class="step-label">AI Extracts</span></div><div class="empty-step"><span class="step-num">3</span><span class="step-label">DB Match</span></div><div class="empty-step"><span class="step-num">4</span><span class="step-label">Set ROI %</span></div></div></div>`;
 }
 
 function buildGearRows(tbody){tbody.innerHTML='';state.gear.forEach((g,i)=>{const isSubpart=!!g.isSubpart,isOverridden=isSubpart&&!!g.subpartOverridden;const costVal=isSubpart&&!isOverridden?0:(parseFloat(g.wholesaleCost)||parseFloat(g.msrp)||0);state.gear[i].wholesaleCost=costVal;state.gear[i].msrp=costVal;const tr=document.createElement('tr');if(isSubpart&&!isOverridden)tr.classList.add('subpart-row');if(isOverridden)tr.classList.add('subpart-overridden');let nameClass=isOverridden?'name subpart-overridden-name':isSubpart?'name subpart':'name';let nameBadge=isOverridden?'<span class="overridden-badge">OVERRIDDEN</span>':isSubpart?'<span class="subpart-badge">SUB-PART</span>':'';let prefix=isSubpart?'↳ ':'';let revertBtn=isOverridden?`<button class="btn-revert" style="margin-left:6px;" onclick="revertSubpart(${i})">Revert</button>`:'';let costCell='';if(isSubpart&&!isOverridden){costCell=`<div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;"><span style="font-family:var(--mono);font-size:11px;color:var(--purple);">cost elsewhere</span><button class="btn-override" onclick="overrideSubpart(${i})">Override</button></div>`;}else{costCell=`<input type="number" min="0" step="10" value="${costVal.toFixed(2)}" data-idx="${i}" data-qty="${g.qty}" style="width:130px;padding:6px 10px;font-size:14px;background:var(--panel);border:1px solid var(--border);color:#34d27b;text-align:right;border-radius:3px;">`;}let extCell=isSubpart&&!isOverridden?`<span style="color:var(--purple)">—</span>`:fmtCAD(costVal*g.qty);tr.innerHTML=`<td style="font-family:var(--mono);color:var(--muted);font-size:13px;">${String(i+1).padStart(2,'0')}</td><td class="${nameClass}">${prefix}${g.name}${nameBadge}${revertBtn}</td><td class="r">${g.qty}</td><td class="r">${costCell}</td><td class="r" style="color:${isSubpart&&!isOverridden?'var(--purple)':'#34d27b'};" id="ext-${i}">${extCell}</td>`;if(!isSubpart||isOverridden){const inp=tr.querySelector('input[type=number]');if(inp){inp.addEventListener('input',()=>{const idx=parseInt(inp.dataset.idx),qty=parseInt(inp.dataset.qty),val=parseFloat(inp.value)||0;state.gear[idx].wholesaleCost=val;state.gear[idx].msrp=val;savePrice(state.gear[idx].name,val);const ec=document.getElementById('ext-'+idx);if(ec)ec.textContent=fmtCAD(val*qty);updateAfterEdit();});inp.addEventListener('focus',()=>inp.style.borderColor='#f0b429');inp.addEventListener('blur',()=>inp.style.borderColor='var(--border)');}}tbody.appendChild(tr);});}

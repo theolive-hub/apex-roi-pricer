@@ -97,10 +97,16 @@ header { position: sticky; top: 0; z-index: 50; background: var(--surface); bord
 
 .content { padding: 28px 32px; overflow:auto; }
 
-.empty { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:14px; color:var(--muted); text-align:center; padding:60px; }
-.empty-glyph { font-family:var(--display); font-size:96px; color:var(--accent); opacity:.06; line-height:1; }
-.empty p { max-width:300px; font-size:13px; line-height:1.7; }
-.empty code { font-family:var(--mono); font-size:11px; color:var(--accent); }
+.empty { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:20px; color:var(--muted); text-align:center; padding:60px; }
+.empty-glyph { font-family:var(--display); font-size:120px; color:var(--accent); opacity:.08; line-height:1; filter:blur(0.5px); animation:glyphPulse 4s ease-in-out infinite; }
+@keyframes glyphPulse { 0%,100%{opacity:.06;transform:scale(1)} 50%{opacity:.12;transform:scale(1.04)} }
+.empty h2 { font-family:var(--display); font-size:28px; color:var(--text); letter-spacing:2px; margin:0; }
+.empty p { max-width:400px; font-size:15px; line-height:1.8; }
+.empty code { font-family:var(--mono); font-size:12px; color:var(--accent); background:rgba(240,180,41,.08); padding:2px 6px; border-radius:4px; }
+.empty .empty-steps { display:flex; gap:32px; margin-top:8px; }
+.empty .empty-step { display:flex; flex-direction:column; align-items:center; gap:6px; }
+.empty .step-num { font-family:var(--mono); font-size:11px; color:var(--accent); border:1px solid rgba(240,180,41,.2); width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+.empty .step-label { font-size:12px; color:var(--muted); }
 
 .loading { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:18px; }
 .spinner { width:64px; height:64px; border-radius:50%; background:none; border:none; overflow:hidden; display:flex; align-items:center; justify-content:center; } .spinner img { width:64px; height:64px; border-radius:50%; object-fit:cover; display:block; animation:pulse .9s ease-in-out infinite; }
@@ -328,13 +334,20 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
   <main class="content" id="content">
     <div class="empty">
       <div class="empty-glyph">%</div>
-      <p>Upload a Rental Point Booking Hardcopy in PDF format. Olive AI will extract your gear list, match it against the <code>Apex Spire DB</code>, and calculate live ROI-based pricing.</p>
+      <h2>ROI-BASED RENTAL PRICING</h2>
+      <p>Drop a Rental Point <strong style="color:var(--text)">Booking Hardcopy</strong> PDF and Olive AI will extract your gear, match it against the <code>Apex Spire DB</code>, and price it live.</p>
+      <div class="empty-steps">
+        <div class="empty-step"><span class="step-num">1</span><span class="step-label">Upload PDF</span></div>
+        <div class="empty-step"><span class="step-num">2</span><span class="step-label">AI Extracts</span></div>
+        <div class="empty-step"><span class="step-num">3</span><span class="step-label">DB Match</span></div>
+        <div class="empty-step"><span class="step-num">4</span><span class="step-label">Set ROI %</span></div>
+      </div>
     </div>
   </main>
 </div>
 
 <script>
-const VERSION = '2.2.5';
+const VERSION = '2.2.6';
 document.getElementById('versionBadge').textContent = 'v' + VERSION;
 
 const SHEETS_ID  = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';
@@ -833,7 +846,7 @@ function resetAll(){
   document.getElementById('extractBtn').disabled=true;
   document.getElementById('resetBtn').style.display='none';
   setStatus('','READY');
-  document.getElementById('content').innerHTML=`<div class="empty"><div class="empty-glyph">%</div><p>Upload a Rental Point Booking Hardcopy in PDF format. Olive AI will extract your gear list, match it against the <code>Apex Spire DB</code>, and calculate live ROI-based pricing.</p></div>`;
+  document.getElementById('content').innerHTML=`<div class="empty"><div class="empty-glyph">%</div><h2>ROI-BASED RENTAL PRICING</h2><p>Drop a Rental Point <strong style="color:var(--text)">Booking Hardcopy</strong> PDF and Olive AI will extract your gear, match it against the <code>Apex Spire DB</code>, and price it live.</p><div class="empty-steps"><div class="empty-step"><span class="step-num">1</span><span class="step-label">Upload PDF</span></div><div class="empty-step"><span class="step-num">2</span><span class="step-label">AI Extracts</span></div><div class="empty-step"><span class="step-num">3</span><span class="step-label">DB Match</span></div><div class="empty-step"><span class="step-num">4</span><span class="step-label">Set ROI %</span></div></div></div>`;
 }
 
 function buildGearRows(tbody){tbody.innerHTML='';state.gear.forEach((g,i)=>{const isSubpart=!!g.isSubpart,isOverridden=isSubpart&&!!g.subpartOverridden;const costVal=isSubpart&&!isOverridden?0:(parseFloat(g.wholesaleCost)||parseFloat(g.msrp)||0);state.gear[i].wholesaleCost=costVal;state.gear[i].msrp=costVal;const tr=document.createElement('tr');if(isSubpart&&!isOverridden)tr.classList.add('subpart-row');if(isOverridden)tr.classList.add('subpart-overridden');let nameClass=isOverridden?'name subpart-overridden-name':isSubpart?'name subpart':'name';let nameBadge=isOverridden?'<span class="overridden-badge">OVERRIDDEN</span>':isSubpart?'<span class="subpart-badge">SUB-PART</span>':'';let prefix=isSubpart?'↳ ':'';let revertBtn=isOverridden?`<button class="btn-revert" style="margin-left:6px;" onclick="revertSubpart(${i})">Revert</button>`:'';let costCell='';if(isSubpart&&!isOverridden){costCell=`<div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;"><span style="font-family:var(--mono);font-size:11px;color:var(--purple);">cost elsewhere</span><button class="btn-override" onclick="overrideSubpart(${i})">Override</button></div>`;}else{costCell=`<input type="number" min="0" step="10" value="${costVal.toFixed(2)}" data-idx="${i}" data-qty="${g.qty}" style="width:130px;padding:6px 10px;font-size:14px;background:var(--panel);border:1px solid var(--border);color:#34d27b;text-align:right;border-radius:3px;">`;}let extCell=isSubpart&&!isOverridden?`<span style="color:var(--purple)">—</span>`:fmtCAD(costVal*g.qty);tr.innerHTML=`<td style="font-family:var(--mono);color:var(--muted);font-size:13px;">${String(i+1).padStart(2,'0')}</td><td class="${nameClass}">${prefix}${g.name}${nameBadge}${revertBtn}</td><td class="r">${g.qty}</td><td class="r">${costCell}</td><td class="r" style="color:${isSubpart&&!isOverridden?'var(--purple)':'#34d27b'};" id="ext-${i}">${extCell}</td>`;if(!isSubpart||isOverridden){const inp=tr.querySelector('input[type=number]');if(inp){inp.addEventListener('input',()=>{const idx=parseInt(inp.dataset.idx),qty=parseInt(inp.dataset.qty),val=parseFloat(inp.value)||0;state.gear[idx].wholesaleCost=val;state.gear[idx].msrp=val;savePrice(state.gear[idx].name,val);const ec=document.getElementById('ext-'+idx);if(ec)ec.textContent=fmtCAD(val*qty);updateAfterEdit();});inp.addEventListener('focus',()=>inp.style.borderColor='#f0b429');inp.addEventListener('blur',()=>inp.style.borderColor='var(--border)');}}tbody.appendChild(tr);});}

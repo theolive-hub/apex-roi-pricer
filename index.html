@@ -367,7 +367,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 </div>
 
 <script>
-const VERSION = '2.3.8';
+const VERSION = '2.3.9';
 document.getElementById('versionBadge').textContent = 'v' + VERSION;
 
 const SHEETS_ID  = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';
@@ -721,7 +721,7 @@ async function runExtract() {
     const res = await fetch(WORKER, {
       method:'POST', headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
-        model:'claude-sonnet-4-20250514', max_tokens:32000,
+        model:'claude-sonnet-4-6', max_tokens:32000,
         system:`You are an expert AV/lighting/staging equipment specialist with deep knowledge of professional gear pricing in Canada.
 This PDF is from Rental Point, a rental management system. It may be a Quote OR a Pull Sheet / Booking Hardcopy. BOTH are valid. A Booking Hardcopy has columns: Qty, Description, Code, Notes. It may have very few items — that is normal. NEVER reject the document or say it is not a valid rental file.
 Extract every line-item piece of equipment from the PDF. For each item return Canadian dealer WHOLESALE cost in CAD as both "msrp" and "wholesaleCost".

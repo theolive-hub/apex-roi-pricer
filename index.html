@@ -367,7 +367,7 @@ input[type=range]::-webkit-slider-thumb:active { transform:scale(1.2); }
 </div>
 
 <script>
-const VERSION = '2.3.9';
+const VERSION = '2.3.10';
 document.getElementById('versionBadge').textContent = 'v' + VERSION;
 
 const SHEETS_ID  = '1m7gr-HP6aNBejxVGFFxp0NdXeUs_EQSEvGpEQ9HimAQ';
@@ -728,7 +728,7 @@ Extract every line-item piece of equipment from the PDF. For each item return Ca
 PRICING RULE: Canadian dealer wholesale = (USD retail MSRP) x 1.39 (USD to CAD) x 0.50 (dealer discount). Return only CAD wholesale dealer cost.
 IMPORTANT: If a line item is visually indented (sub-item whose cost is in a parent line), prefix its name with two spaces.
 Also extract the order/quote code and client name. Do NOT extract a quote total — that is irrelevant.
-Return ONLY valid JSON, no markdown:
+Return ONLY valid JSON, no markdown. Your entire response must be the raw JSON object and nothing else — no preamble, no explanation, no "I'll..." or any text before or after. Begin your response with the { character.
 {"quoteCode":"string or null","client":"string or null","gear":[{"name":"Full product name (2-space indent if sub-part)","qty":number,"msrp":number,"wholesaleCost":number}]}`,
         messages:[{role:'user',content:[{type:'document',source:{type:'base64',media_type:'application/pdf',data:b64}},{type:'text',text:'Extract the gear list and wholesale cost estimates from this rental document.'}]}]
       })
@@ -737,6 +737,9 @@ Return ONLY valid JSON, no markdown:
     if (data.error) throw new Error(data.error.message);
     const raw = data.content.find(b=>b.type==='text')?.text || '{}';
     let clean = raw.replace(/```json|```/g,'').trim();
+    // Strip any conversational preamble/trailing text — keep only the JSON object
+    const firstBrace = clean.indexOf('{');
+    if (firstBrace > 0) clean = clean.slice(firstBrace);
     if (!clean.endsWith('}')) { const lc=clean.lastIndexOf('},'); clean=lc>0?clean.substring(0,lc+1)+']}':clean+']}'; }
     const parsed = JSON.parse(clean);
     if (!parsed.gear?.length) throw new Error('No gear items found. Is this a Rental Point PDF?');
